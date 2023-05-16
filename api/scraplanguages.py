@@ -87,8 +87,3 @@ def _get_languages_values(content_div: BeautifulSoup) -> list[str]:
         languages.append(element.text)
 
     return languages
-
-
-if __name__ == '__main__':
-    languages = get_languages()
-    print(len(languages))
