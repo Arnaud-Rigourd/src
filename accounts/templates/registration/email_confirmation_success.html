@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Email confirmation</title>
+{% endblock %}
+
+{% block content %}
+
+<h1>You did it! Welcome on board!</h1>
+<p>You are going to be redirected to the signin page in few seconds. If not, you can click directly on the link below</p>
+<p><a href="{% url 'accounts:signin' %}">log in</a>.</p>
+
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Login</title>
+{% endblock %}
+
+{% block content %}
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li {% if message.tags %} class="{{ message.tags }}"{% endif %} >{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<form method="POST" action="{% url 'accounts:signin' %}">
+    {% csrf_token %}
+    <p>
+        {{ form.username.label_tag }} {{ form.username }}
+    </p>
+    <p>
+        {{ form.password.label_tag }} {{ form.password }}
+    </p>
+    <button type="submit">Login</button>
+</form>
+
+<div class="login_reset">
+    <p><a href="{% url 'accounts:signup' %}">Join us? Sign up</a></p>
+    <p><a href="{% url 'accounts:password_reset' %}">Forgot your password ?</a></p>
+</div>
+
+<p><a href="{% url 'accounts:home' %}">Back home</a></p>
+
+{% endblock %}
