@@ -16,3 +16,25 @@ class Profile(models.Model):
         choices=JOBS_CHOICES,
         blank=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
+class Stacks(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=250, blank=False)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
+
+class Projects(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=250, blank=False)
+    description = models.TextField(blank=True)
+    used_stacks = models.TextField(blank=True)
+    project_url = models.URLField(blank=True, null=True)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
