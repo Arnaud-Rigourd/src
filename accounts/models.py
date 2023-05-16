@@ -1,5 +1,3 @@
-import uuid
-
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.db import models
 from django.db.models.signals import post_save
@@ -36,6 +34,7 @@ class MyUserManager(BaseUserManager):
 
     def create_superuser(self, email, password=None, **kwargs):
         user = self.create_user(email, password, **kwargs)
+        user.is_active = True
         user.is_admin = True
         user.is_staff = True
         user.save()
@@ -43,11 +42,7 @@ class MyUserManager(BaseUserManager):
 
 
 class CustomUser(AbstractBaseUser):
-    id = models.UUIDField(
-        primary_key=True,
-        default=uuid.uuid4,
-        editable=False
-    )
+    id = models.AutoField(primary_key=True)
     email = models.EmailField(
         unique=True,
         max_length=255,
@@ -87,6 +82,15 @@ class CustomUser(AbstractBaseUser):
         return True
 
 
+class EmailConfirmation(models.Model):
+    id = models.AutoField(primary_key=True)
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    token = models.CharField(max_length=64, unique=True)
+
+    def generate_token(self):
+        self.token = get_random_string(length=64)
+
+
 # Create a profile for each user, like teacher, student etc... Here we have an example with a customer and a vendor
 # class Profile(models.Model):
 #     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -100,17 +104,3 @@ class CustomUser(AbstractBaseUser):
 #
 #
 # post_save.connect(post_save_receiver, sender=settings.AUTH_USER_MODEL)
-
-
-class EmailConfirmation(models.Model):
-    id = models.UUIDField(
-        primary_key=True,
-        default=uuid.uuid4,
-        editable=False
-    )
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-    token = models.CharField(max_length=64, unique=True)
-
-    def generate_token(self):
-        self.token = get_random_string(length=64)
-
