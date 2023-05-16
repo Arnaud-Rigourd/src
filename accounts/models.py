@@ -42,6 +42,10 @@ class MyUserManager(BaseUserManager):
 
 
 class CustomUser(AbstractBaseUser):
+    class Meta:
+        verbose_name = 'Utilisateur'
+        verbose_name_plural = 'Utilisateurs'
+
     CATEGORY_CHOICES = (
         ('developpeur', 'Développeur'),
         ('entrepreneur', 'Entrepreneur'),

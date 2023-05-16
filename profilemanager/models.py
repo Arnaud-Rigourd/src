@@ -15,7 +15,10 @@ class Profile(models.Model):
         max_length=250,
         choices=JOBS_CHOICES,
         blank=False)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.user.username}'s profile"
 
 
 class Stacks(models.Model):
