@@ -9,7 +9,22 @@
     <h1>Bienvenue sur Dev For Free !</h1>
 
     <section class="faq">
-        {% for faq in faqs %}
+        <h2>Pour les clients</h2>
+        {% for faq in faq_clients %}
+        <div class="faq__QA">
+            <div class="faq__question">
+                <h3>{{ faq.question }}</h3>
+            </div>
+            <div class="faq__answer">
+                <p>{{ faq.answer }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </section>
+
+    <section class="faq">
+        <h2>Pour les développeurs</h2>
+        {% for faq in faq_devs %}
         <div class="faq__QA">
             <div class="faq__question">
                 <h3>{{ faq.question }}</h3>
