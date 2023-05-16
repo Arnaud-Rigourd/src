@@ -42,6 +42,11 @@ class MyUserManager(BaseUserManager):
 
 
 class CustomUser(AbstractBaseUser):
+    CATEGORY_CHOICES = (
+        ('developpeur', 'Développeur'),
+        ('entrepreneur', 'Entrepreneur'),
+    )
+
     id = models.AutoField(primary_key=True)
     email = models.EmailField(
         unique=True,
@@ -67,6 +72,17 @@ class CustomUser(AbstractBaseUser):
         blank=False,
         max_length=250
     )
+    category = models.CharField(
+        max_length=250,
+        blank=False,
+        choices=CATEGORY_CHOICES,
+        default='developpeur'
+    )
+    company_name = models.CharField(
+        max_length=250,
+        blank=True,
+    )
+
 
     USERNAME_FIELD = 'email'  # field that will be used to distinguish users. can be username, email, first_name etc...
     REQUIRED_FIELDS = ['first_name', 'last_name', 'username']
