@@ -1,13 +1,12 @@
 from django.urls import path, include, re_path, reverse_lazy
 from django.contrib.auth import views as auth_views
 
-from accounts.views import signup, index, signin, signout, confirm_email, resend_email
+from accounts.views import signup, signin, signout, confirm_email, resend_email
 import django.contrib.auth.urls
 
 app_name = 'accounts'
 
 urlpatterns = [
-    path('', index, name="home"),
     path('signup/', signup, name='signup'),
     path('confirm_email/<str:token>/', confirm_email, name='confirm_email'),
     path('signin/', signin, name='signin'),

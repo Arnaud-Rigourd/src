@@ -13,10 +13,6 @@ from accounts.forms import CustomSignupForm
 from accounts.models import EmailConfirmation, CustomUser
 
 
-def index(request):
-    return HttpResponse("<h1>Hello, world. You're at the accounts index.</h1>")
-
-
 def signup(request):
     context = {}
     if request.method == "POST":

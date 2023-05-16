@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Trouve un développeur gratuitement !</title>
+{% endblock %}
+
+{% block content %}
+<main>
+    <h1>Bienvenue sur Dev For Free !</h1>
+
+    <section class="faq">
+        {% for faq in faqs %}
+        <div class="faq__QA">
+            <div class="faq__question">
+                <h3>{{ faq.question }}</h3>
+            </div>
+            <div class="faq__answer">
+                <p>{{ faq.answer }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </section>
+</main>
+{% endblock %}
