@@ -15,7 +15,10 @@ class Profile(models.Model):
         max_length=250,
         choices=JOBS_CHOICES,
         blank=False)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.user.username}'s profile"
 
 
 class Stacks(models.Model):
@@ -32,7 +35,7 @@ class Projects(models.Model):
     name = models.CharField(max_length=250, blank=False)
     description = models.TextField(blank=True)
     used_stacks = models.TextField(blank=True)
-    project_url = models.URLField(blank=True, null=True)
+    link = models.URLField(blank=True, null=True)
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
 
     def __str__(self):

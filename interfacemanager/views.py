@@ -5,7 +5,7 @@ from interfacemanager.models import FAQClient, FAQDev
 
 
 class FAQHome(TemplateView):
-    templates_name = 'interfacemanager/index.html'
+    template_name = 'interfacemanager/index.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

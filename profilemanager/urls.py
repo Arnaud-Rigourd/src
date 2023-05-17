@@ -1,9 +1,9 @@
 from django.urls import path
 
-from profilemanager.views import index
+from profilemanager.views import ProfileDetail
 
 app_name = "profilemanager"
 
 urlpatterns = [
-    path('profilemanager/index/', index, name="home"),
+    path('profile/<str:username>', ProfileDetail.as_view(), name="home"),
 ]

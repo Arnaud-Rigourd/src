@@ -8,7 +8,7 @@
 
 <h1>Finalize Your Subscription</h1>
 <p>An email has been sent to {{ user.email }} with a confirmation link to complete your subscription. Please check your spam folder if you cannot locate the email in your inbox.</p>
-<p><a href="{% url 'accounts:home' %}">Back to home</a></p>
+<p><a href="{% url 'interfacemanager:home' %}">Back to home</a></p>
 <p>Didn't receive the email? <a href="{% url 'accounts:resend_email' email=user.email %}">Resend email</a></p>
 
 {% if messages %}
