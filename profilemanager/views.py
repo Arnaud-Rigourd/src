@@ -159,3 +159,14 @@ class StackUpdate(UpdateView):
             return self.form_invalid(form)
         self.object.save()
         return super().form_valid(form)
+
+
+class ProfileIndex(TemplateView):
+    template_name = "profilemanager/index.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['users'] = User.objects.all()
+        context['current_user'] = self.request.user
+        context['devs'] = User.objects.filter(category='developpeur')
+        return context
