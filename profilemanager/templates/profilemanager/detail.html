@@ -11,7 +11,7 @@
 {% block content %}
 <h1>Hello on {{ user.first_name }} {{ user.last_name }} profile !</h1>
 
-    {% if profile %}
+{% if profile %}
     <section class="profile__info">
         <h2>{{ user.first_name }}, sa vie et ses passions</h2>
         <p class="user-description">
@@ -30,7 +30,14 @@
         {% endif %}
         <ul>
             {% for stack in stacks %}
-                <li class="stack">{{ stack }}</li>
+                <li class="stack">
+                    {{ stack }}
+                    <form method="POST" action="{% url 'profilemanager:stack-delete' pk=stack.pk  %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="stack_id" value="{{ stack.id }}">
+                        <button type="submit">Supprimer</button>
+                    </form>
+                </li>
             {% endfor %}
         </ul>
     </section>
@@ -56,5 +63,5 @@
             </div>
         {% endfor %}
     </section>
-    {% endif %}
+{% endif %}
 {% endblock %}

@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.utils.decorators import method_decorator
-from django.views.generic import TemplateView, CreateView
+from django.views.generic import TemplateView, CreateView, DeleteView
 
 from profilemanager.forms import CustomProfileForm, CustomStacksFormSet, CustomProjectsFormSet, CustomStacksForm, \
     CustomProjectsForm
@@ -105,3 +105,21 @@ class ProjectCreate(CreateView):
             return self.form_invalid(form)
         self.object.save()
         return super().form_valid(form)
+
+
+class StackDelete(DeleteView):
+    template_name = "profilemanager/detail.html"
+    model = Stacks
+
+    def get_success_url(self):
+        return reverse('profilemanager:detail', kwargs={'username': self.request.user.username})
+
+    def get(self, request, *args, **kwargs):
+        stack_id = self.kwargs['pk']
+        try:
+            stack = Stacks.objects.get(id=stack_id)
+        except Stacks.DoesNotExist:
+            return HttpResponse("Stack does not exist.")
+        else:
+            stack.delete()
+            return super().get(request, *args, **kwargs)
