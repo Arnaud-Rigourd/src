@@ -1,6 +1,7 @@
 from django.urls import path
 
-from profilemanager.views import ProfileDetail, ProfileCreate, StackCreate, ProjectCreate, StackDelete, ProjectDelete
+from profilemanager.views import ProfileDetail, ProfileCreate, StackCreate, ProjectCreate, StackDelete, ProjectDelete, \
+    StackUpdate
 
 app_name = "profilemanager"
 
@@ -9,6 +10,7 @@ urlpatterns = [
     path('profile/create/<str:username>', ProfileCreate.as_view(), name="create"),
     path('profile/create-stack/', StackCreate.as_view(), name="stack-create"),
     path('profile/delete-stack/<int:pk>', StackDelete.as_view(), name="stack-delete"),
+    path('profile/update-stack/<int:pk>', StackUpdate.as_view(), name="stack-update"),
     path('profile/create-project/', ProjectCreate.as_view(), name="project-create"),
     path('profile/delete-project/<int:pk>', ProjectDelete.as_view(), name="project-delete"),
 ]

@@ -33,9 +33,15 @@
                 <li class="stack">
                     {{ stack }}
                     {% if current_user.username == username %}
-                    <form method="POST" action="{% url 'profilemanager:stack-delete' pk=stack.pk  %}">
+                    <form method="POST" action="{% url 'profilemanager:stack-update' pk=stack.pk %}">
                         {% csrf_token %}
-                        <input type="hidden" name="stack_id" value="{{ stack.id }}">
+                        <input type="text" name="name" value="{{ stack.name }}">
+                        <input type="hidden" name="stack_id" value="{{ stack.pk }}">
+                        <button type="submit">Modifier</button>
+                    </form>
+                    <form method="POST" action="{% url 'profilemanager:stack-delete' pk=stack.pk %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="stack_id" value="{{ stack.pk }}">
                         <button type="submit">Supprimer</button>
                     </form>
                     {% endif %}
@@ -63,7 +69,7 @@
                     {% if current_user.username == username %}
                     <form method="POST" action="{% url 'profilemanager:project-delete' pk=project.pk  %}">
                         {% csrf_token %}
-                        <input type="hidden" name="project_id" value="{{ project.id }}">
+                        <input type="hidden" name="project_id" value="{{ project.pk }}">
                         <button type="submit">Supprimer</button>
                     </form>
                     {% endif %}
