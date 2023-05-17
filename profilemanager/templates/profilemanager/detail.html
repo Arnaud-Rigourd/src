@@ -32,11 +32,13 @@
             {% for stack in stacks %}
                 <li class="stack">
                     {{ stack }}
+                    {% if current_user.username == username %}
                     <form method="POST" action="{% url 'profilemanager:stack-delete' pk=stack.pk  %}">
                         {% csrf_token %}
                         <input type="hidden" name="stack_id" value="{{ stack.id }}">
                         <button type="submit">Supprimer</button>
                     </form>
+                    {% endif %}
                 </li>
             {% endfor %}
         </ul>
@@ -58,11 +60,13 @@
             <div class="project">
                 <h3>
                     {{ project.name }}
+                    {% if current_user.username == username %}
                     <form method="POST" action="{% url 'profilemanager:project-delete' pk=project.pk  %}">
                         {% csrf_token %}
                         <input type="hidden" name="project_id" value="{{ project.id }}">
                         <button type="submit">Supprimer</button>
                     </form>
+                    {% endif %}
                 </h3>
                 <p>Description du projet : {{ project.description }}</p>
                 <p class="{% if not project.link %}hidden{% endif %}">Lien : <a href="{{ project.link }}" target="_blank">{{ project.link }}</a></p>
