@@ -117,9 +117,27 @@ class StackDelete(DeleteView):
     def get(self, request, *args, **kwargs):
         stack_id = self.kwargs['pk']
         try:
-            stack = Stacks.objects.get(id=stack_id)
+            stack = Stacks.objects.get(pk=stack_id)
         except Stacks.DoesNotExist:
             return HttpResponse("Stack does not exist.")
         else:
             stack.delete()
+            return super().get(request, *args, **kwargs)
+
+
+class ProjectDelete(DeleteView):
+    template_name = "profilemanager/detail.html"
+    model = Projects
+
+    def get_success_url(self):
+        return reverse('profilemanager:detail', kwargs={'username': self.request.user.username})
+
+    def get(self, request, *args, **kwargs):
+        project_id = self.kwargs['pk']
+        try:
+            project = Projects.objects.get(pk=project_id)
+        except Projects.DoesNotExist:
+            return HttpResponse("Project does not exist.")
+        else:
+            project.delete()
             return super().get(request, *args, **kwargs)
