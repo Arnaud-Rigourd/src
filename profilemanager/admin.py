@@ -27,7 +27,7 @@ class ProjectsAdmin(admin.ModelAdmin):
         'name',
         'description',
         'used_stacks',
-        'project_url',
+        'link',
         'profile',
     )
     list_filter = ('profile',)
