@@ -61,7 +61,7 @@ def signin(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect('accounts:home')
+            return redirect('interfacemanager:home')
         else:
             messages.error(request, "Invalid username or password.")
 
@@ -72,7 +72,7 @@ def signin(request):
 
 def signout(request):
     logout(request)
-    return redirect('accounts:home')
+    return redirect('interfacemanager:home')
 
 
 def _send_confirmation_email(request, context, form):
