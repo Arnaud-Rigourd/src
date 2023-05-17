@@ -29,6 +29,8 @@ class CustomSignupForm(UserCreationForm):
             'first_name',
             'last_name',
             'email',
+            'category',
+            'company_name',
         )
 
 

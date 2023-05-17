@@ -15,6 +15,7 @@ class Profile(models.Model):
         max_length=250,
         choices=JOBS_CHOICES,
         blank=False)
+    visible = models.BooleanField(default=False)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -34,8 +35,8 @@ class Projects(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=250, blank=False)
     description = models.TextField(blank=True)
-    used_stacks = models.TextField(blank=True)
-    link = models.URLField(blank=True, null=True)
+    used_stacks = models.TextField(blank=True) # changer en CharField
+    link = models.URLField(blank=True, default="")
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
 
     def __str__(self):
