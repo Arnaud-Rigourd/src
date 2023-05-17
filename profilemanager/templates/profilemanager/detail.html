@@ -11,7 +11,7 @@
 {% block content %}
 <h1>Hello on {{ user.first_name }} {{ user.last_name }} profile !</h1>
 
-    {% if profile %}
+{% if profile %}
     <section class="profile__info">
         <h2>{{ user.first_name }}, sa vie et ses passions</h2>
         <p class="user-description">
@@ -21,9 +21,25 @@
 
     <section class="profile__stacks">
         <h2>Ses stacks</h2>
+        {% if current_user.username == username %}
+            <form method="POST" action="{% url 'profilemanager:stack-create' %}">
+                {% csrf_token %}
+                {{ stack_form.as_p }}
+                <button type="submit">Ajouter une stack</button>
+            </form>
+        {% endif %}
         <ul>
             {% for stack in stacks %}
-                <li class="stack">{{ stack }}</li>
+                <li class="stack">
+                    {{ stack }}
+                    {% if current_user.username == username %}
+                    <form method="POST" action="{% url 'profilemanager:stack-delete' pk=stack.pk  %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="stack_id" value="{{ stack.id }}">
+                        <button type="submit">Supprimer</button>
+                    </form>
+                    {% endif %}
+                </li>
             {% endfor %}
         </ul>
     </section>
@@ -32,14 +48,31 @@
     {% if projects %}
     <section class="profile__projects">
         <h2>Ses projets</h2>
+        {% if current_user.username == username %}
+            <form method="POST" action="{% url 'profilemanager:project-create' %}">
+                {% csrf_token %}
+                {{ project_form.as_p }}
+                <button type="submit">Ajouter un projet</button>
+            </form>
+        {% endif %}
+
         {% for project in projects %}
             <div class="project">
-                <h3>{{ project.name }}</h3>
+                <h3>
+                    {{ project.name }}
+                    {% if current_user.username == username %}
+                    <form method="POST" action="{% url 'profilemanager:project-delete' pk=project.pk  %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="project_id" value="{{ project.id }}">
+                        <button type="submit">Supprimer</button>
+                    </form>
+                    {% endif %}
+                </h3>
                 <p>Description du projet : {{ project.description }}</p>
                 <p class="{% if not project.link %}hidden{% endif %}">Lien : <a href="{{ project.link }}" target="_blank">{{ project.link }}</a></p>
                 <p>Stacks : {{ project.used_stacks }}</p>
             </div>
         {% endfor %}
     </section>
-    {% endif %}
+{% endif %}
 {% endblock %}

@@ -1,13 +1,15 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.utils.decorators import method_decorator
-from django.views.generic import TemplateView, CreateView
+from django.views.generic import TemplateView, CreateView, DeleteView
 
-from profilemanager.forms import CustomProfileForm, CustomStacksFormSet, CustomProjectsFormSet
-from profilemanager.models import Profile
+from profilemanager.forms import CustomProfileForm, CustomStacksFormSet, CustomProjectsFormSet, CustomStacksForm, \
+    CustomProjectsForm
+from profilemanager.models import Profile, Stacks, Projects
 
 User = get_user_model()
 
@@ -29,6 +31,8 @@ class ProfileDetail(TemplateView):
             context['profile'] = user.profile
             context['stacks'] = user.profile.stacks_set.all()
             context['projects'] = user.profile.projects_set.all()
+            context['stack_form'] = CustomStacksForm()
+            context['project_form'] = CustomProjectsForm()
         return context
 
 
@@ -52,14 +56,11 @@ class ProfileCreate(CreateView):
         return data
 
     def form_valid(self, form):
-        print("form_valid method called")
         context = self.get_context_data()
         stacks = context['stacks']
         projects = context['projects']
         self.object = form.save(commit=False)
-        print("self.object saved")
         self.object.user = self.request.user
-        print(self.object.user)
         self.object.save()
         if stacks.is_valid() and projects.is_valid():
             stacks.instance = self.object
@@ -68,6 +69,75 @@ class ProfileCreate(CreateView):
             projects.save()
         return super().form_valid(form)
 
-    # def form_invalid(self, form):
-    #     print(form.errors)
-    #     return super().form_invalid(form)
+
+@method_decorator(login_required, name='dispatch')
+class StackCreate(CreateView):
+    template_name = "profilemanager/detail.html"
+    model = Stacks
+    fields = ['name']
+
+    def get_success_url(self):
+        return reverse('profilemanager:detail', kwargs={'username': self.request.user.username})
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        try:
+            self.object.profile = self.request.user.profile
+        except ObjectDoesNotExist:
+            return self.form_invalid(form)
+        self.object.save()
+        return super().form_valid(form)
+
+
+class ProjectCreate(CreateView):
+    template_name = "profilemanager/detail.html"
+    model = Projects
+    fields = ['name', 'description', 'used_stacks', 'link']
+
+    def get_success_url(self):
+        return reverse('profilemanager:detail', kwargs={'username': self.request.user.username})
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        try:
+            self.object.profile = self.request.user.profile
+        except ObjectDoesNotExist:
+            return self.form_invalid(form)
+        self.object.save()
+        return super().form_valid(form)
+
+
+class StackDelete(DeleteView):
+    template_name = "profilemanager/detail.html"
+    model = Stacks
+
+    def get_success_url(self):
+        return reverse('profilemanager:detail', kwargs={'username': self.request.user.username})
+
+    def get(self, request, *args, **kwargs):
+        stack_id = self.kwargs['pk']
+        try:
+            stack = Stacks.objects.get(pk=stack_id)
+        except Stacks.DoesNotExist:
+            return HttpResponse("Stack does not exist.")
+        else:
+            stack.delete()
+            return super().get(request, *args, **kwargs)
+
+
+class ProjectDelete(DeleteView):
+    template_name = "profilemanager/detail.html"
+    model = Projects
+
+    def get_success_url(self):
+        return reverse('profilemanager:detail', kwargs={'username': self.request.user.username})
+
+    def get(self, request, *args, **kwargs):
+        project_id = self.kwargs['pk']
+        try:
+            project = Projects.objects.get(pk=project_id)
+        except Projects.DoesNotExist:
+            return HttpResponse("Project does not exist.")
+        else:
+            project.delete()
+            return super().get(request, *args, **kwargs)

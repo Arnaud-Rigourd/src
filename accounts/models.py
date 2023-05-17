@@ -3,8 +3,6 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.utils.crypto import get_random_string
 
-# from new_blog import settings
-
 
 class MyUserManager(BaseUserManager):
     def create_user(self, email, password=None, **kwargs):
@@ -110,17 +108,3 @@ class EmailConfirmation(models.Model):
     def generate_token(self):
         self.token = get_random_string(length=64)
 
-
-# Create a profile for each user, like teacher, student etc... Here we have an example with a customer and a vendor
-# class Profile(models.Model):
-#     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-#     customer_id = models.CharField(max_length=250, blank=True, null=True)
-#     vendor_id = models.CharField(max_length=250, blank=True, null=True)
-#
-#
-# def post_save_receiver(sender, instance, created, *args, **kwargs):
-#     if created:
-#         Profile.objects.create(user=instance, customer_id=instance.id, vendor_id=instance.id)
-#
-#
-# post_save.connect(post_save_receiver, sender=settings.AUTH_USER_MODEL)
