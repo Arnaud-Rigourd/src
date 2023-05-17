@@ -1,12 +1,17 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    <title>{{ user.first_name }} | Dev {{ profile.job }}</title>
+    {% if current_user == user %}
+        <title>{{ user.first_name }} | Ton profil </title>
+    {% else %}
+        <title>{{ user.first_name }} | Dev {{ profile.job }}</title>
+    {% endif %}
 {% endblock %}
 
 {% block content %}
 <h1>Hello on {{ user.first_name }} {{ user.last_name }} profile !</h1>
 
+    {% if profile %}
     <section class="profile__info">
         <h2>{{ user.first_name }}, sa vie et ses passions</h2>
         <p class="user-description">
@@ -22,7 +27,9 @@
             {% endfor %}
         </ul>
     </section>
-
+    {% endif %}
+    
+    {% if projects %}
     <section class="profile__projects">
         <h2>Ses projets</h2>
         {% for project in projects %}
@@ -34,4 +41,5 @@
             </div>
         {% endfor %}
     </section>
+    {% endif %}
 {% endblock %}

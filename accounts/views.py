@@ -75,6 +75,10 @@ def signout(request):
     return redirect('interfacemanager:home')
 
 
+# def _handle_registration_confirmation(request, form, context):
+
+
+
 def _send_confirmation_email(request, context, form):
     load_dotenv()
     user = form.save()

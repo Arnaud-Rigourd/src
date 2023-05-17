@@ -9,6 +9,7 @@ class ProfileAdmin(admin.ModelAdmin):
         'user',
         'job',
         'description',
+        'visible',
     )
     list_filter = ('job',)
 

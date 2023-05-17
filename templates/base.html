@@ -12,6 +12,28 @@
 </head>
 <body>
 
+<nav>
+    <ul>
+        <li><a href="{% url 'interfacemanager:home' %}">Accueil</a></li>
+        <li><a href="#">Liste des développeurs.euses</a></li>
+        {% if current_user.is_authenticated %}
+            {% if current_user.profile.job == 'entrepreneur' %}
+                <li><a href="#">Mes développeurs.euses</a></li>
+            {% endif %}
+
+            {% if current_user.profile %}
+                <li><a href="{% url 'profilemanager:detail' username=current_user.username %}">Mon profil</a></li>
+           {% elif not current_user.profile and current_user.category == 'developpeur' %}
+                <li><a href="{% url 'profilemanager:create' username=current_user.username %}">Créer mon profile</a></li>
+            {% endif %}
+            <li><a href="{% url 'accounts:signout' %}">Se déconnecter</a></li>
+        {% else %}
+            <li><a href="{% url 'accounts:signin' %}">Se connecter</a></li>
+            <li><a href="{% url 'accounts:signup' %}">S'inscrire</a></li>
+        {% endif %}
+    </ul>
+</nav>
+
 {% block content %}
 {% endblock %}
 
