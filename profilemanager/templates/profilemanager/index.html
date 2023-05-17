@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Liste des développeurs disponibles</title>
+{% endblock %}
+
+{% block content %}
+<h1>Index des dev !</h1>
+{% for dev in devs %}
+    {% if dev.profile.visible %}
+        <section class="dev-card">
+            <a href="{% url 'profilemanager:detail' username=dev.username %}">
+                <img src="#" alt="Profile pic" />
+                <div class="dev-card__info">
+                    <h2>{{ dev.first_name }} {{ dev.last_name }}</h2>
+                    <p>En quelques nots : {{ dev.profile.description }}</p>
+                    <p>Stacks : {% for stack in dev.profile.stacks_set.all %}{{ stack.name }} {% endfor %}</p>
+                </div>
+            </a>
+        </section>
+    {% endif %}
+{% endfor %}
+{% endblock %}

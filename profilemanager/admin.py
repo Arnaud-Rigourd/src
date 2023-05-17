@@ -12,6 +12,9 @@ class ProfileAdmin(admin.ModelAdmin):
         'visible',
     )
     list_filter = ('job',)
+    search_fields = (
+        'user__email',
+    )
 
 @admin.register(Stacks)
 class StacksAdmin(admin.ModelAdmin):

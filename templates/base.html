@@ -15,7 +15,7 @@
 <nav>
     <ul>
         <li><a href="{% url 'interfacemanager:home' %}">Accueil</a></li>
-        <li><a href="#">Liste des développeurs.euses</a></li>
+        <li><a href="{% url 'profilemanager:index' %}">Liste des développeurs.euses</a></li>
         {% if current_user.is_authenticated %}
             {% if current_user.profile.job == 'entrepreneur' %}
                 <li><a href="#">Mes développeurs.euses</a></li>
