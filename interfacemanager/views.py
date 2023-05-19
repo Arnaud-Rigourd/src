@@ -12,7 +12,10 @@ class FAQHome(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['current_user'] = self.request.user
+        current_user = self.request.user
+        context['current_user'] = current_user
+        if current_user.is_authenticated and hasattr(current_user, 'profile'):
+            context['slug'] = current_user.profile.slug
         context['faq_clients'] = FAQClient.objects.all()
         context['faq_devs'] = FAQDev.objects.all()
         return context

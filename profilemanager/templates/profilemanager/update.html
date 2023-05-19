@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Mise à jour de vos informations</title>
+{% endblock %}
+
+{% block content %}
+{% if request.user.profile.slug == slug %}
+<h1>Tes informations</h1>
+    <form method="POST" action="{% url 'profilemanager:update' slug=slug %}">
+        {% csrf_token %}
+        {{ form.description.label_tag }}
+        {{ form.description }}
+        {{ form.job.label_tag }}
+        {{ form.job }}
+
+        <button type="submit">Valider</button>
+    </form>
+    
+    <p><a href="{% url 'profilemanager:detail' slug=slug %}">Annuler</a></p>
+{% else %}
+    <h1>Accès non autorisé</h1>
+{% endif %}
+{% endblock %}

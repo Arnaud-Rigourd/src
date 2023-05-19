@@ -14,6 +14,9 @@
 {% if profile %}
     <section class="profile__info">
         <h2>{{ user.first_name }}, sa vie et ses passions</h2>
+        {% if current_user.profile.slug == slug %}
+            <p><a href="{% url 'profilemanager:update' slug=slug %}">Modifier</a></p>
+        {% endif %}
         <p class="user-description">
             {{ profile.description }}
         </p>
@@ -21,18 +24,18 @@
 
     <section class="profile__stacks">
         <h2>Ses stacks</h2>
-        {% if current_user.username == username %}
-            <form method="POST" action="{% url 'profilemanager:stack-create' %}">
+        {% if current_user.profile.slug == slug %}
+            <form hx-post="{% url 'profilemanager:stack-create' %}" hx-target="#stacks-target" hx-swap="beforeend">
                 {% csrf_token %}
                 {{ stack_form.as_p }}
                 <button type="submit">Ajouter une stack</button>
             </form>
         {% endif %}
-        <ul>
+        <ul id="stacks-target">
             {% for stack in stacks %}
                 <li class="stack">
                     {{ stack }}
-                    {% if current_user.username == username %}
+                    {% if current_user.profile.slug == slug %}
                     <form method="POST" action="{% url 'profilemanager:stack-update' pk=stack.pk %}">
                         {% csrf_token %}
                         <input type="text" name="name" value="{{ stack.name }}">
@@ -54,7 +57,7 @@
     {% if projects %}
     <section class="profile__projects">
         <h2>Ses projets</h2>
-        {% if current_user.username == username %}
+        {% if current_user.profile.slug == slug %}
             <form method="POST" action="{% url 'profilemanager:project-create' %}">
                 {% csrf_token %}
                 {{ project_form.as_p }}
@@ -66,7 +69,7 @@
             <div class="project">
                 <h3>
                     {{ project.name }}
-                    {% if current_user.username == username %}
+                    {% if current_user.profile.slug == slug %}
                     <form method="POST" action="{% url 'profilemanager:project-delete' pk=project.pk  %}">
                         {% csrf_token %}
                         <input type="hidden" name="project_id" value="{{ project.pk }}">

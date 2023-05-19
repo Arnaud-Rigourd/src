@@ -5,8 +5,12 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="{% static 'css/index.css' %}">
     <meta name="viewport" content="width=device-width" />
-{#    <script src="{% static 'js/script.js' %}" defer></script>#}
+    <script src="{% static 'js/index.js' %}" defer></script>
+    <script src="{% static 'js/htmx.min.js' %}" defer></script>
 
+    {% block head %}
+    {% endblock %}
+    
     {% block title %}
     {% endblock %}
 </head>
@@ -21,8 +25,8 @@
                 <li><a href="#">Mes développeurs.euses</a></li>
             {% endif %}
 
-            {% if current_user.profile %}
-                <li><a href="{% url 'profilemanager:detail' username=current_user.username %}">Mon profil</a></li>
+            {% if current_user and current_user.profile %}
+                <li><a href="{% url 'profilemanager:detail' slug=slug %}">Mon profil</a></li>
            {% elif not current_user.profile and current_user.category == 'developpeur' %}
                 <li><a href="{% url 'profilemanager:create' username=current_user.username %}">Créer mon profile</a></li>
             {% endif %}

@@ -5,21 +5,23 @@
 {% endblock %}
 
 {% block content %}
+{% if current_user.username == username %}
 <h1>Pour que les entreprises puissent voir ton profil, une dernière étape est nécessaire !</h1>
 
-    <form method="POST" action="{% url 'profilemanager:create' username=current_user.username %}">
-        {% csrf_token %}
-        <h3>Laisse les entreprises en apprendre d'avantage sur toi en te présentant brievement</h3>
+<form method="POST" action="{% url 'profilemanager:create' username=current_user.username %}">
+    {% csrf_token %}
+    <h3>Laisse les entreprises en apprendre d'avantage sur toi en te présentant brievement</h3>
+    {{ form.as_p }}
+    <h3>Quelles sont tes stacks</h3>
+    {{ stacks.management_form }}
+    {% for form in stacks %}
         {{ form.as_p }}
-        <h3>Quelles sont tes stacks</h3>
-        {{ stacks.management_form }}
-        {% for form in stacks %}
-            {{ form.as_p }}
-        {% endfor %}
-        {{ projects.management_form }}
-        {% for form in projects %}
-            {{ form.as_p }}
-        {% endfor %}
-        <button type="submit">Valider</button>
-    </form>
+    {% endfor %}
+    {{ projects.management_form }}
+    {% for form in projects %}
+        {{ form.as_p }}
+    {% endfor %}
+    <button type="submit">Valider</button>
+</form>
+{% endif %}
 {% endblock %}

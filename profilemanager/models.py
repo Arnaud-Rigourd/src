@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.template.defaultfilters import slugify
 
 User = get_user_model()
 class Profile(models.Model):
@@ -16,10 +17,15 @@ class Profile(models.Model):
         choices=JOBS_CHOICES,
         blank=False)
     visible = models.BooleanField(default=False)
+    slug = models.SlugField(max_length=250, blank=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.user.username}'s profile"
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.user.username)
+        super().save(*args, **kwargs)
 
 
 class Stacks(models.Model):

@@ -72,7 +72,7 @@ class CustomUser(AbstractBaseUser):
     username = models.CharField(
         unique=True,
         blank=False,
-        max_length=250
+        max_length=250,
     )
     category = models.CharField(
         max_length=250,
@@ -98,6 +98,10 @@ class CustomUser(AbstractBaseUser):
 
     def has_module_perms(self, app_label):
         return True
+
+    def save(self, *args, **kwargs):
+        self.username = self.username.lower()
+        super().save(*args, **kwargs)
 
 
 class EmailConfirmation(models.Model):
