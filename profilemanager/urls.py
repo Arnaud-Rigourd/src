@@ -7,7 +7,7 @@ app_name = "profilemanager"
 
 urlpatterns = [
     path('all/', ProfileIndex.as_view(), name="index"),
-    path('profile/<str:username>', ProfileDetail.as_view(), name="detail"),
+    path('profile/<slug:slug>', ProfileDetail.as_view(), name="detail"),
     path('profile/create/<str:username>', ProfileCreate.as_view(), name="create"),
     path('profile/update/<slug:slug>', ProfileUpdate.as_view(), name="update"),
     path('profile/create-stack/', StackCreate.as_view(), name="stack-create"),

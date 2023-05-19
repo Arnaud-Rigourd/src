@@ -1,8 +1,8 @@
 from django.contrib.auth import get_user_model
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import HttpResponse
-from django.shortcuts import render
+from django.http import HttpResponse, HttpResponseForbidden
+from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy, reverse
 from django.utils.decorators import method_decorator
@@ -32,32 +32,35 @@ class ProfileDetail(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        username = self.kwargs['username']
-        try:
-            user = User.objects.get(username=username)
-        except User.DoesNotExist:
-            context['error_message'] = f"No user with username {username} exists."
-        else:
-            context['user'] = user
-            context['current_user'] = self.request.user
-            context['username'] = username
-            context['slug'] = user.profile.slug
-            context['profile'] = user.profile
-            context['stacks'] = user.profile.stacks_set.all()
-            context['projects'] = user.profile.projects_set.all()
-            context['stack_form'] = CustomStacksForm()
-            context['project_form'] = CustomProjectsForm()
+        slug = self.kwargs['slug']
+
+        profile = get_object_or_404(Profile, slug=slug)
+        user = profile.user
+
+        context['user'] = user
+        context['current_user'] = self.request.user
+        context['slug'] = user.profile.slug
+        context['profile'] = user.profile
+        context['stacks'] = user.profile.stacks_set.all()
+        context['projects'] = user.profile.projects_set.all()
+        context['stack_form'] = CustomStacksForm()
+        context['project_form'] = CustomProjectsForm()
+
         return context
 
 
-@method_decorator(login_required, name='dispatch')
 class ProfileUpdate(UpdateView):
     template_name = "profilemanager/update.html"
     model = Profile
     form_class = CustomProfileForm
 
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.profile.slug != self.kwargs['slug']:
+            return HttpResponseForbidden()
+        return super().dispatch(request, *args, **kwargs)
+
     def get_success_url(self):
-        return reverse('profilemanager:detail', kwargs={'username': self.request.user.username})
+        return reverse('profilemanager:detail', kwargs={'slug': self.request.user.profile.slug})
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -80,7 +83,7 @@ class ProfileCreate(CreateView):
     form_class = CustomProfileForm
 
     def get_success_url(self):
-        return reverse('profilemanager:detail', kwargs={'username': self.request.user.username})
+        return reverse('profilemanager:detail', kwargs={'slug': self.request.user.profile.slug})
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -137,7 +140,7 @@ class StackUpdate(UpdateView):
     fields = ['name']
 
     def get_success_url(self):
-        return reverse('profilemanager:detail', kwargs={'username': self.request.user.username})
+        return reverse('profilemanager:detail', kwargs={'slug': self.request.user.profile.slug})
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -154,7 +157,7 @@ class StackDelete(DeleteView):
     model = Stacks
 
     def get_success_url(self):
-        return reverse('profilemanager:detail', kwargs={'username': self.request.user.username})
+        return reverse('profilemanager:detail', kwargs={'slug': self.request.user.profile.slug})
 
     def get(self, request, *args, **kwargs):
         stack_id = self.kwargs['pk']
@@ -174,7 +177,7 @@ class ProjectCreate(CreateView):
     fields = ['name', 'description', 'used_stacks', 'link']
 
     def get_success_url(self):
-        return reverse('profilemanager:detail', kwargs={'username': self.request.user.username})
+        return reverse('profilemanager:detail', kwargs={'slug': self.request.user.profile.slug})
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -191,7 +194,7 @@ class ProjectDelete(DeleteView):
     model = Projects
 
     def get_success_url(self):
-        return reverse('profilemanager:detail', kwargs={'username': self.request.user.username})
+        return reverse('profilemanager:detail', kwargs={'slug': self.request.user.profile.slug})
 
     def get(self, request, *args, **kwargs):
         project_id = self.kwargs['pk']
