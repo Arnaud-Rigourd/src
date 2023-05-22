@@ -111,6 +111,7 @@ class ProfileCreate(CreateView):
             projects.save()
         return super().form_valid(form)
 
+
 # Stacks management
 @method_decorator(login_required, name='dispatch')
 class StackCreate(CreateView):
@@ -128,8 +129,9 @@ class StackCreate(CreateView):
         except ObjectDoesNotExist:
             return self.form_invalid(form)
         self.object.save()
+
         if self.request.headers.get('HX-Request'):
-            html = render_to_string('profilemanager/stacks_partial.html', {'stack': self.object})
+            html = render_to_string('profilemanager/partials/stacks_partial.html', {'stack': self.object})
             return HttpResponse(html)
         return super().form_valid(form)
 
@@ -138,6 +140,11 @@ class StackUpdate(UpdateView):
     template_name = "profilemanager/detail.html"
     model = Stacks
     fields = ['name']
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.profile.slug != self.kwargs['slug']:
+            return HttpResponseForbidden()
+        return super().dispatch(request, *args, **kwargs)
 
     def get_success_url(self):
         return reverse('profilemanager:detail', kwargs={'slug': self.request.user.profile.slug})
@@ -149,6 +156,10 @@ class StackUpdate(UpdateView):
         except ObjectDoesNotExist:
             return self.form_invalid(form)
         self.object.save()
+
+        if self.request.headers.get('HX-Request'):
+            html = render_to_string('profilemanager/partials/stacks_partial.html', {'stack': self.object})
+            return HttpResponse(html)
         return super().form_valid(form)
 
 
@@ -156,21 +167,26 @@ class StackDelete(DeleteView):
     template_name = "profilemanager/detail.html"
     model = Stacks
 
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.profile.slug != self.kwargs['slug']:
+            return HttpResponseForbidden()
+        return super().dispatch(request, *args, **kwargs)
+
     def get_success_url(self):
         return reverse('profilemanager:detail', kwargs={'slug': self.request.user.profile.slug})
 
-    def get(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         stack_id = self.kwargs['pk']
-        try:
-            stack = Stacks.objects.get(pk=stack_id)
-        except Stacks.DoesNotExist:
-            return HttpResponse("Stack does not exist.")
-        else:
-            stack.delete()
-            return super().get(request, *args, **kwargs)
+        stack = get_object_or_404(Stacks, pk=stack_id)
+        stack.delete()
+
+        if self.request.headers.get('HX-Request'):
+            return HttpResponse('')
+        return super().post(request, *args, **kwargs)
 
 
 # Projects management
+@method_decorator(login_required, name='dispatch')
 class ProjectCreate(CreateView):
     template_name = "profilemanager/detail.html"
     model = Projects
@@ -189,9 +205,43 @@ class ProjectCreate(CreateView):
         return super().form_valid(form)
 
 
+class ProjectUpdate(UpdateView):
+    template_name = "profilemanager/projects/edit.html"
+    model = Projects
+    fields = ['name', 'description', 'used_stacks', 'link']
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.profile.slug != self.kwargs['slug']:
+            return HttpResponseForbidden()
+        return super().dispatch(request, *args, **kwargs)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        current_user = self.request.user
+        context['current_user'] = current_user
+        context['slug'] = current_user.profile.slug
+        context['pk'] = self.kwargs['pk']
+        return context
+    def get_success_url(self):
+        return reverse('profilemanager:detail', kwargs={'slug': self.request.user.profile.slug})
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        try:
+            self.object.profile = self.request.user.profile
+        except ObjectDoesNotExist:
+            return self.form_invalid(form)
+        self.object.save()
+        return super().form_valid(form)
+
+
 class ProjectDelete(DeleteView):
     template_name = "profilemanager/detail.html"
     model = Projects
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.profile.slug != self.kwargs['slug']:
+            return HttpResponseForbidden()
+        return super().dispatch(request, *args, **kwargs)
 
     def get_success_url(self):
         return reverse('profilemanager:detail', kwargs={'slug': self.request.user.profile.slug})

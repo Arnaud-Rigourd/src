@@ -1,3 +1,5 @@
+import re
+
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.db import models
 from django.db.models.signals import post_save
@@ -74,6 +76,10 @@ class CustomUser(AbstractBaseUser):
         blank=False,
         max_length=250,
     )
+    phone_number = models.CharField(
+        max_length=10,
+        blank=True,
+    )
     category = models.CharField(
         max_length=250,
         blank=False,
@@ -83,6 +89,11 @@ class CustomUser(AbstractBaseUser):
     company_name = models.CharField(
         max_length=250,
         blank=True,
+    )
+    profile_image = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True
     )
 
 
@@ -101,6 +112,7 @@ class CustomUser(AbstractBaseUser):
 
     def save(self, *args, **kwargs):
         self.username = self.username.lower()
+        self.phone_number = re.sub('[^0-9]', '', self.phone_number)
         super().save(*args, **kwargs)
 
 

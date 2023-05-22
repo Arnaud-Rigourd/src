@@ -22,6 +22,12 @@ class CustomSignupForm(UserCreationForm):
         }
     )
 
+    phone_number = forms.CharField(
+        error_messages={
+            'invalid': 'Please enter a valid phone number',
+        }
+    )
+
     class Meta:
         model = CustomUser
         fields = (
@@ -30,6 +36,7 @@ class CustomSignupForm(UserCreationForm):
             'last_name',
             'email',
             'category',
+            'phone_number',
             'company_name',
         )
 
