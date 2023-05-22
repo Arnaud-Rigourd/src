@@ -10,11 +10,13 @@
 
 {% block content %}
     <h1>Hello on {{ user.first_name }} {{ user.last_name }} profile !</h1>
-<section class="profile__info-user">
+<header class="profile__info-user">
     <h3>Développeur {{ user.profile.job }}</h3>
-<p>email : {{ user.email }}</p>
-{#<p>Tel : {{  }}</p>#}
-</section>
+    <p>email : {{ user.email }}</p>
+    {% if user.phone_number %}
+        <p>Tel : {{ user.phone_number }}</p>
+    {% endif %}
+</header>
 
 {% if profile %}
     <section class="profile__info">
@@ -38,16 +40,16 @@
         {% endif %}
         <ul id="stacks-target">
             {% for stack in stacks %}
-                <li class="stack">
+                <li id="stack{{ stack.pk }}" class="stack">
                     {{ stack }}
                     {% if current_user.profile.slug == slug %}
-                    <form method="POST" action="{% url 'profilemanager:stack-update' pk=stack.pk %}">
+                    <form hx-post="{% url 'profilemanager:stack-update' pk=stack.pk slug=slug %}" hx-target="#stack{{ stack.pk }}">
                         {% csrf_token %}
                         <input type="text" name="name" value="{{ stack.name }}">
                         <input type="hidden" name="stack_id" value="{{ stack.pk }}">
                         <button type="submit">Modifier</button>
                     </form>
-                    <form method="POST" action="{% url 'profilemanager:stack-delete' pk=stack.pk %}">
+                    <form hx-post="{% url 'profilemanager:stack-delete' pk=stack.pk slug=slug %}" hx-target="#stack{{ stack.pk }}">
                         {% csrf_token %}
                         <input type="hidden" name="stack_id" value="{{ stack.pk }}">
                         <button type="submit">Supprimer</button>
@@ -75,7 +77,8 @@
                 <h3>
                     {{ project.name }}
                     {% if current_user.profile.slug == slug %}
-                    <form method="POST" action="{% url 'profilemanager:project-delete' pk=project.pk  %}">
+                    <p><a href="{% url 'profilemanager:project-update' pk=project.pk slug=slug %}">Modifier</a></p>
+                    <form method="POST" action="{% url 'profilemanager:project-delete' pk=project.pk slug=slug  %}">
                         {% csrf_token %}
                         <input type="hidden" name="project_id" value="{{ project.pk }}">
                         <button type="submit">Supprimer</button>

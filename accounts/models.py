@@ -90,6 +90,11 @@ class CustomUser(AbstractBaseUser):
         max_length=250,
         blank=True,
     )
+    profile_image = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True
+    )
 
 
     USERNAME_FIELD = 'email'  # field that will be used to distinguish users. can be username, email, first_name etc...
