@@ -9,8 +9,11 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Hello on {{ user.first_name }} {{ user.last_name }} profile !</h1>
+
+<h1>Hello on {{ user.first_name }} {{ user.last_name }} profile !</h1>
 <header class="profile__info-user">
+    <p><img src="{{ user.profile_image }}" alt="Photo de {{ user.first_name }} {{ user.last_name }}" /></p>
+    <p><a href="{% url 'accounts:update_profile_picture' pk=current_user.pk %}">Modifier photo de profil</a></p>
     <h3>Développeur {{ user.profile.job }}</h3>
     <p>email : {{ user.email }}</p>
     {% if user.phone_number %}

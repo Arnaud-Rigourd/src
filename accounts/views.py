@@ -1,5 +1,6 @@
 import os
 
+import cloudinary
 from django.contrib import messages
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm
@@ -9,13 +10,14 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from dotenv import load_dotenv
 
-from accounts.forms import CustomSignupForm
+from accounts.forms import CustomSignupForm, ImageUploadForm
 from accounts.models import EmailConfirmation, CustomUser
 
 
 def signup(request):
     context = {}
     if request.method == "POST":
+        print('form submitted')
         form = CustomSignupForm(request.POST)
         if form.is_valid():
             context = _send_confirmation_email(request, context, form)
@@ -75,13 +77,33 @@ def signout(request):
     return redirect('interfacemanager:home')
 
 
-# def _handle_registration_confirmation(request, form, context):
+def update_profile_picture(request, pk):
+    context = {}
+    context['image_form'] = ImageUploadForm()
+    context['pk'] = pk
+    context['current_user'] = request.user
+    if request.method == 'POST':
+        form = ImageUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            user = request.user
+            upload_result = cloudinary.uploader.upload(request.FILES['image'])
+            user.profile_image = upload_result['url']
+            user.save()
+            return redirect('profilemanager:detail', slug=user.profile.slug)
+        else:
+            messages.error(request, "Invalid image.")
+
+    return render(request, 'accounts/update_profile_picture.html', context=context)
 
 
 
 def _send_confirmation_email(request, context, form):
     load_dotenv()
     user = form.save()
+    print('send email')
+    user.profile_image = 'https://res.cloudinary.com/dal73z4cj/image/upload/v1684772629/dinosaure_j44fyo.png'
+    print('user profile image')
+    user.save()
     email_confirmation = EmailConfirmation(user=user)
     email_confirmation.generate_token()
     email_confirmation.save()

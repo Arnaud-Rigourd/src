@@ -53,3 +53,11 @@ class CustomLoginForm(UserCreationForm):
         fields = (
             'email',
         )
+
+class ImageUploadForm(forms.Form):
+    image = forms.ImageField(
+        error_messages={
+            'invalid': 'Please enter a valid image',
+        }
+    )
+

@@ -13,8 +13,12 @@ import os
 from pathlib import Path
 
 import dj_database_url
+import cloudinary
+from cloudinary.uploader import upload
+from cloudinary.utils import cloudinary_url
 from decouple import config
 from dotenv import load_dotenv
+
 
 load_dotenv()
 
@@ -136,5 +140,14 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = os.environ.get('HOST_EMAIL', 'default_value')
-EMAIL_HOST_PASSWORD = os.environ.get('HOST_PW', 'default_value')
+EMAIL_HOST_USER = config('HOST_EMAIL')
+EMAIL_HOST_PASSWORD = config('HOST_PW')
+
+
+# Cloudinary
+cloudinary.config(
+  cloud_name = config('CLOUDINARY_CLOUD_NAME'),
+  api_key = config('CLOUDINARY_API_KEY'),
+  api_secret = config('CLOUDINARY_API_SECRET'),
+  secure = True,
+)
