@@ -9,7 +9,12 @@
 {% endblock %}
 
 {% block content %}
-<h1>Hello on {{ user.first_name }} {{ user.last_name }} profile !</h1>
+    <h1>Hello on {{ user.first_name }} {{ user.last_name }} profile !</h1>
+<section class="profile__info-user">
+    <h3>Développeur {{ user.profile.job }}</h3>
+<p>email : {{ user.email }}</p>
+{#<p>Tel : {{  }}</p>#}
+</section>
 
 {% if profile %}
     <section class="profile__info">
