@@ -25,7 +25,6 @@ class CustomSignupForm(UserCreationForm):
     phone_number = forms.CharField(
         error_messages={
             'invalid': 'Please enter a valid phone number',
-            'unique': 'This phone number is already taken'
         }
     )
 
