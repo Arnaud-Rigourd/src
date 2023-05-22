@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Photo de profil</title>
+{% endblock %}
+
+{% block content %}
+
+    <form method="POST" action="{% url 'accounts:update_profile_picture' pk=pk %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table>
+        {% for field in image_form %}
+        <tr>
+            <td>{{ field.label_tag }}</td>
+            <td>{{ field }}</td>
+            <td>{{ field.errors }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <button type="submit">Valider</button>
+    </form>
+
+{% endblock %}

@@ -14,17 +14,15 @@
 <form method="POST" action="{% url 'accounts:signup' %}">
     {% csrf_token %}
     <table>
-        {{ form.as_table }}
-    </table>
-
-    <div id="error-messages">
-        {% for message in errors.values %}
-        <h3 style="color: red;">
-            {{ message }}
-        </h3>
+        {% for field in form %}
+        <tr>
+            <td>{{ field.label_tag }}</td>
+            <td>{{ field }}</td>
+            <td>{{ field.errors }}</td>
+        </tr>
         {% endfor %}
-    </div>
-    <button type="submit">Submit</button>
+    </table>
+    <button type="submit">Valider</button>
 </form>
 
 <p><a href="{% url 'interfacemanager:home' %}">Back home</a></p>

@@ -1,7 +1,7 @@
 from django.urls import path, include, re_path, reverse_lazy
 from django.contrib.auth import views as auth_views
 
-from accounts.views import signup, signin, signout, confirm_email, resend_email
+from accounts.views import signup, signin, signout, confirm_email, resend_email, update_profile_picture
 import django.contrib.auth.urls
 
 app_name = 'accounts'
@@ -11,6 +11,7 @@ urlpatterns = [
     path('confirm_email/<str:token>/', confirm_email, name='confirm_email'),
     path('signin/', signin, name='signin'),
     path('signout/', signout, name='signout'),
+    path('user/update/picture/<int:pk>/', update_profile_picture, name='update_profile_picture'),
     re_path(r'^password_reset/$', auth_views.PasswordResetView.as_view(
         template_name='registration/custom_password_reset_form.html',
         success_url=reverse_lazy('accounts:password_reset_done'),
