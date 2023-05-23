@@ -96,7 +96,6 @@ def update_profile_picture(request, pk):
     return render(request, 'accounts/update_profile_picture.html', context=context)
 
 
-
 def _send_confirmation_email(request, context, form):
     load_dotenv()
     user = form.save()

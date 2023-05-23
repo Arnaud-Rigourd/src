@@ -13,7 +13,9 @@
 <h1>Hello on {{ user.first_name }} {{ user.last_name }} profile !</h1>
 <header class="profile__info-user">
     <p><img src="{{ user.profile_image }}" alt="Photo de {{ user.first_name }} {{ user.last_name }}" /></p>
-    <p><a href="{% url 'accounts:update_profile_picture' pk=current_user.pk %}">Modifier photo de profil</a></p>
+    {% if current_user.slug == slug %}
+        <p><a href="{% url 'accounts:update_profile_picture' pk=current_user.pk %}">Modifier photo de profil</a></p>
+    {% endif %}
     <h3>Développeur {{ user.profile.job }}</h3>
     <p>email : {{ user.email }}</p>
     {% if user.phone_number %}
@@ -24,7 +26,7 @@
 {% if profile %}
     <section class="profile__info">
         <h2>{{ user.first_name }}, sa vie et ses passions</h2>
-        {% if current_user.profile.slug == slug %}
+        {% if current_user.slug == slug %}
             <p><a href="{% url 'profilemanager:update' slug=slug %}">Modifier</a></p>
         {% endif %}
         <p class="user-description">
@@ -34,7 +36,7 @@
 
     <section class="profile__stacks">
         <h2>Ses stacks</h2>
-        {% if current_user.profile.slug == slug %}
+        {% if current_user.slug == slug %}
             <form hx-post="{% url 'profilemanager:stack-create' %}" hx-target="#stacks-target" hx-swap="beforeend">
                 {% csrf_token %}
                 {{ stack_form.as_p }}
@@ -45,7 +47,7 @@
             {% for stack in stacks %}
                 <li id="stack{{ stack.pk }}" class="stack">
                     {{ stack }}
-                    {% if current_user.profile.slug == slug %}
+                    {% if current_user.slug == slug %}
                     <form hx-post="{% url 'profilemanager:stack-update' pk=stack.pk slug=slug %}" hx-target="#stack{{ stack.pk }}">
                         {% csrf_token %}
                         <input type="text" name="name" value="{{ stack.name }}">
@@ -64,10 +66,9 @@
     </section>
     {% endif %}
     
-    {% if projects %}
     <section class="profile__projects">
         <h2>Ses projets</h2>
-        {% if current_user.profile.slug == slug %}
+        {% if current_user.slug == slug %}
             <form method="POST" action="{% url 'profilemanager:project-create' %}">
                 {% csrf_token %}
                 {{ project_form.as_p }}
@@ -79,7 +80,7 @@
             <div class="project">
                 <h3>
                     {{ project.name }}
-                    {% if current_user.profile.slug == slug %}
+                    {% if current_user.slug == slug %}
                     <p><a href="{% url 'profilemanager:project-update' pk=project.pk slug=slug %}">Modifier</a></p>
                     <form method="POST" action="{% url 'profilemanager:project-delete' pk=project.pk slug=slug  %}">
                         {% csrf_token %}
@@ -94,5 +95,4 @@
             </div>
         {% endfor %}
     </section>
-{% endif %}
 {% endblock %}

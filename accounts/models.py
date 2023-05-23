@@ -4,6 +4,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.db import models
 from django.db.models.signals import post_save
 from django.utils.crypto import get_random_string
+from django.utils.text import slugify
 
 
 class MyUserManager(BaseUserManager):
@@ -95,6 +96,10 @@ class CustomUser(AbstractBaseUser):
         blank=True,
         null=True
     )
+    slug = models.SlugField(
+        max_length=250,
+        blank=True,
+    )
 
 
     USERNAME_FIELD = 'email'  # field that will be used to distinguish users. can be username, email, first_name etc...
@@ -112,6 +117,7 @@ class CustomUser(AbstractBaseUser):
 
     def save(self, *args, **kwargs):
         self.username = self.username.lower()
+        self.slug = slugify(self.username)
         self.phone_number = re.sub('[^0-9]', '', self.phone_number)
         super().save(*args, **kwargs)
 

@@ -33,13 +33,11 @@ class ProfileDetail(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         slug = self.kwargs['slug']
-
-        profile = get_object_or_404(Profile, slug=slug)
-        user = profile.user
+        user = get_object_or_404(User, slug=slug)
 
         context['user'] = user
         context['current_user'] = self.request.user
-        context['slug'] = user.profile.slug
+        context['slug'] = user.slug
         context['profile'] = user.profile
         context['stacks'] = user.profile.stacks_set.all()
         context['projects'] = user.profile.projects_set.all()
@@ -48,19 +46,19 @@ class ProfileDetail(TemplateView):
 
         return context
 
-
+# dispatch method overloaded to check if the user is the owner of the profile
 class ProfileUpdate(UpdateView):
     template_name = "profilemanager/update.html"
     model = Profile
     form_class = CustomProfileForm
 
     def dispatch(self, request, *args, **kwargs):
-        if request.user.profile.slug != self.kwargs['slug']:
+        if request.user.slug != self.kwargs['slug']:
             return HttpResponseForbidden()
         return super().dispatch(request, *args, **kwargs)
 
     def get_success_url(self):
-        return reverse('profilemanager:detail', kwargs={'slug': self.request.user.profile.slug})
+        return reverse('profilemanager:detail', kwargs={'slug': self.request.user.slug})
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -83,7 +81,7 @@ class ProfileCreate(CreateView):
     form_class = CustomProfileForm
 
     def get_success_url(self):
-        return reverse('profilemanager:detail', kwargs={'slug': self.request.user.profile.slug})
+        return reverse('profilemanager:detail', kwargs={'slug': self.request.user.slug})
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -135,19 +133,19 @@ class StackCreate(CreateView):
             return HttpResponse(html)
         return super().form_valid(form)
 
-
+# dispatch method overloaded to check if the user is the owner of the profile
 class StackUpdate(UpdateView):
     template_name = "profilemanager/detail.html"
     model = Stacks
     fields = ['name']
 
     def dispatch(self, request, *args, **kwargs):
-        if request.user.profile.slug != self.kwargs['slug']:
+        if request.user.slug != self.kwargs['slug']:
             return HttpResponseForbidden()
         return super().dispatch(request, *args, **kwargs)
 
     def get_success_url(self):
-        return reverse('profilemanager:detail', kwargs={'slug': self.request.user.profile.slug})
+        return reverse('profilemanager:detail', kwargs={'slug': self.request.user.slug})
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -162,18 +160,18 @@ class StackUpdate(UpdateView):
             return HttpResponse(html)
         return super().form_valid(form)
 
-
+# dispatch method overloaded to check if the user is the owner of the profile
 class StackDelete(DeleteView):
     template_name = "profilemanager/detail.html"
     model = Stacks
 
     def dispatch(self, request, *args, **kwargs):
-        if request.user.profile.slug != self.kwargs['slug']:
+        if request.user.slug != self.kwargs['slug']:
             return HttpResponseForbidden()
         return super().dispatch(request, *args, **kwargs)
 
     def get_success_url(self):
-        return reverse('profilemanager:detail', kwargs={'slug': self.request.user.profile.slug})
+        return reverse('profilemanager:detail', kwargs={'slug': self.request.user.slug})
 
     def post(self, request, *args, **kwargs):
         stack_id = self.kwargs['pk']
@@ -193,7 +191,7 @@ class ProjectCreate(CreateView):
     fields = ['name', 'description', 'used_stacks', 'link']
 
     def get_success_url(self):
-        return reverse('profilemanager:detail', kwargs={'slug': self.request.user.profile.slug})
+        return reverse('profilemanager:detail', kwargs={'slug': self.request.user.slug})
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -204,25 +202,25 @@ class ProjectCreate(CreateView):
         self.object.save()
         return super().form_valid(form)
 
-
+# dispatch method overloaded to check if the user is the owner of the profile
 class ProjectUpdate(UpdateView):
     template_name = "profilemanager/projects/edit.html"
     model = Projects
     fields = ['name', 'description', 'used_stacks', 'link']
 
     def dispatch(self, request, *args, **kwargs):
-        if request.user.profile.slug != self.kwargs['slug']:
+        if request.user.slug != self.kwargs['slug']:
             return HttpResponseForbidden()
         return super().dispatch(request, *args, **kwargs)
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         current_user = self.request.user
         context['current_user'] = current_user
-        context['slug'] = current_user.profile.slug
+        context['slug'] = current_user.slug
         context['pk'] = self.kwargs['pk']
         return context
     def get_success_url(self):
-        return reverse('profilemanager:detail', kwargs={'slug': self.request.user.profile.slug})
+        return reverse('profilemanager:detail', kwargs={'slug': self.request.user.slug})
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -233,18 +231,18 @@ class ProjectUpdate(UpdateView):
         self.object.save()
         return super().form_valid(form)
 
-
+# dispatch method overloaded to check if the user is the owner of the profile
 class ProjectDelete(DeleteView):
     template_name = "profilemanager/detail.html"
     model = Projects
 
     def dispatch(self, request, *args, **kwargs):
-        if request.user.profile.slug != self.kwargs['slug']:
+        if request.user.slug != self.kwargs['slug']:
             return HttpResponseForbidden()
         return super().dispatch(request, *args, **kwargs)
 
     def get_success_url(self):
-        return reverse('profilemanager:detail', kwargs={'slug': self.request.user.profile.slug})
+        return reverse('profilemanager:detail', kwargs={'slug': self.request.user.slug})
 
     def get(self, request, *args, **kwargs):
         project_id = self.kwargs['pk']

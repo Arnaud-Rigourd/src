@@ -10,7 +10,7 @@
     <form method="POST" action="{% url 'profilemanager:project-update' pk=pk slug=slug %}">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Modifier</button>
+        <button type="submit">Enregistrer les modifications</button>
     </form>
-    <p><a href="{% url 'profilemanager:detail' slug=current_user.profile.slug %}">Annuler</a></p>
+    <p><a href="{% url 'profilemanager:detail' slug=current_user.slug %}">Annuler</a></p>
 {% endblock %}

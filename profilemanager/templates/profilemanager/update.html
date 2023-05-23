@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-{% if request.user.profile.slug == slug %}
+{% if request.user.slug == slug %}
 <h1>Tes informations</h1>
     <form method="POST" action="{% url 'profilemanager:update' slug=slug %}">
         {% csrf_token %}

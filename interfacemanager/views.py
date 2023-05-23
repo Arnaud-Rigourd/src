@@ -15,7 +15,7 @@ class FAQHome(TemplateView):
         current_user = self.request.user
         context['current_user'] = current_user
         if current_user.is_authenticated and hasattr(current_user, 'profile'):
-            context['slug'] = current_user.profile.slug
+            context['slug'] = current_user.slug
         context['faq_clients'] = FAQClient.objects.all()
         context['faq_devs'] = FAQDev.objects.all()
         return context
