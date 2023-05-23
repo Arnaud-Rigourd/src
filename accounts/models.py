@@ -4,6 +4,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.db import models
 from django.db.models.signals import post_save
 from django.utils.crypto import get_random_string
+from django.utils.text import slugify
 
 
 class MyUserManager(BaseUserManager):
@@ -80,6 +81,7 @@ class CustomUser(AbstractBaseUser):
         max_length=10,
         blank=True,
     )
+    phone_display = models.BooleanField(default=False)
     category = models.CharField(
         max_length=250,
         blank=False,
@@ -94,6 +96,10 @@ class CustomUser(AbstractBaseUser):
         max_length=255,
         blank=True,
         null=True
+    )
+    slug = models.SlugField(
+        max_length=250,
+        blank=True,
     )
 
 
@@ -112,7 +118,7 @@ class CustomUser(AbstractBaseUser):
 
     def save(self, *args, **kwargs):
         self.username = self.username.lower()
-        self.phone_number = re.sub('[^0-9]', '', self.phone_number)
+        self.slug = slugify(self.username)
         super().save(*args, **kwargs)
 
 

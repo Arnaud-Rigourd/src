@@ -3,21 +3,22 @@ import os
 import cloudinary
 from django.contrib import messages
 from django.contrib.auth import login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.core.mail import send_mail
-from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
-from django.shortcuts import render, redirect
-from django.urls import reverse_lazy, reverse
+from django.http import HttpResponse, HttpResponseForbidden
+from django.shortcuts import render, redirect, get_object_or_404
+from django.template.loader import render_to_string
+from django.urls import reverse
 from dotenv import load_dotenv
 
-from accounts.forms import CustomSignupForm, ImageUploadForm
+from accounts.forms import CustomSignupForm, ImageUploadForm, CustomUpdateForm
 from accounts.models import EmailConfirmation, CustomUser
 
 
 def signup(request):
     context = {}
     if request.method == "POST":
-        print('form submitted')
         form = CustomSignupForm(request.POST)
         if form.is_valid():
             context = _send_confirmation_email(request, context, form)
@@ -77,32 +78,59 @@ def signout(request):
     return redirect('interfacemanager:home')
 
 
-def update_profile_picture(request, pk):
+def update_profile_picture(request, slug):
     context = {}
     context['image_form'] = ImageUploadForm()
-    context['pk'] = pk
+    context['slug'] = slug
+    print(slug)
     context['current_user'] = request.user
     if request.method == 'POST':
         form = ImageUploadForm(request.POST, request.FILES)
+        user = request.user
         if form.is_valid():
-            user = request.user
             upload_result = cloudinary.uploader.upload(request.FILES['image'])
             user.profile_image = upload_result['url']
             user.save()
-            return redirect('profilemanager:detail', slug=user.profile.slug)
+            return redirect('profilemanager:detail', slug=user.slug)
         else:
             messages.error(request, "Invalid image.")
 
     return render(request, 'accounts/update_profile_picture.html', context=context)
 
 
+@login_required
+def update_profile_info(request, slug):
+    if request.user.slug != slug:
+        return HttpResponseForbidden("Vous n'avez pas l'autorisation d'effectuer cette action.")
+
+    user = get_object_or_404(CustomUser, slug=slug)
+    if request.method == 'POST':
+        form = CustomUpdateForm(request.POST, instance=user)
+        print(form.errors)
+        if form.is_valid():
+            user = form.save()
+            if request.headers.get('HX-Request'):
+                html = render_to_string('accounts/partials/phone_number_partial.html', {'phone_number': user.phone_number})
+                return HttpResponse(html)
+            return redirect('profilemanager:detail', slug=user.slug)
+        else:
+            if request.headers.get('HX-Request'):
+                errors_html = render_to_string('accounts/partials/errors.html', {'user': user, 'profile_form': form})
+                return HttpResponse(errors_html)
+            print('form invalid')
+            return redirect('profilemanager:detail', slug=user.slug)
+
+    return redirect('profilemanager:detail', slug=user.slug)
+
+
+def update_phone_display(request, pk):
+    pass
+
 
 def _send_confirmation_email(request, context, form):
     load_dotenv()
     user = form.save()
-    print('send email')
     user.profile_image = 'https://res.cloudinary.com/dal73z4cj/image/upload/v1684772629/dinosaure_j44fyo.png'
-    print('user profile image')
     user.save()
     email_confirmation = EmailConfirmation(user=user)
     email_confirmation.generate_token()
