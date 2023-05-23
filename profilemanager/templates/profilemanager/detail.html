@@ -14,12 +14,42 @@
 <header class="profile__info-user">
     <p><img src="{{ user.profile_image }}" alt="Photo de {{ user.first_name }} {{ user.last_name }}" /></p>
     {% if current_user.slug == slug %}
-        <p><a href="{% url 'accounts:update_profile_picture' pk=current_user.pk %}">Modifier photo de profil</a></p>
+        <p><a href="{% url 'accounts:update_profile_picture' slug=current_user.slug %}">Modifier photo de profil</a></p>
     {% endif %}
     <h3>Développeur {{ user.profile.job }}</h3>
     <p>email : {{ user.email }}</p>
     {% if user.phone_number %}
-        <p>Tel : {{ user.phone_number }}</p>
+    <div id="phone_number">
+        {% if user.phone_display %}
+            <div class="phone_number_management">
+                <p>Tel : {{ user.phone_number }}</p>
+            {% if current_user.slug == slug %}
+                <form method="POST" action="{% url 'accounts:update_profile_info' slug=current_user.slug %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="phone_number" value="{{ user.phone_number }}" />
+                    <input type="hidden" name="phone_display" id="id_phone_display" value="{{ not_phone_display }}" />
+                    <button type="submit">Masquer le numéro</button>
+                </form>
+
+            </div>
+            <form hx-post="{% url 'accounts:update_profile_info' slug=current_user.slug %}" hx-target="#phone_number">
+                {% csrf_token %}
+                <input type="text" name="phone_number" id="id_phone_number" value="{{ user.phone_number }}" />
+                {% if profile_form.phone_number.errors %}
+                    <p>{{ profile_form.phone_number.errors }}</p>
+                {% endif %}
+                <button type="submit">Enregistrer</button>
+            </form>
+            {% endif %}
+        {% elif current_user.slug == slug %}
+            <form method="POST" action="{% url 'accounts:update_profile_info' slug=current_user.slug %}">
+                {% csrf_token %}
+                <input type="hidden" name="phone_number" value="{{ user.phone_number }}" />
+                <input type="hidden" name="phone_display" id="id_phone_display" value="{{ not_phone_display }}" />
+                <button type="submit">Afficher le numéro</button>
+            </form>
+        {% endif %}
+    </div>
     {% endif %}
 </header>
 

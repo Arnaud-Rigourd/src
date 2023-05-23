@@ -6,7 +6,7 @@
 
 {% block content %}
 
-    <form method="POST" action="{% url 'accounts:update_profile_picture' pk=pk %}" enctype="multipart/form-data">
+    <form method="POST" action="{% url 'accounts:update_profile_picture' slug=slug %}" enctype="multipart/form-data">
         {% csrf_token %}
         <table>
         {% for field in image_form %}

@@ -81,6 +81,7 @@ class CustomUser(AbstractBaseUser):
         max_length=10,
         blank=True,
     )
+    phone_display = models.BooleanField(default=False)
     category = models.CharField(
         max_length=250,
         blank=False,
@@ -118,7 +119,6 @@ class CustomUser(AbstractBaseUser):
     def save(self, *args, **kwargs):
         self.username = self.username.lower()
         self.slug = slugify(self.username)
-        self.phone_number = re.sub('[^0-9]', '', self.phone_number)
         super().save(*args, **kwargs)
 
 

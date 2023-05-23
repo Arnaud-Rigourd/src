@@ -1,0 +1,4 @@
+<p>Tel : {{ user.phone_number }}</p>
+{% if profile_form.phone_number.errors %}
+    <p>{{ profile_form.phone_number.errors }}</p>
+{% endif %}

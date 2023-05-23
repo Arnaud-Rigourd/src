@@ -8,6 +8,7 @@ from django.urls import reverse_lazy, reverse
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView, CreateView, DeleteView, UpdateView
 
+from accounts.forms import CustomUpdateForm
 from profilemanager.forms import CustomProfileForm, CustomStacksFormSet, CustomProjectsFormSet, CustomStacksForm, \
     CustomProjectsForm
 from profilemanager.models import Profile, Stacks, Projects
@@ -43,6 +44,9 @@ class ProfileDetail(TemplateView):
         context['projects'] = user.profile.projects_set.all()
         context['stack_form'] = CustomStacksForm()
         context['project_form'] = CustomProjectsForm()
+        context['profile_form'] = CustomUpdateForm()
+        context['user_form'] = CustomUpdateForm()
+        context['not_phone_display'] = not user.phone_display
 
         return context
 
