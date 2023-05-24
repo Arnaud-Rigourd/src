@@ -14,6 +14,7 @@ from dotenv import load_dotenv
 
 from accounts.forms import CustomSignupForm, ImageUploadForm, CustomUpdateForm
 from accounts.models import EmailConfirmation, CustomUser
+from profilemanager.models import Company
 
 
 def signup(request):
@@ -21,6 +22,7 @@ def signup(request):
     if request.method == "POST":
         form = CustomSignupForm(request.POST)
         if form.is_valid():
+            # Gérer si le user,category est dev ou client, puis modifier le mail de confirmation en fonction
             context = _send_confirmation_email(request, context, form)
             return render(request, 'registration/email_confirmation_done.html', context=context)
         else:
@@ -37,6 +39,9 @@ def confirm_email(request, token):
         email_confirmation = EmailConfirmation.objects.get(token=token)
         user = email_confirmation.user
         user.is_active = True
+        print(user)
+        if user.category == 'company':
+            user.company = _create_company_profile(user)
         user.save()
         email_confirmation.delete()
         return render(request, 'registration/email_confirmation_success.html')
@@ -78,20 +83,20 @@ def signout(request):
     return redirect('interfacemanager:home')
 
 
-def update_profile_picture(request, slug):
+def update_profile_picture(request, slug, pk):
     context = {}
     context['image_form'] = ImageUploadForm()
     context['slug'] = slug
-    print(slug)
+    context['pk'] = pk
     context['current_user'] = request.user
     if request.method == 'POST':
         form = ImageUploadForm(request.POST, request.FILES)
-        user = request.user
+        user = get_object_or_404(CustomUser, pk=pk)
         if form.is_valid():
             upload_result = cloudinary.uploader.upload(request.FILES['image'])
             user.profile_image = upload_result['url']
             user.save()
-            return redirect('profilemanager:detail', slug=user.slug)
+            return redirect('profilemanager:detail', slug=slug, pk=pk)
         else:
             messages.error(request, "Invalid image.")
 
@@ -99,11 +104,11 @@ def update_profile_picture(request, slug):
 
 
 @login_required
-def update_profile_info(request, slug):
-    if request.user.slug != slug:
+def update_profile_info(request, slug, pk):
+    if request.user.pk != pk:
         return HttpResponseForbidden("Vous n'avez pas l'autorisation d'effectuer cette action.")
 
-    user = get_object_or_404(CustomUser, slug=slug)
+    user = get_object_or_404(CustomUser, pk=pk)
     if request.method == 'POST':
         form = CustomUpdateForm(request.POST, instance=user)
         print(form.errors)
@@ -112,15 +117,14 @@ def update_profile_info(request, slug):
             if request.headers.get('HX-Request'):
                 html = render_to_string('accounts/partials/phone_number_partial.html', {'phone_number': user.phone_number})
                 return HttpResponse(html)
-            return redirect('profilemanager:detail', slug=user.slug)
+            return redirect('profilemanager:detail', slug=slug, pk=pk)
         else:
             if request.headers.get('HX-Request'):
                 errors_html = render_to_string('accounts/partials/errors.html', {'user': user, 'profile_form': form})
                 return HttpResponse(errors_html)
-            print('form invalid')
-            return redirect('profilemanager:detail', slug=user.slug)
+            return redirect('profilemanager:detail', slug=slug, pk=pk)
 
-    return redirect('profilemanager:detail', slug=user.slug)
+    return redirect('profilemanager:detail', slug=slug, pk=pk)
 
 
 def update_phone_display(request, pk):
@@ -150,3 +154,7 @@ def _email_content(request, email_confirmation):
     from_email = os.environ.get('EMAIL_HOST_USER')
 
     return subject, message, from_email
+
+def _create_company_profile(user):
+    user_company = Company.objects.create(user=user)
+    return user_company

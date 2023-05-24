@@ -9,7 +9,7 @@
 {% for dev in devs %}
     {% if dev.profile.visible %}
         <section class="dev-card">
-            <a href="{% url 'profilemanager:detail' slug=dev.slug %}">
+            <a href="{% url 'profilemanager:detail' slug=dev.slug pk=dev.pk %}">
                 <img src="{{ dev.profile_image }}" alt="Profile pic" />
                 <div class="dev-card__info">
                     <h2>{{ dev.first_name }} {{ dev.last_name }}</h2>

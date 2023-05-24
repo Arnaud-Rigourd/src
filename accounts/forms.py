@@ -40,8 +40,8 @@ class CustomSignupForm(UserCreationForm):
             'email',
             'category',
             'phone_number',
-            'company_name',
             'phone_display',
+            'company_name',
         )
 
 

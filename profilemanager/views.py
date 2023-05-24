@@ -31,15 +31,23 @@ class ProfileIndex(TemplateView):
 class ProfileDetail(TemplateView):
     template_name = "profilemanager/detail.html"
 
+    def dispatch(self, request, *args, **kwargs):
+        profile = get_object_or_404(Profile, user=self.kwargs['pk'], user__slug=self.kwargs['slug'])
+        if profile:
+            return super().dispatch(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         slug = self.kwargs['slug']
-        user = get_object_or_404(User, slug=slug)
+        pk = self.kwargs['pk']
+        user = get_object_or_404(User, pk=pk)
 
         context['user'] = user
         context['current_user'] = self.request.user
-        context['slug'] = user.slug
+        context['slug'] = slug
+        context['pk'] = pk
         context['profile'] = user.profile
+        context['dev'] = user.category == 'developpeur'
         context['stacks'] = user.profile.stacks_set.all()
         context['projects'] = user.profile.projects_set.all()
         context['stack_form'] = CustomStacksForm()
@@ -57,16 +65,19 @@ class ProfileUpdate(UpdateView):
     form_class = CustomProfileForm
 
     def dispatch(self, request, *args, **kwargs):
-        if request.user.slug != self.kwargs['slug']:
+        profile = self.get_object()
+        if request.user != profile.user:
             return HttpResponseForbidden()
         return super().dispatch(request, *args, **kwargs)
 
     def get_success_url(self):
-        return reverse('profilemanager:detail', kwargs={'slug': self.request.user.slug})
+        return reverse('profilemanager:detail', kwargs={'slug': self.request.user.slug, 'pk': self.request.user.pk})
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['slug'] = self.kwargs['slug']
+        context['profile_pk'] = self.kwargs['pk']
+        context['current_user'] = self.request.user
         return context
 
     def form_valid(self, form):
@@ -259,7 +270,22 @@ class ProjectDelete(DeleteView):
             return super().get(request, *args, **kwargs)
 
 
+class CompanyDetail(TemplateView):
+    template_name = "profilemanager/company/detail.html"
 
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.category != 'company' or request.user.pk != self.kwargs['pk']:
+            return HttpResponseForbidden()
+        return super().dispatch(request, *args, **kwargs)
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = get_object_or_404(User, pk=self.kwargs['pk'])
+
+        context['user'] = user
+        context['current_user'] = self.request.user
+        return context
 
 
 

@@ -12,8 +12,8 @@ urlpatterns = [
     path('confirm_email/<str:token>/', confirm_email, name='confirm_email'),
     path('signin/', signin, name='signin'),
     path('signout/', signout, name='signout'),
-    path('user/update/picture/<slug:slug>/', update_profile_picture, name='update_profile_picture'),
-    path('user/update/profile-info/<slug:slug>/', update_profile_info, name='update_profile_info'),
+    path('user/update/picture/<slug:slug>/<int:pk>/', update_profile_picture, name='update_profile_picture'),
+    path('user/update/profile-info/<slug:slug>/<int:pk>/', update_profile_info, name='update_profile_info'),
     re_path(r'^password_reset/$', auth_views.PasswordResetView.as_view(
         template_name='registration/custom_password_reset_form.html',
         success_url=reverse_lazy('accounts:password_reset_done'),

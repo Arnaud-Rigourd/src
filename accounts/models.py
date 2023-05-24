@@ -49,7 +49,7 @@ class CustomUser(AbstractBaseUser):
 
     CATEGORY_CHOICES = (
         ('developpeur', 'Développeur'),
-        ('entrepreneur', 'Entrepreneur'),
+        ('company', 'Entrepreneur'),
     )
 
     id = models.AutoField(primary_key=True)
@@ -91,6 +91,7 @@ class CustomUser(AbstractBaseUser):
     company_name = models.CharField(
         max_length=250,
         blank=True,
+        default='Inconnu',
     )
     profile_image = models.CharField(
         max_length=255,
