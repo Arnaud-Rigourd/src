@@ -16,6 +16,7 @@ class Profile(models.Model):
         choices=JOBS_CHOICES,
         blank=False)
     visible = models.BooleanField(default=False)
+    available = models.BooleanField(default=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def __str__(self):
