@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 
 from profilemanager.views import ProfileDetail, ProfileCreate, StackCreate, ProjectCreate, StackDelete, ProjectDelete, \
     StackUpdate, ProfileIndex, ProfileUpdate, ProjectUpdate, CompanyDetail

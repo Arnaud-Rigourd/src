@@ -9,9 +9,10 @@ from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView, CreateView, DeleteView, UpdateView
 
 from accounts.forms import CustomUpdateForm
+from meetingsmanager.forms import CustomMeetingForm
 from profilemanager.forms import CustomProfileForm, CustomStacksFormSet, CustomProjectsFormSet, CustomStacksForm, \
     CustomProjectsForm
-from profilemanager.models import Profile, Stacks, Projects
+from profilemanager.models import Profile, Stacks, Projects, Company
 
 User = get_user_model()
 
@@ -55,6 +56,7 @@ class ProfileDetail(TemplateView):
         context['profile_form'] = CustomUpdateForm()
         context['user_form'] = CustomUpdateForm()
         context['not_phone_display'] = not user.phone_display
+        context['meeting_form'] = CustomMeetingForm()
 
         return context
 
@@ -96,7 +98,7 @@ class ProfileCreate(CreateView):
     form_class = CustomProfileForm
 
     def get_success_url(self):
-        return reverse('profilemanager:detail', kwargs={'slug': self.request.user.slug})
+        return reverse('profilemanager:detail', kwargs={'slug': self.request.user.slug, 'pk': self.request.user.pk})
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -160,7 +162,7 @@ class StackUpdate(UpdateView):
         return super().dispatch(request, *args, **kwargs)
 
     def get_success_url(self):
-        return reverse('profilemanager:detail', kwargs={'slug': self.request.user.slug})
+        return reverse('profilemanager:detail', kwargs={'slug': self.request.user.slug, 'pk': self.request.user.pk})
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -186,7 +188,7 @@ class StackDelete(DeleteView):
         return super().dispatch(request, *args, **kwargs)
 
     def get_success_url(self):
-        return reverse('profilemanager:detail', kwargs={'slug': self.request.user.slug})
+        return reverse('profilemanager:detail', kwargs={'slug': self.request.user.slug, 'pk': self.request.user.pk})
 
     def post(self, request, *args, **kwargs):
         stack_id = self.kwargs['pk']
@@ -206,7 +208,7 @@ class ProjectCreate(CreateView):
     fields = ['name', 'description', 'used_stacks', 'link']
 
     def get_success_url(self):
-        return reverse('profilemanager:detail', kwargs={'slug': self.request.user.slug})
+        return reverse('profilemanager:detail', kwargs={'slug': self.request.user.slug, 'pk': self.request.user.pk})
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -235,7 +237,7 @@ class ProjectUpdate(UpdateView):
         context['pk'] = self.kwargs['pk']
         return context
     def get_success_url(self):
-        return reverse('profilemanager:detail', kwargs={'slug': self.request.user.slug})
+        return reverse('profilemanager:detail', kwargs={'slug': self.request.user.slug, 'pk': self.request.user.pk})
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -257,7 +259,7 @@ class ProjectDelete(DeleteView):
         return super().dispatch(request, *args, **kwargs)
 
     def get_success_url(self):
-        return reverse('profilemanager:detail', kwargs={'slug': self.request.user.slug})
+        return reverse('profilemanager:detail', kwargs={'slug': self.request.user.slug, 'pk': self.request.user.pk})
 
     def get(self, request, *args, **kwargs):
         project_id = self.kwargs['pk']
@@ -282,6 +284,10 @@ class CompanyDetail(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user = get_object_or_404(User, pk=self.kwargs['pk'])
+        company = get_object_or_404(Company, user__pk=self.kwargs['pk'])
+
+        context['company'] = company
+        context['meetings'] = company.meetings_set.all()
 
         context['user'] = user
         context['current_user'] = self.request.user
