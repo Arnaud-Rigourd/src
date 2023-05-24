@@ -2,6 +2,7 @@ from django import forms
 from django.forms.models import inlineformset_factory
 from .models import Profile, Stacks, Projects
 
+
 class CustomProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
@@ -11,6 +12,7 @@ class CustomProfileForm(forms.ModelForm):
             'job': "Domaine d'expertise",
         }
 
+
 class CustomStacksForm(forms.ModelForm):
     class Meta:
         model = Stacks
@@ -18,6 +20,7 @@ class CustomStacksForm(forms.ModelForm):
         labels = {
             'name': 'Stacks',
         }
+
 
 class CustomProjectsForm(forms.ModelForm):
     class Meta:

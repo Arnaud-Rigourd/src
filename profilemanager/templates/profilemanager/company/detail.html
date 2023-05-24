@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>{{ user.first_name }} | Ton profil </title>
+{% endblock %}
+
+{% block content %}
+
+    <h1>Hello on {{ user.first_name }} {{ user.last_name }} profile !</h1>
+    <h2>Suivi de tes rendez-vous</h2>
+
+{% endblock %}

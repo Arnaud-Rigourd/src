@@ -13,18 +13,23 @@
 <h1>Hello on {{ user.first_name }} {{ user.last_name }} profile !</h1>
 <header class="profile__info-user">
     <p><img src="{{ user.profile_image }}" alt="Photo de {{ user.first_name }} {{ user.last_name }}" /></p>
-    {% if current_user.slug == slug %}
-        <p><a href="{% url 'accounts:update_profile_picture' slug=current_user.slug %}">Modifier photo de profil</a></p>
+
+    {% if current_user.pk == pk and current_user.slug == slug %}
+        <p><a href="{% url 'accounts:update_profile_picture' slug=current_user.slug pk=current_user.pk %}">Modifier photo de profil</a></p>
     {% endif %}
+
     <h3>Développeur {{ user.profile.job }}</h3>
     <p>email : {{ user.email }}</p>
+
     {% if user.phone_number %}
     <div id="phone_number">
+
         {% if user.phone_display %}
             <div class="phone_number_management">
                 <p>Tel : {{ user.phone_number }}</p>
-            {% if current_user.slug == slug %}
-                <form method="POST" action="{% url 'accounts:update_profile_info' slug=current_user.slug %}">
+
+            {% if current_user.pk == pk and current_user.slug == slug %}
+                <form method="POST" action="{% url 'accounts:update_profile_info' slug=current_user.slug pk=current_user.pk %}">
                     {% csrf_token %}
                     <input type="hidden" name="phone_number" value="{{ user.phone_number }}" />
                     <input type="hidden" name="phone_display" id="id_phone_display" value="{{ not_phone_display }}" />
@@ -32,7 +37,8 @@
                 </form>
 
             </div>
-            <form hx-post="{% url 'accounts:update_profile_info' slug=current_user.slug %}" hx-target="#phone_number">
+
+            <form hx-post="{% url 'accounts:update_profile_info' slug=current_user.slug pk=current_user.pk %}" hx-target="#phone_number">
                 {% csrf_token %}
                 <input type="text" name="phone_number" id="id_phone_number" value="{{ user.phone_number }}" />
                 {% if profile_form.phone_number.errors %}
@@ -41,23 +47,27 @@
                 <button type="submit">Enregistrer</button>
             </form>
             {% endif %}
-        {% elif current_user.slug == slug %}
-            <form method="POST" action="{% url 'accounts:update_profile_info' slug=current_user.slug %}">
+
+        {% elif current_user.pk == pk and current_user.slug == slug %}
+            <form method="POST" action="{% url 'accounts:update_profile_info' slug=current_user.slug pk=current_user.pk %}">
                 {% csrf_token %}
                 <input type="hidden" name="phone_number" value="{{ user.phone_number }}" />
                 <input type="hidden" name="phone_display" id="id_phone_display" value="{{ not_phone_display }}" />
                 <button type="submit">Afficher le numéro</button>
             </form>
+
         {% endif %}
+
     </div>
     {% endif %}
+
 </header>
 
-{% if profile %}
+{% if dev %}
     <section class="profile__info">
         <h2>{{ user.first_name }}, sa vie et ses passions</h2>
-        {% if current_user.slug == slug %}
-            <p><a href="{% url 'profilemanager:update' slug=slug %}">Modifier</a></p>
+        {% if current_user.pk == pk and current_user.slug == slug %}
+            <p><a href="{% url 'profilemanager:update' slug=slug pk=profile.pk %}">Modifier</a></p>
         {% endif %}
         <p class="user-description">
             {{ profile.description }}
@@ -66,18 +76,20 @@
 
     <section class="profile__stacks">
         <h2>Ses stacks</h2>
-        {% if current_user.slug == slug %}
+
+        {% if current_user.pk == pk and current_user.slug == slug %}
             <form hx-post="{% url 'profilemanager:stack-create' %}" hx-target="#stacks-target" hx-swap="beforeend">
                 {% csrf_token %}
                 {{ stack_form.as_p }}
                 <button type="submit">Ajouter une stack</button>
             </form>
         {% endif %}
+
         <ul id="stacks-target">
             {% for stack in stacks %}
                 <li id="stack{{ stack.pk }}" class="stack">
                     {{ stack }}
-                    {% if current_user.slug == slug %}
+                    {% if current_user.pk == pk and current_user.slug == slug %}
                     <form hx-post="{% url 'profilemanager:stack-update' pk=stack.pk slug=slug %}" hx-target="#stack{{ stack.pk }}">
                         {% csrf_token %}
                         <input type="text" name="name" value="{{ stack.name }}">
@@ -98,7 +110,7 @@
     
     <section class="profile__projects">
         <h2>Ses projets</h2>
-        {% if current_user.slug == slug %}
+        {% if current_user.pk == pk and current_user.slug == slug %}
             <form method="POST" action="{% url 'profilemanager:project-create' %}">
                 {% csrf_token %}
                 {{ project_form.as_p }}
@@ -107,10 +119,11 @@
         {% endif %}
 
         {% for project in projects %}
+
             <div class="project">
                 <h3>
                     {{ project.name }}
-                    {% if current_user.slug == slug %}
+                    {% if current_user.pk == pk and current_user.slug == slug %}
                     <p><a href="{% url 'profilemanager:project-update' pk=project.pk slug=slug %}">Modifier</a></p>
                     <form method="POST" action="{% url 'profilemanager:project-delete' pk=project.pk slug=slug  %}">
                         {% csrf_token %}
@@ -123,6 +136,8 @@
                 <p class="{% if not project.link %}hidden{% endif %}">Lien : <a href="{{ project.link }}" target="_blank">{{ project.link }}</a></p>
                 <p>Stacks : {{ project.used_stacks }}</p>
             </div>
+
         {% endfor %}
     </section>
+
 {% endblock %}

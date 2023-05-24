@@ -1,6 +1,5 @@
 from django.contrib.auth import get_user_model
 from django.db import models
-from django.template.defaultfilters import slugify
 
 User = get_user_model()
 class Profile(models.Model):
@@ -43,3 +42,14 @@ class Projects(models.Model):
     def __str__(self):
         return self.name
 
+
+class Company(models.Model):
+    name = models.CharField(max_length=250, blank=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        self.name = self.user.company_name
+        super().save(*args, **kwargs)

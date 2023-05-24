@@ -21,12 +21,12 @@
         <li><a href="{% url 'interfacemanager:home' %}">Accueil</a></li>
         <li><a href="{% url 'profilemanager:index' %}">Liste des développeurs.euses</a></li>
         {% if current_user.is_authenticated %}
-            {% if current_user.profile.job == 'entrepreneur' %}
-                <li><a href="#">Mes développeurs.euses</a></li>
+            {% if current_user.category == 'company' %}
+                <li><a href="{% url 'profilemanager:company-monitoring' slug=current_user.slug pk=current_user.pk %}">Mon profil</a></li>
             {% endif %}
 
             {% if current_user and current_user.profile %}
-                <li><a href="{% url 'profilemanager:detail' slug=current_user.slug %}">Mon profil</a></li>
+                <li><a href="{% url 'profilemanager:detail' slug=current_user.slug pk=current_user.pk %}">Mon profil</a></li>
            {% elif not current_user.profile and current_user.category == 'developpeur' %}
                 <li><a href="{% url 'profilemanager:create' username=current_user.username %}">Créer mon profile</a></li>
             {% endif %}
