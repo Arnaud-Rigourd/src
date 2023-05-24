@@ -1,7 +1,7 @@
-from django.urls import path
+from django.urls import path, include
 
 from profilemanager.views import ProfileDetail, ProfileCreate, StackCreate, ProjectCreate, StackDelete, ProjectDelete, \
-    StackUpdate, ProfileIndex, ProfileUpdate, ProjectUpdate, CompanyDetail
+    StackUpdate, ProfileIndex, ProfileUpdate, ProjectUpdate, CompanyDetail, ProfileMeetings
 
 app_name = "profilemanager"
 
@@ -17,4 +17,5 @@ urlpatterns = [
     path('profile/project/delete/<slug:slug>/<int:pk>/', ProjectDelete.as_view(), name="project-delete"),
     path('company/<slug:slug>/<int:pk>/', CompanyDetail.as_view(), name="company-monitoring"),
     path('profile/<slug:slug>/<int:pk>/', ProfileDetail.as_view(), name="detail"),
+    path('profile/my_meetings/<slug:slug>/<int:pk>/', ProfileMeetings.as_view(), name="dev-meetings"),
 ]

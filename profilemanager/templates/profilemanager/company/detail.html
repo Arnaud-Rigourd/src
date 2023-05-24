@@ -9,4 +9,12 @@
     <h1>Hello on {{ user.first_name }} {{ user.last_name }} profile !</h1>
     <h2>Suivi de tes rendez-vous</h2>
 
+    {% for meeting in meetings %}
+        <div class="meeting">
+            <p>Le {{ meeting.meeting_date|date:'d/m/Y' }} à {{ meeting.meeting_date|date:'H:i' }}</p>
+            <p>avec {{ meeting.dev.user.first_name }}</p>
+            <p>statut : {{ meeting.status }}</p>
+        </div>
+    {% endfor %}
+
 {% endblock %}

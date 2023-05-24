@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Mes RDV</title>
+{% endblock %}
+
+{% block content %}
+
+    <h1>RDV en attente de validation</h1>
+    {% for meeting in meetings %}
+        {% if meeting.status == 'pending' %}
+
+        <div class="meeting">
+            <p>Le {{ meeting.meeting_date|date:'d/m/Y' }} à {{ meeting.meeting_date|date:'H:i' }}</p>
+            <p>avec {{ meeting.company.user.first_name }}</p>
+            <p>statut : {{ meeting.status }}</p>
+
+            <form method="POST" action="{% url 'meetingsmanager:update' meeting_pk=meeting.pk %}">
+                {% csrf_token %}
+                <input type="hidden" name="status" value="accepted">
+                <button type="submit">Confirmer</button>
+            </form>
+            <form method="POST" action="{% url 'meetingsmanager:update' meeting_pk=meeting.pk %}">
+                {% csrf_token %}
+                <input type="hidden" name="status" value="declined">
+                <button type="submit">Refuser</button>
+            </form>
+        </div>
+
+        {% endif %}
+
+    {% endfor %}
+
+
+    <h1>RDV confirmés</h1>
+    {% for meeting in meetings %}
+        {% if meeting.status != 'pending' %}
+
+        <div class="meeting">
+            <p>Le {{ meeting.meeting_date|date:'d/m/Y' }} à {{ meeting.meeting_date|date:'H:i' }}</p>
+            <p>avec {{ meeting.company.user.first_name }}</p>
+            <p>statut : {{ meeting.status }}</p>
+
+            <form method="POST" action="{% url 'meetingsmanager:update' meeting_pk=meeting.pk %}">
+                {% csrf_token %}
+                <input type="hidden" name="status" value="declined">
+                <button type="submit">Refuser</button>
+            </form>
+            <form method="POST" action="{% url 'meetingsmanager:update' meeting_pk=meeting.pk %}">
+                {% csrf_token %}
+                <input type="hidden" name="status" value="pending">
+                <button type="submit">En attente</button>
+            </form>
+        </div>
+        
+        {% endif %}
+
+    {% endfor %}
+
+{% endblock %}
