@@ -21,4 +21,5 @@ urlpatterns = [
     path('', include('accounts.urls')),
     path('', include('profilemanager.urls')),
     path('', include('interfacemanager.urls')),
+    path('', include('meetingsmanager.urls')),
 ]
