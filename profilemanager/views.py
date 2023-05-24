@@ -294,4 +294,23 @@ class CompanyDetail(TemplateView):
         return context
 
 
+class ProfileMeetings(TemplateView):
+    template_name = "profilemanager/my_meetings.html"
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.pk != self.kwargs['pk']:
+            return HttpResponseForbidden()
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = get_object_or_404(User, pk=self.kwargs['pk'])
+        current_user = self.request.user
+        context['current_user'] = current_user
+        context['user'] = user
+        context['meetings'] = user.profile.meetings_set.all()
+        context['meeting_form'] = CustomMeetingForm()
+        return context
+
+
 

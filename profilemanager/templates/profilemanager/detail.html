@@ -10,6 +10,8 @@
 
 {% block content %}
 
+    <p><a href="{% url 'profilemanager:dev-meetings' slug=slug pk=pk %}">Mes RDV</a></p>
+
 <h1>Hello on {{ user.first_name }} {{ user.last_name }} profile !</h1>
 <header class="profile__info-user">
     <p><img src="{{ user.profile_image }}" alt="Photo de {{ user.first_name }} {{ user.last_name }}" /></p>
