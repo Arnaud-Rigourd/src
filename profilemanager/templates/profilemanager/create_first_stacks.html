@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Tes stacks</title>
+{% endblock %}
+
+{% block content %}
+
+    <h1>Test stacks</h1>
+    <form method="POST" action="{% url 'profilemanager:first-stack-create' username=username %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Valider les stacks</button>
+    </form>
+
+{% endblock %}

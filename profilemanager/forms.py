@@ -23,6 +23,7 @@ class CustomStacksForm(forms.ModelForm):
 
 
 class CustomProjectsForm(forms.ModelForm):
+
     class Meta:
         model = Projects
         fields = ['name', 'description', 'used_stacks', 'link']
@@ -32,6 +33,7 @@ class CustomProjectsForm(forms.ModelForm):
             'used_stacks': 'Stacks utilisées',
             'link': 'Lien vers le projet',
         }
+
 
 
 CustomStacksFormSet = inlineformset_factory(Profile, Stacks, form=CustomStacksForm, extra=1, can_delete=False)

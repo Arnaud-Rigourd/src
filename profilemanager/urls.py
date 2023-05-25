@@ -1,7 +1,7 @@
 from django.urls import path, include
 
 from profilemanager.views import ProfileDetail, ProfileCreate, StackCreate, ProjectCreate, StackDelete, ProjectDelete, \
-    StackUpdate, ProfileIndex, ProfileUpdate, ProjectUpdate, CompanyDetail, ProfileMeetings
+    StackUpdate, ProfileIndex, ProfileUpdate, ProjectUpdate, CompanyDetail, ProfileMeetings, FirstStackCreate
 
 app_name = "profilemanager"
 
@@ -9,6 +9,7 @@ urlpatterns = [
     path('all/', ProfileIndex.as_view(), name="index"),
     path('profile/create/<str:username>/', ProfileCreate.as_view(), name="create"),
     path('profile/update/<slug:slug>/<int:pk>/', ProfileUpdate.as_view(), name="update"),
+    path('profile/first_stacks/create/<str:username>/', FirstStackCreate.as_view(), name="first-stack-create"),
     path('profile/stack/create/', StackCreate.as_view(), name="stack-create"),
     path('profile/stack/delete/<slug:slug>/<int:pk>/', StackDelete.as_view(), name="stack-delete"),
     path('profile/stack/update/<slug:slug>/<int:pk>/', StackUpdate.as_view(), name="stack-update"),
