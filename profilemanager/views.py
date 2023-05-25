@@ -1,6 +1,9 @@
+import json
+
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Q
 from django.http import HttpResponse, HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
@@ -49,7 +52,7 @@ class ProfileDetail(TemplateView):
         context['pk'] = pk
         context['profile'] = user.profile
         context['dev'] = user.category == 'developpeur'
-        context['stacks'] = user.profile.stacks_set.all()
+        context['stacks'] = user.profile.stacks_set.filter(~Q(name__startswith='[{'))
         context['projects'] = user.profile.projects_set.all()
         context['stack_form'] = CustomStacksForm()
         context['project_form'] = CustomProjectsForm()
@@ -59,6 +62,7 @@ class ProfileDetail(TemplateView):
         context['meeting_form'] = CustomMeetingForm()
 
         return context
+
 
 # dispatch method overloaded to check if the user is the owner of the profile
 class ProfileUpdate(UpdateView):
@@ -98,33 +102,78 @@ class ProfileCreate(CreateView):
     form_class = CustomProfileForm
 
     def get_success_url(self):
-        return reverse('profilemanager:detail', kwargs={'slug': self.request.user.slug, 'pk': self.request.user.pk})
+        # return reverse('profilemanager:detail', kwargs={'slug': self.request.user.slug, 'pk': self.request.user.pk})
+        return reverse('profilemanager:first-stack-create', kwargs={'username': self.request.user.username})
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['username'] = self.kwargs['username']
-        if self.request.POST:
-            context['stacks'] = CustomStacksFormSet(self.request.POST)
-            context['projects'] = CustomProjectsFormSet(self.request.POST)
-        else:
-            context['current_user'] = self.request.user
-            context['stacks'] = CustomStacksFormSet()
-            context['projects'] = CustomProjectsFormSet()
+        # if self.request.POST:
+        #     context['stacks'] = CustomStacksFormSet(self.request.POST)
+        #     context['projects'] = CustomProjectsFormSet(self.request.POST)
+        # else:
+        context['current_user'] = self.request.user
+        # context['stacks'] = CustomStacksFormSet()
+        # context['projects'] = CustomProjectsFormSet()
         return context
 
     def form_valid(self, form):
         context = self.get_context_data()
-        stacks = context['stacks']
-        projects = context['projects']
+        # stacks = context['stacks']
+        # projects = context['projects']
         self.object = form.save(commit=False)
         self.object.user = self.request.user
         self.object.save()
-        if stacks.is_valid() and projects.is_valid():
-            stacks.instance = self.object
-            stacks.save()
-            projects.instance = self.object
-            projects.save()
+        # if stacks.is_valid() and projects.is_valid():
+        #     stacks.instance = self.object
+        #     stacks.save()
+        #     projects.instance = self.object
+        #     projects.save()
         return super().form_valid(form)
+
+
+class FirstStackCreate(CreateView):
+    template_name = "profilemanager/create_first_stacks.html"
+    model = Stacks
+    fields = ['name']
+
+    def get_success_url(self):
+        print(self.request.user.profile.stacks_set.all())
+        return reverse('profilemanager:detail', kwargs={'slug': self.request.user.slug, 'pk': self.request.user.pk})
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        current_user = self.request.user
+        context['current_user'] = current_user
+        context['username'] = current_user.username
+        return context
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.profile = self.request.user.profile
+
+        tags_json_string = form.cleaned_data.get('name')
+        if tags_json_string:
+            try:
+                tags = self._handle_tagify_input(tags_json_string)
+                for tag in tags:
+                    stack = Stacks(name=tag, profile=self.object.profile)
+                    stack.save()
+            except json.JSONDecodeError:
+                form.add_error('name', 'Invalid tags input')
+                return self.form_invalid(form)
+
+        try:
+            self.object.save()
+        except ObjectDoesNotExist:
+            return self.form_invalid(form)
+
+        return super().form_valid(form)
+
+    def _handle_tagify_input(self, json_string: json) -> list[str]:
+        tags_json = json.loads(json_string)
+        tags = [tag['value'] for tag in tags_json]
+        return tags
 
 
 # Stacks management
@@ -205,7 +254,8 @@ class StackDelete(DeleteView):
 class ProjectCreate(CreateView):
     template_name = "profilemanager/detail.html"
     model = Projects
-    fields = ['name', 'description', 'used_stacks', 'link']
+    # fields = ['name', 'description', 'used_stacks', 'link']
+    form_class = CustomProjectsForm
 
     def get_success_url(self):
         return reverse('profilemanager:detail', kwargs={'slug': self.request.user.slug, 'pk': self.request.user.pk})
@@ -218,6 +268,7 @@ class ProjectCreate(CreateView):
             return self.form_invalid(form)
         self.object.save()
         return super().form_valid(form)
+
 
 # dispatch method overloaded to check if the user is the owner of the profile
 class ProjectUpdate(UpdateView):

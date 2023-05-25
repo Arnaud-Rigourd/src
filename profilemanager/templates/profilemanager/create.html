@@ -13,15 +13,15 @@
     <h3>Laisse les entreprises en apprendre d'avantage sur toi en te présentant brievement</h3>
     {{ form.as_p }}
     <h3>Quelles sont tes stacks</h3>
-    {{ stacks.management_form }}
-    {% for form in stacks %}
-        {{ form.as_p }}
-    {% endfor %}
-    {{ projects.management_form }}
-    {% for form in projects %}
-        {{ form.as_p }}
-    {% endfor %}
-    <button type="submit">Valider</button>
+{#    {{ stacks.management_form }}#}
+{#    {% for form in stacks %}#}
+{#        {{ form.as_p }}#}
+{#    {% endfor %}#}
+{#    {{ projects.management_form }}#}
+{#    {% for form in projects %}#}
+{#        {{ form.as_p }}#}
+{#    {% endfor %}#}
+    <button type="submit">Valider et completer mes stacks</button>
 </form>
 {% endif %}
 {% endblock %}

@@ -25,7 +25,7 @@
     <h3>Développeu.r.se {{ user.profile.job }}</h3>
     <p>email : {{ user.email }}</p>
 
-    {% if user.phone_number %}
+    {% if user.phone_number or current_user == user %}
     <div id="phone_number">
 
         {% if user.phone_display %}
@@ -144,11 +144,11 @@
                 </h3>
                 <p>Description du projet : {{ project.description }}</p>
                 <p class="{% if not project.link %}hidden{% endif %}">Lien : <a href="{{ project.link }}" target="_blank">{{ project.link }}</a></p>
-{#                <p>Stacks :#}
-{#                    {% for stack in project.used_stacks.all %}#}
-{#                        {{ stack.name }} {% if not forloop.last %}, {% endif %}#}
-{#                    {% endfor %}#}
-{#                </p>#}
+                <p>Stacks :
+                    {% for stack in project.used_stacks.all %}
+                        {{ stack.name }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </p>
             </div>
 
         {% endfor %}
@@ -165,4 +165,5 @@
 {#        <p><a href="{% url 'meetingsmanager:test' %}">Contacter</a></p>#}
     </section>
     {% endif %}
+
 {% endblock %}
