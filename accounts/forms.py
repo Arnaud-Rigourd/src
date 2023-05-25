@@ -90,10 +90,11 @@ class CustomUpdateForm(forms.ModelForm):
     phone_display = forms.BooleanField(required=False)
 
     def clean_phone_number(self):
-        phone_number = re.sub('[^0-9]', '', self.cleaned_data.get('phone_number'))
-        if len(phone_number) == 10 and phone_number.isdigit():
-            return phone_number
-        raise ValidationError("Le numéro de téléphone doit être composé d'exactement 10 chiffres.")
+        phone_number = self.cleaned_data.get('phone_number')
+        if phone_number and (not phone_number.isdigit() or len(phone_number) != 10):
+            raise ValidationError(
+                "Le numéro de téléphone ne doit contenir que des chiffres, et doit être sous le format '0600000000'.")
+        return phone_number
 
 
     def clean_phone_display(self):

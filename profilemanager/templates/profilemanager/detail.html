@@ -28,11 +28,22 @@
     {% if user.phone_number or current_user == user %}
     <div id="phone_number">
 
-        {% if user.phone_display %}
+        {% if user.phone_display or current_user.pk == pk and current_user.slug == slug %}
             <div class="phone_number_management">
                 <p>Tel : {{ user.phone_number }}</p>
 
             {% if current_user.pk == pk and current_user.slug == slug %}
+                <form hx-post="{% url 'accounts:update_profile_info' slug=current_user.slug pk=current_user.pk %}" hx-target="#phone_number">
+                    {% csrf_token %}
+                    <input type="text" name="phone_number" id="id_phone_number" value="{{ user.phone_number }}" />
+                    {% if profile_form.phone_number.errors %}
+                        <p>{{ profile_form.phone_number.errors }}</p>
+                    {% endif %}
+                    <button type="submit">Enregistrer</button>
+                </form>
+                
+                {% if user.phone_display %}
+
                 <form method="POST" action="{% url 'accounts:update_profile_info' slug=current_user.slug pk=current_user.pk %}">
                     {% csrf_token %}
                     <input type="hidden" name="phone_number" value="{{ user.phone_number }}" />
@@ -40,26 +51,19 @@
                     <button type="submit">Masquer le numéro</button>
                 </form>
 
-            </div>
+                {% elif not user.phone_display and user.phone_number %}
 
-            <form hx-post="{% url 'accounts:update_profile_info' slug=current_user.slug pk=current_user.pk %}" hx-target="#phone_number">
-                {% csrf_token %}
-                <input type="text" name="phone_number" id="id_phone_number" value="{{ user.phone_number }}" />
-                {% if profile_form.phone_number.errors %}
-                    <p>{{ profile_form.phone_number.errors }}</p>
+                <form method="POST" action="{% url 'accounts:update_profile_info' slug=current_user.slug pk=current_user.pk %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="phone_number" value="{{ user.phone_number }}" />
+                    <input type="hidden" name="phone_display" id="id_phone_display" value="{{ not_phone_display }}" />
+                    <button type="submit">Afficher le numéro</button>
+                </form>
+
                 {% endif %}
-                <button type="submit">Enregistrer</button>
-            </form>
             {% endif %}
 
-        {% elif current_user.pk == pk and current_user.slug == slug %}
-            <form method="POST" action="{% url 'accounts:update_profile_info' slug=current_user.slug pk=current_user.pk %}">
-                {% csrf_token %}
-                <input type="hidden" name="phone_number" value="{{ user.phone_number }}" />
-                <input type="hidden" name="phone_display" id="id_phone_display" value="{{ not_phone_display }}" />
-                <button type="submit">Afficher le numéro</button>
-            </form>
-
+            </div>
         {% endif %}
 
     </div>
