@@ -31,6 +31,23 @@ class CustomSignupForm(UserCreationForm):
         }
     )
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['phone_number'].required = False
+
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        if not re.match(r'^[a-zA-Z0-9]+$', username):
+            raise ValidationError("Le nom d'utilisateur ne doit contenir que des lettres et des chiffres.")
+        return username
+
+    def clean_phone_number(self):
+        phone_number = self.cleaned_data.get('phone_number')
+        if phone_number and (not phone_number.isdigit() or len(phone_number) != 10):
+            raise ValidationError("Le numéro de téléphone ne doit contenir que des chiffres, et doit être sous le format '0600000000'.")
+        return phone_number
+
+
     class Meta:
         model = CustomUser
         fields = (
@@ -43,6 +60,8 @@ class CustomSignupForm(UserCreationForm):
             'phone_display',
             'company_name',
         )
+
+
 
 
 class CustomLoginForm(UserCreationForm):

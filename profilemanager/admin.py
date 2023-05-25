@@ -30,7 +30,7 @@ class ProjectsAdmin(admin.ModelAdmin):
     list_display = (
         'name',
         'description',
-        'used_stacks',
+        # 'used_stacks',
         'link',
         'profile',
     )

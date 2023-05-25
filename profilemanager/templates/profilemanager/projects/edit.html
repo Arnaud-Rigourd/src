@@ -12,5 +12,5 @@
         {{ form.as_p }}
         <button type="submit">Enregistrer les modifications</button>
     </form>
-    <p><a href="{% url 'profilemanager:detail' slug=current_user.slug %}">Annuler</a></p>
+    <p><a href="{% url 'profilemanager:detail' slug=current_user.slug pk=current_user.pk %}">Annuler</a></p>
 {% endblock %}

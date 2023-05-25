@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
+    {% comment %}Si l'utilisateur courant est le même que l'utilisateur du profil, on affiche "Ton profil", sinon on affiche la profession de l'utilisateur{% endcomment %}
     {% if current_user == user %}
         <title>{{ user.first_name }} | Ton profil </title>
     {% else %}
@@ -9,8 +10,11 @@
 {% endblock %}
 
 {% block content %}
+    {% comment %}Lien vers la page des rendez-vous de l'utilisateur{% endcomment %}
+    <p><a href="{% url 'profilemanager:dev-meetings' slug=slug pk=pk %}">Mes RDV</a></p>
 
 <h1>Hello on {{ user.first_name }} {{ user.last_name }} profile !</h1>
+{% comment %}Information de base de l'utilisateur : photo de profil, email, numéro de téléphone{% endcomment %}
 <header class="profile__info-user">
     <p><img src="{{ user.profile_image }}" alt="Photo de {{ user.first_name }} {{ user.last_name }}" /></p>
 
@@ -18,7 +22,7 @@
         <p><a href="{% url 'accounts:update_profile_picture' slug=current_user.slug pk=current_user.pk %}">Modifier photo de profil</a></p>
     {% endif %}
 
-    <h3>Développeur {{ user.profile.job }}</h3>
+    <h3>Développeu.r.se {{ user.profile.job }}</h3>
     <p>email : {{ user.email }}</p>
 
     {% if user.phone_number %}
@@ -61,8 +65,13 @@
     </div>
     {% endif %}
 
+{% comment %}Si l'utilisateur courant est une entreprise, on affiche un lien pour contacter l'utilisateur{% endcomment %}
+    {% if current_user.category == 'company' %}
+        <p><a href="#contact-{{ user.username }}">Contacter</a></p>
+    {% endif %}
 </header>
 
+{% comment %}Section pour la description de l'utilisateur et ses stacks si l'utilisateur est un développeur{% endcomment %}
 {% if dev %}
     <section class="profile__info">
         <h2>{{ user.first_name }}, sa vie et ses passions</h2>
@@ -107,7 +116,8 @@
         </ul>
     </section>
     {% endif %}
-    
+
+ {% comment %}Section pour les projets de l'utilisateur{% endcomment %}
     <section class="profile__projects">
         <h2>Ses projets</h2>
         {% if current_user.pk == pk and current_user.slug == slug %}
@@ -134,10 +144,25 @@
                 </h3>
                 <p>Description du projet : {{ project.description }}</p>
                 <p class="{% if not project.link %}hidden{% endif %}">Lien : <a href="{{ project.link }}" target="_blank">{{ project.link }}</a></p>
-                <p>Stacks : {{ project.used_stacks }}</p>
+{#                <p>Stacks :#}
+{#                    {% for stack in project.used_stacks.all %}#}
+{#                        {{ stack.name }} {% if not forloop.last %}, {% endif %}#}
+{#                    {% endfor %}#}
+{#                </p>#}
             </div>
 
         {% endfor %}
     </section>
 
+     {% comment %}Section pour contacter l'utilisateur si l'utilisateur courant est une entreprise{% endcomment %}
+    {% if current_user.category == 'company' %}
+    <section id="contact-{{ user.username }}">
+        <form method="POST" action="{% url 'meetingsmanager:create' company_pk=current_user.company.pk dev_pk=user.profile.pk %}">
+            {% csrf_token %}
+            {{ meeting_form.as_p }}
+            <button type="submit">Envoyer</button>
+        </form>
+{#        <p><a href="{% url 'meetingsmanager:test' %}">Contacter</a></p>#}
+    </section>
+    {% endif %}
 {% endblock %}
