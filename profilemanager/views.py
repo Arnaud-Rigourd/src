@@ -383,7 +383,6 @@ class ProfileMeetings(TemplateView):
         context['user'] = user
         context['meetings'] = user.profile.meetings_set.all()
         context['meeting_form'] = CustomMeetingForm()
-        # context['company'] = context['meetings'].filter(company__pk=)
         return context
 
 
