@@ -244,6 +244,11 @@ class ProjectCreate(CreateView):
     model = Projects
     form_class = CustomProjectsForm
 
+    def dispatch(self, request, *args, **kwargs):
+        if request.user != self.kwargs['pk']:
+            return HttpResponseForbidden()
+        return super().dispatch(request, *args, **kwargs)
+
     def get_form_kwargs(self) -> dict[str, Any]:
         """
         Returns the keyword arguments for instantiating the form.
@@ -376,6 +381,7 @@ class ProfileMeetings(TemplateView):
         context['user'] = user
         context['meetings'] = user.profile.meetings_set.all()
         context['meeting_form'] = CustomMeetingForm()
+        # context['company'] = context['meetings'].filter(company__pk=)
         return context
 
 

@@ -11,10 +11,16 @@
         {% if meeting.status == 'pending' %}
 
         <div class="meeting">
-            <p>Le {{ meeting.meeting_date|date:'d/m/Y' }} à {{ meeting.meeting_date|date:'H:i' }}</p>
-            <p>avec {{ meeting.company.user.first_name }}</p>
-            <p>statut : {{ meeting.status }}</p>
+            <div class="meeting__content">
+                <p>Date : le {{ meeting.meeting_date|date:'d/m/Y' }} à {{ meeting.meeting_date|date:'H:i' }}</p>
+                <p>avec {{ meeting.company.user.first_name }}</p>
+                <p>statut : {{ meeting.status }}</p>
+                <img src="{{ meeting.company.user.profile_image }}" alt="company profile picture" />
+                <p>Message : {{ meeting.message }}</p>
 
+            </div>
+
+            {% if current_user == user %}
             <form method="POST" action="{% url 'meetingsmanager:update' meeting_pk=meeting.pk %}">
                 {% csrf_token %}
                 <input type="hidden" name="status" value="accepted">
@@ -25,6 +31,7 @@
                 <input type="hidden" name="status" value="declined">
                 <button type="submit">Refuser</button>
             </form>
+            {% endif %}
         </div>
 
         {% endif %}
@@ -40,6 +47,8 @@
             <p>Le {{ meeting.meeting_date|date:'d/m/Y' }} à {{ meeting.meeting_date|date:'H:i' }}</p>
             <p>avec {{ meeting.company.user.first_name }}</p>
             <p>statut : {{ meeting.status }}</p>
+            <img src="{{ meeting.company.user.profile_image }}" alt="company profile picture" />
+            <p>Message : {{ meeting.message }}</p>
 
             <form method="POST" action="{% url 'meetingsmanager:update' meeting_pk=meeting.pk %}">
                 {% csrf_token %}

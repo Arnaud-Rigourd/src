@@ -128,8 +128,9 @@
 {#                <button type="submit">Ajouter un projet</button>#}
 {#            </form>#}
 {#        {% endif %}#}
-    
-        <p><a href="{% url 'profilemanager:project-create' %}">Ajouter un projet</a></p>
+        {% if current_user == user %}
+        <p><a href="{% url 'profilemanager:project-create' pk=pk %}">Ajouter un projet</a></p>
+        {% endif %}
 
         {% for project in projects %}
 

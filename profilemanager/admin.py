@@ -11,7 +11,7 @@ class ProfileAdmin(admin.ModelAdmin):
         'description',
         'visible',
     )
-    list_filter = ('job',)
+    list_filter = ('job', 'visible')
     search_fields = (
         'user__email',
     )
