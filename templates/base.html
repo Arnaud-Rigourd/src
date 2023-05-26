@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width" />
     {% if request.resolver_match.url_name == 'first-stack-create' %}
         <script src="{% static 'js/tagify.min.js' %}" defer></script>
+        <script src="{% static 'js/first_stacks.js' %}" defer></script>
     {% endif %}
     <script src="{% static 'js/index.js' %}" defer></script>
     <script src="{% static 'js/htmx.min.js' %}" defer></script>

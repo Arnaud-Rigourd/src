@@ -1,10 +1,11 @@
 import json
+from typing import Any
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
-from django.http import HttpResponse, HttpResponseForbidden
+from django.http import HttpResponse, HttpResponseForbidden, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy, reverse
@@ -102,36 +103,23 @@ class ProfileCreate(CreateView):
     form_class = CustomProfileForm
 
     def get_success_url(self):
-        # return reverse('profilemanager:detail', kwargs={'slug': self.request.user.slug, 'pk': self.request.user.pk})
         return reverse('profilemanager:first-stack-create', kwargs={'username': self.request.user.username})
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['username'] = self.kwargs['username']
-        # if self.request.POST:
-        #     context['stacks'] = CustomStacksFormSet(self.request.POST)
-        #     context['projects'] = CustomProjectsFormSet(self.request.POST)
-        # else:
         context['current_user'] = self.request.user
-        # context['stacks'] = CustomStacksFormSet()
-        # context['projects'] = CustomProjectsFormSet()
         return context
 
     def form_valid(self, form):
         context = self.get_context_data()
-        # stacks = context['stacks']
-        # projects = context['projects']
         self.object = form.save(commit=False)
         self.object.user = self.request.user
         self.object.save()
-        # if stacks.is_valid() and projects.is_valid():
-        #     stacks.instance = self.object
-        #     stacks.save()
-        #     projects.instance = self.object
-        #     projects.save()
         return super().form_valid(form)
 
 
+@method_decorator(login_required, name='dispatch')
 class FirstStackCreate(CreateView):
     template_name = "profilemanager/create_first_stacks.html"
     model = Stacks
@@ -252,21 +240,36 @@ class StackDelete(DeleteView):
 # Projects management
 @method_decorator(login_required, name='dispatch')
 class ProjectCreate(CreateView):
-    template_name = "profilemanager/detail.html"
+    template_name = "profilemanager/projects/create.html"
     model = Projects
-    # fields = ['name', 'description', 'used_stacks', 'link']
     form_class = CustomProjectsForm
 
-    def get_success_url(self):
+    def get_form_kwargs(self) -> dict[str, Any]:
+        """
+        Returns the keyword arguments for instantiating the form.
+        """
+        kwargs = super().get_form_kwargs()
+        kwargs.update({'user': self.request.user})
+        return kwargs
+
+    def get_success_url(self) -> str:
         return reverse('profilemanager:detail', kwargs={'slug': self.request.user.slug, 'pk': self.request.user.pk})
 
-    def form_valid(self, form):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        current_user = self.request.user
+        context['current_user'] = current_user
+        context['username'] = current_user.username
+        return context
+
+    def form_valid(self, form: CustomProjectsForm) -> HttpResponseRedirect:
         self.object = form.save(commit=False)
         try:
             self.object.profile = self.request.user.profile
         except ObjectDoesNotExist:
             return self.form_invalid(form)
         self.object.save()
+        form.save_m2m()
         return super().form_valid(form)
 
 
@@ -274,19 +277,31 @@ class ProjectCreate(CreateView):
 class ProjectUpdate(UpdateView):
     template_name = "profilemanager/projects/edit.html"
     model = Projects
-    fields = ['name', 'description', 'used_stacks', 'link']
+    form_class = CustomProjectsForm
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.slug != self.kwargs['slug']:
             return HttpResponseForbidden()
         return super().dispatch(request, *args, **kwargs)
+
+    def get_form_kwargs(self) -> dict[str, Any]:
+        """
+        Returns the keyword arguments for instantiating the form.
+        """
+        kwargs = super().get_form_kwargs()
+        kwargs.update({'user': self.request.user})
+        return kwargs
+
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         current_user = self.request.user
         context['current_user'] = current_user
         context['slug'] = current_user.slug
         context['pk'] = self.kwargs['pk']
+        context['stacks'] = current_user.profile.stacks_set.filter(~Q(name__startswith='[{'))
         return context
+
     def get_success_url(self):
         return reverse('profilemanager:detail', kwargs={'slug': self.request.user.slug, 'pk': self.request.user.pk})
 

@@ -13,7 +13,11 @@
     {% comment %}Lien vers la page des rendez-vous de l'utilisateur{% endcomment %}
     <p><a href="{% url 'profilemanager:dev-meetings' slug=slug pk=pk %}">Mes RDV</a></p>
 
-<h1>Hello on {{ user.first_name }} {{ user.last_name }} profile !</h1>
+    {% if current_user == user %}
+        <h1>Bienvenue {{ user.first_name }} !</h1>
+    {% else %}
+        <h1>Bienvenu sur le profil de {{ user.first_name }} {{ user.last_name }} !</h1>
+    {% endif %}
 {% comment %}Information de base de l'utilisateur : photo de profil, email, numéro de téléphone{% endcomment %}
 <header class="profile__info-user">
     <p><img src="{{ user.profile_image }}" alt="Photo de {{ user.first_name }} {{ user.last_name }}" /></p>
@@ -42,25 +46,18 @@
                     <button type="submit">Enregistrer</button>
                 </form>
                 
-                {% if user.phone_display %}
 
                 <form method="POST" action="{% url 'accounts:update_profile_info' slug=current_user.slug pk=current_user.pk %}">
                     {% csrf_token %}
                     <input type="hidden" name="phone_number" value="{{ user.phone_number }}" />
                     <input type="hidden" name="phone_display" id="id_phone_display" value="{{ not_phone_display }}" />
-                    <button type="submit">Masquer le numéro</button>
+                    {% if user.phone_display %}
+                        <button type="submit">Masquer le numéro</button>
+                    {% elif not user.phone_display and user.phone_number %}
+                        <button type="submit">Afficher le numéro</button>
+                    {% endif %}
                 </form>
 
-                {% elif not user.phone_display and user.phone_number %}
-
-                <form method="POST" action="{% url 'accounts:update_profile_info' slug=current_user.slug pk=current_user.pk %}">
-                    {% csrf_token %}
-                    <input type="hidden" name="phone_number" value="{{ user.phone_number }}" />
-                    <input type="hidden" name="phone_display" id="id_phone_display" value="{{ not_phone_display }}" />
-                    <button type="submit">Afficher le numéro</button>
-                </form>
-
-                {% endif %}
             {% endif %}
 
             </div>
@@ -124,13 +121,15 @@
  {% comment %}Section pour les projets de l'utilisateur{% endcomment %}
     <section class="profile__projects">
         <h2>Ses projets</h2>
-        {% if current_user.pk == pk and current_user.slug == slug %}
-            <form method="POST" action="{% url 'profilemanager:project-create' %}">
-                {% csrf_token %}
-                {{ project_form.as_p }}
-                <button type="submit">Ajouter un projet</button>
-            </form>
-        {% endif %}
+{#        {% if current_user.pk == pk and current_user.slug == slug %}#}
+{#            <form method="POST" action="{% url 'profilemanager:project-create' %}">#}
+{#                {% csrf_token %}#}
+{#                {{ project_form.as_p }}#}
+{#                <button type="submit">Ajouter un projet</button>#}
+{#            </form>#}
+{#        {% endif %}#}
+    
+        <p><a href="{% url 'profilemanager:project-create' %}">Ajouter un projet</a></p>
 
         {% for project in projects %}
 

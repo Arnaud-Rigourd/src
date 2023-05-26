@@ -10,6 +10,11 @@
     <form method="POST" action="{% url 'profilemanager:project-update' pk=pk slug=slug %}">
         {% csrf_token %}
         {{ form.as_p }}
+        <p>Stacks actuels :
+        {% for stack in stacks %}
+            {{ stack.name }}{% if not forloop.last %}, {% endif %}
+        {% endfor %}
+        </p>
         <button type="submit">Enregistrer les modifications</button>
     </form>
     <p><a href="{% url 'profilemanager:detail' slug=current_user.slug pk=current_user.pk %}">Annuler</a></p>
