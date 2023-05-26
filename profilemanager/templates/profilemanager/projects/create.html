@@ -7,7 +7,7 @@
 {% block content %}
 
     <h1>Partage tes projets avec les recruteurs</h1>
-    <form method="POST" action="{% url 'profilemanager:project-create' %}">
+    <form method="POST" action="{% url 'profilemanager:project-create' pk=pk %}">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Enregistrer</button>
