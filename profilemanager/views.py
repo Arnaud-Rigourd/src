@@ -244,6 +244,11 @@ class ProjectCreate(CreateView):
     model = Projects
     form_class = CustomProjectsForm
 
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.pk != self.kwargs['pk']:
+            return HttpResponseForbidden()
+        return super().dispatch(request, *args, **kwargs)
+
     def get_form_kwargs(self) -> dict[str, Any]:
         """
         Returns the keyword arguments for instantiating the form.
@@ -258,8 +263,10 @@ class ProjectCreate(CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         current_user = self.request.user
+        user = get_object_or_404(User, pk=current_user.pk)
         context['current_user'] = current_user
         context['username'] = current_user.username
+        context['pk'] = user.pk
         return context
 
     def form_valid(self, form: CustomProjectsForm) -> HttpResponseRedirect:
@@ -376,6 +383,7 @@ class ProfileMeetings(TemplateView):
         context['user'] = user
         context['meetings'] = user.profile.meetings_set.all()
         context['meeting_form'] = CustomMeetingForm()
+        # context['company'] = context['meetings'].filter(company__pk=)
         return context
 
 
