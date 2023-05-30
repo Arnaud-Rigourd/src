@@ -9,7 +9,10 @@
     <h1>Hello on {{ user.first_name }} {{ user.last_name }} profile !</h1>
     <h2>Suivi de tes rendez-vous</h2>
 
+
+    <h2>Rendez-vous en attente de validation</h2>
     {% for meeting in meetings %}
+        {% if meeting.status == 'pending' %}
         <div class="meeting">
             <img src="{{ user.profile_image }}" alt="profile picture" />
             <p>Le {{ meeting.meeting_date|date:'d/m/Y' }} à {{ meeting.meeting_date|date:'H:i' }}</p>
@@ -23,6 +26,34 @@
                 <button type="submit">Annuler cette demande</button>
             </form>
         </div>
+        {% endif %}
     {% endfor %}
+
+    <h2>Rendez-vous confirmés</h2>
+    {% for meeting in meetings %}
+        {% if meeting.status == 'accepted' %}
+        <div class="meeting">
+            <img src="{{ user.profile_image }}" alt="profile picture" />
+            <p>Le {{ meeting.meeting_date|date:'d/m/Y' }} à {{ meeting.meeting_date|date:'H:i' }}</p>
+            <p>avec {{ meeting.dev.user.first_name }}</p>
+            <p>statut : {{ meeting.status }}</p>
+            <p>Message : {{ meeting.message }} </p>
+        </div>
+        {% endif %}
+    {% endfor %}
+
+    <h2>Rendez-vous refusés</h2>
+    {% for meeting in meetings %}
+        {% if meeting.status == 'declined' %}
+        <div class="meeting">
+            <img src="{{ user.profile_image }}" alt="profile picture" />
+            <p>Le {{ meeting.meeting_date|date:'d/m/Y' }} à {{ meeting.meeting_date|date:'H:i' }}</p>
+            <p>avec {{ meeting.dev.user.first_name }}</p>
+            <p>statut : {{ meeting.status }}</p>
+            <p>Message : {{ meeting.message }} </p>
+        </div>
+        {% endif %}
+    {% endfor %}
+    
 
 {% endblock %}
