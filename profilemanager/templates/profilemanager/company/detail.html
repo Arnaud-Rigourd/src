@@ -16,6 +16,12 @@
             <p>avec {{ meeting.dev.user.first_name }}</p>
             <p>statut : {{ meeting.status }}</p>
             <p>Message : {{ meeting.message }} </p>
+
+            <form method="POST" action="{% url 'meetingsmanager:delete' meeting_pk=meeting.pk %}">
+                {% csrf_token %}
+                <input type="hidden" name="meeting_id" value="meeting.pk" />
+                <button type="submit">Annuler cette demande</button>
+            </form>
         </div>
     {% endfor %}
 
