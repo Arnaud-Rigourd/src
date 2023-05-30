@@ -1,10 +1,13 @@
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.mail import send_mail
 from django.http import HttpResponseForbidden
 from django.shortcuts import get_object_or_404
-from django.urls import reverse
-from django.views.generic import TemplateView, CreateView, UpdateView
+from django.template.loader import render_to_string
+from django.urls import reverse, reverse_lazy
+from django.views.generic import TemplateView, CreateView, UpdateView, DeleteView
 
+from devforfree import settings
 from meetingsmanager.forms import CustomMeetingForm
 from meetingsmanager.models import Meetings
 from profilemanager.models import Company, Profile
@@ -19,11 +22,17 @@ class MeetingsCreate(CreateView):
         return reverse('interfacemanager:home')
 
     def form_valid(self, form):
-        print('form_valid')
         self.object = form.save(commit=False)
         self.object.dev = get_object_or_404(Profile, pk=self.kwargs['dev_pk'])
         self.object.company = get_object_or_404(Company, pk=self.kwargs['company_pk'])
         self.object.save()
+
+        subject = self.object.title
+        print(self.object.title)
+        message = render_to_string('meetingsmanager/email.html', {'company': self.object.company, 'dev': self.object.dev, 'meeting': self.object})
+        email_from = settings.EMAIL_HOST_USER
+        email_to = [self.object.dev.user.email]
+        send_mail(subject, message, email_from, email_to)
         return super().form_valid(form)
 
 
@@ -67,5 +76,20 @@ class MeetingsUpdate(UpdateView):
         return super().form_valid(form)
 
 
+class MeetingsDelete(DeleteView):
+    template_name = 'profilemanager/company/detail.html'
+    model = Meetings
+    pk_url_kwarg = 'meeting_pk'
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return HttpResponseForbidden()
+        meeting = self.get_object()
+        if request.user.pk != meeting.company.user.pk:
+            return HttpResponseForbidden()
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_success_url(self):
+        return reverse('profilemanager:company-monitoring', kwargs={'slug': self.object.company.user.slug, 'pk': self.object.company.user.pk})
 
 

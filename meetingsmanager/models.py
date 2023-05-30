@@ -16,7 +16,7 @@ class Meetings(models.Model):
         choices=STATUS_CHOICES,
         default='pending',
     )
-    title = models.CharField(max_length=100, default="Demande de rendez-vous")
+    title = models.CharField(max_length=100, default="Vous avez une nouvelle demande de rendez-vous")
     meeting_date = models.DateTimeField(default=timezone.now)
     message = models.TextField()
     company = models.ForeignKey('profilemanager.Company', on_delete=models.CASCADE)

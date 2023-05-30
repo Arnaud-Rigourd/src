@@ -349,7 +349,7 @@ class CompanyDetail(TemplateView):
     template_name = "profilemanager/company/detail.html"
 
     def dispatch(self, request, *args, **kwargs):
-        if request.user.category != 'company' or request.user.pk != self.kwargs['pk']:
+        if request.user.pk != self.kwargs['pk']:
             return HttpResponseForbidden()
         return super().dispatch(request, *args, **kwargs)
 
