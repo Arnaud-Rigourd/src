@@ -5,10 +5,6 @@ from meetingsmanager.models import Meetings
 
 
 class CustomMeetingForm(forms.ModelForm):
-    meeting_date = forms.DateTimeField(
-        widget=DateTimePickerInput()
-    )
-
     class Meta:
         model = Meetings
         fields = ['title', 'message', 'meeting_date']
