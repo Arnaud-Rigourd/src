@@ -5,10 +5,12 @@ charset-normalizer==3.1.0
 cloudinary==1.33.0
 dj-database-url==2.0.0
 Django==4.2.1
+django-flatpickr==2.0.0
 gunicorn==20.1.0
 idna==3.4
 Pillow==9.5.0
 psycopg2==2.9.6
+pydantic==1.10.8
 python-decouple==3.8
 python-dotenv==1.0.0
 requests==2.30.0

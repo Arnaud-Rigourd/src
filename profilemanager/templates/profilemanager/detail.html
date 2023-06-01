@@ -163,6 +163,7 @@
     <section id="contact-{{ user.username }}">
         <form method="POST" action="{% url 'meetingsmanager:create' company_pk=current_user.company.pk dev_pk=user.profile.pk %}">
             {% csrf_token %}
+            {{ meeting_form.media }}
             {{ meeting_form.as_p }}
             <button type="submit">Envoyer</button>
         </form>
