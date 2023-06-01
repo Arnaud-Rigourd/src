@@ -17,7 +17,7 @@
         <button type="submit">Valider</button>
     </form>
     
-    <p><a href="{% url 'profilemanager:detail' slug=slug pk=current_user.profile.pk %}">Annuler</a></p>
+    <p><a href="{% url 'profilemanager:detail' slug=slug pk=current_user.pk %}">Annuler</a></p>
 {% else %}
     <h1>Accès non autorisé</h1>
 {% endif %}

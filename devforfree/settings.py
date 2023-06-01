@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'profilemanager',
     'interfacemanager',
     'meetingsmanager',
+    'django_flatpickr',
 ]
 
 MIDDLEWARE = [
