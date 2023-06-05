@@ -88,7 +88,7 @@ def signin(request):
             redirect to either the profile creation page or the home page.
     """
     # Handle form for GET request
-    if request.methode != 'POST':
+    if request.method != 'POST':
         return render(request, "registration/login.html", context={'form': AuthenticationForm()})
 
     form = AuthenticationForm(data=request.POST)
@@ -161,7 +161,7 @@ def update_phone_display(request, pk):
     pass
 
 
-def _send_confirmation_email(request, context, form):
+def _send_confirmation_email(request, context, form: CustomSignupForm) -> 'context':
     load_dotenv()
     user = _setup_default_profile_image(form)
     email_confirmation = EmailConfirmation(user=user)
@@ -184,12 +184,13 @@ def _confirmation_email_content(request, email_confirmation):
     return subject, message, from_email
 
 
-def _introduction_email_content(user):
+def _introduction_email_content(user: CustomUser):
     subject = "Bienvenue sur DevForFree ! 👩‍💻🧑‍💻"
     text_message = render_to_string('accounts/partials/text_introduction_dev_email.html', {'user': user})
     html_message = render_to_string('accounts/partials/html_introduction_dev_email.html', {'user': user})
     from_email = os.environ.get('EMAIL_HOST_USER')
     return subject, text_message, html_message, from_email
+
 
 def _setup_default_profile_image(form: CustomSignupForm) -> CustomUser:
     user = form.save()
@@ -199,6 +200,6 @@ def _setup_default_profile_image(form: CustomSignupForm) -> CustomUser:
     return user
 
 
-def _create_company_profile(user):
+def _create_company_profile(user: CustomUser) -> CustomUser:
     user_company = Company.objects.create(user=user)
     return user_company
