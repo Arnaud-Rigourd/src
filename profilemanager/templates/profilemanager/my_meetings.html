@@ -6,7 +6,7 @@
 
 {% block content %}
 
-    <h1>RDV en attente de validation</h1>
+    <h1>RDV en attente de validation !</h1>
     {% for meeting in meetings %}
         {% if meeting.status == 'pending' %}
 
@@ -16,7 +16,11 @@
                 <p>avec {{ meeting.company.user.first_name }}</p>
                 <p>statut : {{ meeting.status }}</p>
                 <img src="{{ meeting.company.user.profile_image }}" alt="company profile picture" />
-                <p>Message : {{ meeting.message }}</p>
+                <p>Message old : {{ meeting.message }}</p>
+                <h4>Discution</h4>
+                {% for message in meeting.messages_set.all %}
+                    <p>{{ message.content }}</p>
+                {% endfor %}
 
             </div>
 
@@ -31,6 +35,14 @@
                 <input type="hidden" name="status" value="declined">
                 <button type="submit">Refuser</button>
             </form>
+
+            <div class="conversation">
+                <form method="POST" action="{% url 'meetingsmanager:message-create' meeting_pk=meeting.pk %}">
+                    {% csrf_token %}
+                    {{ message_form.as_p }}
+                    <button type="submit">Envoyer</button>
+                </form>
+            </div>
             {% endif %}
         </div>
 

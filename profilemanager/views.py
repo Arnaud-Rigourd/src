@@ -13,7 +13,7 @@ from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView, CreateView, DeleteView, UpdateView
 
 from accounts.forms import CustomUpdateForm
-from meetingsmanager.forms import CustomMeetingForm
+from meetingsmanager.forms import CustomMeetingForm, CustomMessageForm, CustomMessageFormSet
 from profilemanager.forms import CustomProfileForm, CustomStacksFormSet, CustomProjectsFormSet, CustomStacksForm, \
     CustomProjectsForm
 from profilemanager.models import Profile, Stacks, Projects, Company
@@ -61,6 +61,8 @@ class ProfileDetail(TemplateView):
         context['user_form'] = CustomUpdateForm()
         context['not_phone_display'] = not user.phone_display
         context['meeting_form'] = CustomMeetingForm()
+        context['message_form'] = CustomMessageForm()
+        context['messages'] = CustomMessageFormSet()
 
         return context
 
@@ -383,6 +385,7 @@ class ProfileMeetings(TemplateView):
         context['user'] = user
         context['meetings'] = user.profile.meetings_set.all()
         context['meeting_form'] = CustomMeetingForm()
+        context['message_form'] = CustomMessageForm()
         return context
 
 

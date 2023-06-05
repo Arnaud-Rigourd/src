@@ -8,8 +8,8 @@ from django.urls import reverse, reverse_lazy
 from django.views.generic import TemplateView, CreateView, UpdateView, DeleteView
 
 from devforfree import settings
-from meetingsmanager.forms import CustomMeetingForm
-from meetingsmanager.models import Meetings
+from meetingsmanager.forms import CustomMeetingForm, CustomMessageFormSet, CustomMessageForm
+from meetingsmanager.models import Meetings, Messages
 from profilemanager.models import Company, Profile
 
 
@@ -23,12 +23,26 @@ class MeetingsCreate(CreateView):
     def get_success_url(self):
         return reverse('profilemanager:company-monitoring', kwargs={'slug': self.object.company.user.slug, 'pk': self.object.company.user.pk})
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.POST:
+            context['messages'] = CustomMessageFormSet(self.request.POST)
+        else:
+            context['current_user'] = self.request.user
+            context['messages'] = CustomMessageFormSet()
+        return context
+
     def form_valid(self, form):
+        context = self.get_context_data()
+        messages = context['messages']
         self.object = form.save(commit=False)
         self.object.dev = get_object_or_404(Profile, pk=self.kwargs['dev_pk'])
         self.object.company = get_object_or_404(Company, pk=self.kwargs['company_pk'])
         self.object.save()
 
+        if messages.is_valid():
+            messages.instance = self.object
+            messages.save()
         subject, message, email_from, email_to = _email_content(self, self.object)
         send_mail(subject, message, email_from, email_to)
         return super().form_valid(form)
@@ -89,6 +103,24 @@ class MeetingsDelete(DeleteView):
 
     def get_success_url(self):
         return reverse('profilemanager:company-monitoring', kwargs={'slug': self.object.company.user.slug, 'pk': self.object.company.user.pk})
+
+
+class MessagesCreateDev(CreateView):
+    template_name = 'profilemanager/my_meetings.html'
+    form_class = CustomMessageForm
+
+    def get_success_url(self):
+        print(self.request.user.pk)
+        return reverse('profilemanager:dev-meetings', kwargs={'pk': self.request.user.pk, 'slug': self.request.user.slug})
+
+    def form_valid(self, form):
+        print('Hello')
+        self.object = form.save(commit=False)
+        meeting = get_object_or_404(Meetings, pk=self.kwargs['meeting_pk'])
+        self.object.meeting = meeting
+        self.object.save()
+        print(self.object.content)
+        return super().form_valid(form)
 
 
 def _email_content(self, object):

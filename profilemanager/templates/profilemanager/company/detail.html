@@ -18,7 +18,10 @@
             <p>Le {{ meeting.meeting_date|date:'d/m/Y' }} à {{ meeting.meeting_date|date:'H:i' }}</p>
             <p>avec {{ meeting.dev.user.first_name }}</p>
             <p>statut : {{ meeting.status }}</p>
-            <p>Message : {{ meeting.message }} </p>
+            <h4>Discution</h4>
+            {% for message in meeting.messages_set.all %}
+                <p>{{ message.content }}</p>
+            {% endfor %}
 
             <form method="POST" action="{% url 'meetingsmanager:delete' meeting_pk=meeting.pk %}">
                 {% csrf_token %}
