@@ -385,6 +385,7 @@ class ProfileMeetings(TemplateView):
         context['user'] = user
         context['meetings'] = user.profile.meetings_set.all()
         context['meeting_form'] = CustomMeetingForm()
+        context['message_form'] = CustomMessageForm()
         return context
 
 

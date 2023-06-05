@@ -30,8 +30,6 @@ class Meetings(models.Model):
 class Messages(models.Model):
     content = models.TextField()
     meeting = models.ForeignKey(Meetings, on_delete=models.CASCADE)
-    # company = models.ForeignKey('profilemanager.Company', on_delete=models.CASCADE)
-    # dev = models.ForeignKey('profilemanager.Profile', on_delete=models.CASCADE, related_name='dev')
     date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):

@@ -36,14 +36,13 @@
                 <button type="submit">Refuser</button>
             </form>
 
-{#            <div class="conversation">#}
-{#                <form method="POST" action="{% url 'meetingsmanager:create' company_pk=meeting.company.pk dev_pk=meeting.dev.pk %}">#}
-{#                    {% csrf_token %}#}
-{#                    {{ meeting_form.media }}#}
-{#                    {{ meeting_form.as_p }}#}
-{#                    <button type="submit">Envoyer</button>#}
-{#                </form>#}
-{#            </div>#}
+            <div class="conversation">
+                <form method="POST" action="{% url 'meetingsmanager:message-create' meeting_pk=meeting.pk %}">
+                    {% csrf_token %}
+                    {{ message_form.as_p }}
+                    <button type="submit">Envoyer</button>
+                </form>
+            </div>
             {% endif %}
         </div>
 
