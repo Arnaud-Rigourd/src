@@ -10,8 +10,10 @@
   object-fit: cover;
   overflow: hidden;
   top: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate3d(-50%, -50%, -5px) scale(1.5);
+  transform-style: preserve-3d;
   width: 100vw;
+  z-index: -1;
 }
 
 header {
@@ -23,6 +25,9 @@ header {
   justify-content: center;
   margin-bottom: 50px;
   padding: 80px;
+  transform: translateZ(-5px) scale(1.5);
+  transform-style: preserve-3d;
+  z-index: -1;
 
   .main-title {
     color: #E8EBF7;
@@ -78,6 +83,7 @@ header {
       height: 50px;
       opacity: 0;
       width: 450px;
+      z-index: 0;
 
       &:nth-child(2) {
         translate: 1px -1px;
@@ -127,6 +133,15 @@ header {
 
 // Parallax
 
-//.main-parallax {
-//
-//}
+.wrapper {
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  perspective: 10px;
+  scroll-behavior: smooth;
+  width: 100vw;
+}
+
+main {
+  background-color: $lighter;
+}
