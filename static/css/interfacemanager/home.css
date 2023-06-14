@@ -35,7 +35,7 @@ header .btn-container {
   justify-content: center;
   margin: 0 auto;
 }
-header .btn-container p {
+header .btn-container .header-btn {
   position: absolute;
   background-color: #E8EBF7;
   border: 3px solid #262322;
@@ -45,15 +45,19 @@ header .btn-container p {
   transition: transform 300ms;
   width: 450px;
 }
-header .btn-container p:hover {
+header .btn-container .header-btn:hover {
   transform: translate(5px, -5px);
 }
-header .btn-container p a {
+header .btn-container .header-btn__content {
   color: #262322;
   font-weight: bold;
 }
-header .btn-container p a:visited {
+header .btn-container .header-btn:visited {
   color: #262322;
+}
+header .btn-container .header-btn:active {
+  transform: translate(0, 0);
+  background-color: #F1E4F3;
 }
 header .btn-container .trace {
   position: absolute;

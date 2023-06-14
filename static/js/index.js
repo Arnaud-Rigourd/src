@@ -86,3 +86,10 @@ btnContainer.addEventListener('mouseout', e => {
         fadeOutTraces();
     }
 })
+
+btnContainer.addEventListener('mousedown', e => {
+    traces.forEach((trace) => {
+        trace.style.opacity = 0;
+    })
+
+})
