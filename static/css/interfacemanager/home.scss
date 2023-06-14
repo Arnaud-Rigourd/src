@@ -1,0 +1,88 @@
+@import url('../keyframes.css');
+@import '../utils/colors';
+@import '../utils/mixins';
+
+header {
+  background-color: #5b80b2;
+  margin-bottom: 50px;
+
+  .main-title {
+    font-size: 9vh;
+    text-align: center;
+  }
+
+  .btn-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+
+    p {
+      position: absolute;
+      transition: transform 500ms, background-color 500ms, box-shadow 500ms;
+      width: 189px;
+      height: 39px;
+      z-index: 1;
+
+      &:hover {
+        @include hoverEffect
+      }
+
+      a {
+        color: $lighter;
+
+        &:visited {
+          color: $lighter;
+        }
+
+      }
+    }
+
+    .trace {
+      position: absolute;
+      background-color: $medium;
+      border-radius: 5px 5px 5px 5px;
+      height: 39px;
+      width: 189px;
+      opacity: 0;
+
+      &:nth-child(2) {
+        translate: 1px -1px;
+      }
+
+      &:nth-child(3) {
+        translate: 2px -2px;
+      }
+
+      &:nth-child(4) {
+        translate: 3px -3px;
+      }
+    }
+  }
+}
+
+.header__arrows {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 4.5vh;
+  margin: 0 auto;
+  width: 3vh;
+
+
+  .arrow {
+    filter: invert(73%) sepia(0%) saturate(1%) hue-rotate(339deg) brightness(94%) contrast(89%);
+    opacity: 0.8;
+    position: absolute;
+    width: 3vh;
+
+    &:first-child {
+      animation: breathe 2s infinite;
+    }
+
+    &:last-child {
+      animation: breathe 2s 300ms infinite;
+      top: 14px;
+    }
+  }
+}
+

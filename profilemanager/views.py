@@ -2,20 +2,19 @@ import json
 from typing import Any
 
 from django.contrib.auth import get_user_model
-from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
 from django.http import HttpResponse, HttpResponseForbidden, HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404
 from django.template.loader import render_to_string
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView, CreateView, DeleteView, UpdateView
 
 from accounts.forms import CustomUpdateForm
 from meetingsmanager.forms import CustomMeetingForm, CustomMessageForm, CustomMessageFormSet
-from profilemanager.forms import CustomProfileForm, CustomStacksFormSet, CustomProjectsFormSet, CustomStacksForm, \
-    CustomProjectsForm
+from profilemanager.forms import *
 from profilemanager.models import Profile, Stacks, Projects, Company
 
 User = get_user_model()
@@ -189,6 +188,7 @@ class StackCreate(CreateView):
             return HttpResponse(html)
         return super().form_valid(form)
 
+
 # dispatch method overloaded to check if the user is the owner of the profile
 class StackUpdate(UpdateView):
     template_name = "profilemanager/detail.html"
@@ -215,6 +215,7 @@ class StackUpdate(UpdateView):
             html = render_to_string('profilemanager/partials/stacks_partial.html', {'stack': self.object})
             return HttpResponse(html)
         return super().form_valid(form)
+
 
 # dispatch method overloaded to check if the user is the owner of the profile
 class StackDelete(DeleteView):
@@ -301,7 +302,6 @@ class ProjectUpdate(UpdateView):
         kwargs.update({'user': self.request.user})
         return kwargs
 
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         current_user = self.request.user
@@ -322,6 +322,7 @@ class ProjectUpdate(UpdateView):
             return self.form_invalid(form)
         self.object.save()
         return super().form_valid(form)
+
 
 # dispatch method overloaded to check if the user is the owner of the profile
 class ProjectDelete(DeleteView):
@@ -355,7 +356,6 @@ class CompanyDetail(TemplateView):
             return HttpResponseForbidden()
         return super().dispatch(request, *args, **kwargs)
 
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user = get_object_or_404(User, pk=self.kwargs['pk'])
@@ -387,6 +387,3 @@ class ProfileMeetings(TemplateView):
         context['meeting_form'] = CustomMeetingForm()
         context['message_form'] = CustomMessageForm()
         return context
-
-
-

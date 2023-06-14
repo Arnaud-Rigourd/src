@@ -6,8 +6,12 @@
 
 }
 
+a {
+	text-decoration: none;
+}
+
 a:visited {
-  color: black;
+  	color: black;
 }
 
 .flex {
@@ -21,11 +25,11 @@ a:visited {
 }
 
 .flex-column {
-  flex-direction: column;
+  	flex-direction: column;
 }
 
 .space-around {
-  justify-content: space-around;
+  	justify-content: space-around;
 }
 
 .hidden {
@@ -35,10 +39,10 @@ a:visited {
 .active {}
 
 strong {
-  font-weight: normal;
+  	font-weight: normal;
 }
 
 em {
-  font-style: normal;
+  	font-style: normal;
 }
 
