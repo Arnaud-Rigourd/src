@@ -40,7 +40,7 @@ header {
     justify-content: center;
     margin: 0 auto;
 
-    p {
+    .header-btn {
       position: absolute;
       background-color: $lighter;
       border: 3px solid $darker;
@@ -54,14 +54,20 @@ header {
         @include hoverEffect
       }
 
-      a {
+      &__content {
         color: $darker;
         font-weight: bold;
 
-        &:visited {
-          color: $darker;
-        }
 
+      }
+
+      &:visited {
+        color: $darker;
+      }
+
+      &:active {
+        transform: translate(0, 0);
+        background-color: $mediumLight;
       }
     }
 
