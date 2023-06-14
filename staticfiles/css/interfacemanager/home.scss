@@ -5,57 +5,62 @@
 
 #lp-video {
   position: absolute;
-  width: 100vw;
   height: 100vh;
+  left: 50%;
+  object-fit: cover;
   overflow: hidden;
   top: 50%;
-  left: 50%;
   transform: translate(-50%, -50%);
-  object-fit: cover;
+  width: 100vw;
 }
 
 header {
   position: relative;
-  margin-bottom: 50px;
-  height: 100vh;
-  padding: 80px;
+  align-items: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  height: 100vh;
   justify-content: center;
+  margin-bottom: 50px;
+  padding: 80px;
 
   .main-title {
-    font-family: $mainTitle;
-    color: $lighter;
-    font-size: 9vh;
+    color: #E8EBF7;
+    font-family: "clash display", "sans-serif";
+    font-size: 6.3vw;
+    letter-spacing: 0.4vh;
+    margin: 15vh auto;
     text-align: center;
-    margin: 30px auto;
     text-shadow: 0 0 5px black;
+    -webkit-text-stroke: 1px black;
   }
 
   .btn-container {
     position: relative;
     display: flex;
     justify-content: center;
-    height: fit-content;
-    margin: 30px auto;
+    margin: 0 auto;
 
     p {
       position: absolute;
+      background-color: $lighter;
+      border: 3px solid $darker;
+      height: 50px;
+      padding: 12px;
+      text-align: center;
       transition: transform 300ms;
-      width: 232px;
-      height: 39px;
-      z-index: 0;
+      width: 450px;
 
       &:hover {
         @include hoverEffect
       }
 
       a {
-        color: $lighter;
+        color: $darker;
+        font-weight: bold;
 
         &:visited {
-          color: $lighter;
+          color: $darker;
         }
 
       }
@@ -63,11 +68,11 @@ header {
 
     .trace {
       position: absolute;
-      background-color: $mediumDark;
+      background-color: $darker;
       border-radius: 3px;
-      height: 39px;
-      width: 232px;
+      height: 50px;
       opacity: 0;
+      width: 450px;
 
       &:nth-child(2) {
         translate: 1px -1px;
@@ -96,10 +101,10 @@ header {
   width: 3vh;
 
   .arrow {
-    filter: invert(73%) sepia(0%) saturate(1%) hue-rotate(339deg) brightness(94%) contrast(89%);
-    opacity: 0.8;
     position: absolute;
     bottom: 0;
+    filter: invert(73%) sepia(0%) saturate(1%) hue-rotate(339deg) brightness(94%) contrast(89%);
+    opacity: 0.8;
     width: 3vh;
     z-index: 1;
 

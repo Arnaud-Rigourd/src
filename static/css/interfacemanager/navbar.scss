@@ -2,18 +2,20 @@
 
 nav {
   position: fixed;
-  background-color: $darker;
+  animation: fadeIn ease 3s forwards;
+  background-color: #000000FF;
+  display: flex;
+  justify-content: space-between;
+  opacity: 0;
+  padding: 25px 10px;
   top: 0;
   width: 100vw;
   z-index: 10;
-  display: flex;
-  justify-content: space-between;
-  padding: 25px 10px;
 
   ul {
-    min-width: 500px;
     display: flex;
     justify-content: space-evenly;
+    min-width: 500px;
   }
 
   li,
