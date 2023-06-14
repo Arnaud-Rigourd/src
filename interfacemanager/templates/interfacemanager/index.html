@@ -6,68 +6,68 @@
 {% endblock %}
 
 {% block content %}
-
-<video autoplay muted loop id="lp-video">
-    <source src="{% static 'videos/bg_clip_lp.mp4' %}" />
-    Your browser does not support HTML5 video.
-</video>
-<header id="header">
-    <h1 class="main-title">Ton projet n'a pas de prix&nbsp;!<br />
-        Ton site non plus
-    </h1>
-    <div id='btnContainer' class="btn-container">
-        <div class="trace"></div>
-        <div class="trace"></div>
-        <div class="trace"></div>
-        <div class="trace"></div>
-        <div class="trace"></div>
-{#        <p id='headerBtn' class="btn"><a href="{% url 'profilemanager:index' %}">Trouve un développeur</a></p>#}
-        <a id='headerBtn' class="btn header-btn" href="{% url 'profilemanager:index' %}"><p class="header-btn__content">Trouve un développeur</p></a>
-    </div>
-    <div class="header__arrows">
-        <svg class="arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-            <path d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/>
-        </svg>
-        <svg class="arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-            <path d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/>
-        </svg>
-    </div>
-</header>
-    
-<main class="main-parallax">
-    {% if current_user.is_authenticated %}
-        <h1>Bienvenue {{ current_user.first_name }}</h1>
-    {% else %}
-        <h1>Bienvenue sur Dev For Free !</h1>
-    {% endif %}
-
-    <section class="faq">
-        <h2>On te crée ton site gratuitement</h2>
-        {% for faq in faq_clients %}
-        <div class="faq__QA">
-            <div class="faq__question">
-                <h3>{{ faq.question }}</h3>
-            </div>
-            <div class="faq__answer">
-                <p>{{ faq.answer }}</p>
-            </div>
+<div class="wrapper">
+    <video autoplay muted loop id="lp-video">
+        <source src="{% static 'videos/bg_clip_lp.mp4' %}" />
+        Your browser does not support HTML5 video.
+    </video>
+    <header id="header">
+        <h1 class="main-title">Ton projet n'a pas de prix&nbsp;!<br />
+            Ton site non plus
+        </h1>
+        <div id='btnContainer' class="btn-container">
+            <div class="trace"></div>
+            <div class="trace"></div>
+            <div class="trace"></div>
+            <div class="trace"></div>
+            <div class="trace"></div>
+    {#        <p id='headerBtn' class="btn"><a href="{% url 'profilemanager:index' %}">Trouve un développeur</a></p>#}
+            <a id='headerBtn' class="btn header-btn" href="{% url 'profilemanager:index' %}"><p class="header-btn__content">Trouve un développeur</p></a>
         </div>
-        {% endfor %}
-    </section>
-
-    <section class="faq">
-        <h2>Ce site est fait pour toi, jeune développeur</h2>
-        {% for faq in faq_devs %}
-        <div class="faq__QA">
-            <div class="faq__question">
-                <h3>{{ faq.question }}</h3>
-            </div>
-            <div class="faq__answer">
-                <p>{{ faq.answer }}</p>
-            </div>
+        <div class="header__arrows">
+            <svg class="arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                <path d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/>
+            </svg>
+            <svg class="arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                <path d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/>
+            </svg>
         </div>
-        {% endfor %}
-    </section>
-</main>
+    </header>
 
+    <main class="main-parallax">
+        {% if current_user.is_authenticated %}
+            <h1>Bienvenue {{ current_user.first_name }}</h1>
+        {% else %}
+            <h1>Bienvenue sur Dev For Free !</h1>
+        {% endif %}
+
+        <section class="faq">
+            <h2>On te crée ton site gratuitement</h2>
+            {% for faq in faq_clients %}
+            <div class="faq__QA">
+                <div class="faq__question">
+                    <h3>{{ faq.question }}</h3>
+                </div>
+                <div class="faq__answer">
+                    <p>{{ faq.answer }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </section>
+
+        <section class="faq">
+            <h2>Ce site est fait pour toi, jeune développeur</h2>
+            {% for faq in faq_devs %}
+            <div class="faq__QA">
+                <div class="faq__question">
+                    <h3>{{ faq.question }}</h3>
+                </div>
+                <div class="faq__answer">
+                    <p>{{ faq.answer }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </section>
+    </main>
+</div>
 {% endblock %}
