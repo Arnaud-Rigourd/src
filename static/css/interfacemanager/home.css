@@ -14,14 +14,13 @@ header .btn-container {
 }
 header .btn-container p {
   position: absolute;
-  transition: transform 500ms, background-color 500ms, box-shadow 500ms;
+  transition: transform 300ms;
   width: 189px;
   height: 39px;
   z-index: 1;
 }
 header .btn-container p:hover {
-  background-color: #63372C;
-  transform: translate(4px, -4px);
+  transform: translate(5px, -5px);
 }
 header .btn-container p a {
   color: #F2E5D7;
@@ -31,8 +30,8 @@ header .btn-container p a:visited {
 }
 header .btn-container .trace {
   position: absolute;
-  background-color: #C97D60;
-  border-radius: 5px 5px 5px 5px;
+  background-color: #63372C;
+  border-radius: 3px;
   height: 39px;
   width: 189px;
   opacity: 0;
@@ -45,6 +44,9 @@ header .btn-container .trace:nth-child(3) {
 }
 header .btn-container .trace:nth-child(4) {
   translate: 3px -3px;
+}
+header .btn-container .trace:nth-child(5) {
+  translate: 4px -4px;
 }
 
 .header__arrows {

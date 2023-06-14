@@ -1,3 +1,5 @@
-@import url("home.scss");
+@import url('setup.css');
+@import url('interfacemanager/home.css');
+@import url('tagify.css');
+@import url('utils/components.css');
 
-/*# sourceMappingURL=index.css.map */

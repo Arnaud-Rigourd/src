@@ -46,6 +46,9 @@ const header = document.getElementById('header');
 const btnContainer = document.getElementById('btnContainer');
 const traces = document.querySelectorAll('.trace');
 
+const animationTime = 300
+const traceNum = 5
+
 let hoverTimeout;
 let fadeIns = [];
 let fadeOuts = [];
@@ -55,7 +58,7 @@ btnContainer.addEventListener('mouseenter', e => {
         traces.forEach((trace, index) => {
             fadeIns[index] = setTimeout(() => {
                 trace.style.opacity = 1;
-            }, index * 200);
+            }, index * animationTime/traceNum);
         });
     }, 50);
 })
@@ -67,7 +70,7 @@ function fadeOutTraces() {
     traces.forEach((trace, index) => {
         fadeOuts[index] = setTimeout(() => {
             trace.style.opacity = 0;
-        }, (traces.length - 1 - index) * 500/4);
+        }, (traces.length - 1 - index) * animationTime/traceNum);
     });
 }
 

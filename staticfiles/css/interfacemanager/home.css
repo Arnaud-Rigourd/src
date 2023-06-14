@@ -1,0 +1,72 @@
+@import url("../keyframes.css");
+header {
+  background-color: #5b80b2;
+  margin-bottom: 50px;
+}
+header .main-title {
+  font-size: 9vh;
+  text-align: center;
+}
+header .btn-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+header .btn-container p {
+  position: absolute;
+  transition: transform 500ms, background-color 500ms, box-shadow 500ms;
+  width: 189px;
+  height: 39px;
+  z-index: 1;
+}
+header .btn-container p:hover {
+  background-color: #63372C;
+  transform: translate(4px, -4px);
+}
+header .btn-container p a {
+  color: #F2E5D7;
+}
+header .btn-container p a:visited {
+  color: #F2E5D7;
+}
+header .btn-container .trace {
+  position: absolute;
+  background-color: #C97D60;
+  border-radius: 5px 5px 5px 5px;
+  height: 39px;
+  width: 189px;
+  opacity: 0;
+}
+header .btn-container .trace:nth-child(2) {
+  translate: 1px -1px;
+}
+header .btn-container .trace:nth-child(3) {
+  translate: 2px -2px;
+}
+header .btn-container .trace:nth-child(4) {
+  translate: 3px -3px;
+}
+
+.header__arrows {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 4.5vh;
+  margin: 0 auto;
+  width: 3vh;
+}
+.header__arrows .arrow {
+  filter: invert(73%) sepia(0%) saturate(1%) hue-rotate(339deg) brightness(94%) contrast(89%);
+  opacity: 0.8;
+  position: absolute;
+  width: 3vh;
+}
+.header__arrows .arrow:first-child {
+  animation: breathe 2s infinite;
+}
+.header__arrows .arrow:last-child {
+  animation: breathe 2s 300ms infinite;
+  top: 14px;
+}
+
+/*# sourceMappingURL=home.css.map */

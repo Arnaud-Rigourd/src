@@ -18,7 +18,7 @@ header {
 
     p {
       position: absolute;
-      transition: transform 300ms;
+      transition: transform 500ms, background-color 500ms, box-shadow 500ms;
       width: 189px;
       height: 39px;
       z-index: 1;
@@ -39,8 +39,8 @@ header {
 
     .trace {
       position: absolute;
-      background-color: $mediumDark;
-      border-radius: 3px;
+      background-color: $medium;
+      border-radius: 5px 5px 5px 5px;
       height: 39px;
       width: 189px;
       opacity: 0;
@@ -55,10 +55,6 @@ header {
 
       &:nth-child(4) {
         translate: 3px -3px;
-      }
-
-      &:nth-child(5) {
-        translate: 4px -4px;
       }
     }
   }
