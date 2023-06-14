@@ -1,6 +1,5 @@
 @import 'colors';
 
 @mixin hoverEffect {
-  //background-color: $mediumDark;
   transform: translate(5px, -5px);
 }
