@@ -1,0 +1,1 @@
+{"version":3,"sourceRoot":"","sources":["setup.scss","utils/colors.scss","utils/fonts.scss"],"names":[],"mappings":"AAGA;EACC;EACA;EACA;EACA;EACA,OCRa;;;ADWd;EACC,kBCPS;;;ADUV;EACC;EACA,aEfI;;AFiBD;EACI,OCnBC;;;ADwBT;EACC;;;AAGD;EACC;EACA;EACA;;;AAGD;EACG;;;AAGH;EACG;;;AAGH;EACC;;;AAKD;EACG;;;AAGH;EACG;;;AAGH;EACE,aExDG;;;AF2DL;AAAA;AAAA;AAAA;AAAA;EAKE,aEjEM","file":"setup.css"}

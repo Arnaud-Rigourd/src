@@ -1,0 +1,70 @@
+@import 'utils/fonts';
+@import 'utils/colors';
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	list-style: none;
+	color: $customBlack;
+}
+
+body {
+	background-color: $lighter;
+}
+
+a {
+	text-decoration: none;
+	font-family: $pg;
+
+    &:visited {
+        color: $darker;
+    }
+}
+
+
+.flex {
+	display: flex;
+}
+
+.flex-center {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.flex-column {
+  	flex-direction: column;
+}
+
+.space-around {
+  	justify-content: space-around;
+}
+
+.hidden {
+	display: none;
+}
+
+.active {}
+
+strong {
+  	font-weight: normal;
+}
+
+em {
+  	font-style: normal;
+}
+
+p {
+  font-family: $pg;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: $title;
+}
+
+

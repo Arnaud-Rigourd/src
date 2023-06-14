@@ -1,0 +1,116 @@
+@import url('../keyframes.css');
+@import '../utils/colors';
+@import '../utils/mixins';
+@import '../utils/fonts';
+
+#lp-video {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+}
+
+header {
+  position: relative;
+  margin-bottom: 50px;
+  height: 100vh;
+  padding: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .main-title {
+    font-family: $mainTitle;
+    color: $lighter;
+    font-size: 9vh;
+    text-align: center;
+    margin: 30px auto;
+    text-shadow: 0 0 5px black;
+  }
+
+  .btn-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    height: fit-content;
+    margin: 30px auto;
+
+    p {
+      position: absolute;
+      transition: transform 300ms;
+      width: 232px;
+      height: 39px;
+      z-index: 0;
+
+      &:hover {
+        @include hoverEffect
+      }
+
+      a {
+        color: $lighter;
+
+        &:visited {
+          color: $lighter;
+        }
+
+      }
+    }
+
+    .trace {
+      position: absolute;
+      background-color: $mediumDark;
+      border-radius: 3px;
+      height: 39px;
+      width: 232px;
+      opacity: 0;
+
+      &:nth-child(2) {
+        translate: 1px -1px;
+      }
+
+      &:nth-child(3) {
+        translate: 2px -2px;
+      }
+
+      &:nth-child(4) {
+        translate: 3px -3px;
+      }
+
+      &:nth-child(5) {
+        translate: 4px -4px;
+      }
+    }
+  }
+}
+
+.header__arrows {
+  display: flex;
+  flex-direction: column;
+  height: 4.5vh;
+  margin: 0 auto;
+  width: 3vh;
+
+  .arrow {
+    filter: invert(73%) sepia(0%) saturate(1%) hue-rotate(339deg) brightness(94%) contrast(89%);
+    opacity: 0.8;
+    position: absolute;
+    bottom: 0;
+    width: 3vh;
+    z-index: 1;
+
+    &:first-child {
+      animation: breathe 2s infinite;
+      bottom: 14px;
+    }
+
+    &:last-child {
+      animation: breathe 2s 300ms infinite;
+    }
+  }
+}
+

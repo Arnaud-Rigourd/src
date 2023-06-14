@@ -1,5 +1,9 @@
 @import url('setup.css');
 @import url('interfacemanager/home.css');
+@import url('interfacemanager/navbar.css');
 @import url('tagify.css');
 @import url('utils/components.css');
+@import url('utils/colors.css');
+@import url('utils/mixins.css');
+@import url('utils/fonts.css');
 
