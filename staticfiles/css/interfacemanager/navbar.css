@@ -1,0 +1,24 @@
+nav {
+  position: fixed;
+  background-color: #262322;
+  top: 0;
+  width: 100vw;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  padding: 25px 10px;
+}
+nav ul {
+  min-width: 500px;
+  display: flex;
+  justify-content: space-evenly;
+}
+nav li,
+nav a {
+  color: #E8EBF7;
+}
+nav a:visited {
+  color: #E8EBF7;
+}
+
+/*# sourceMappingURL=navbar.css.map */

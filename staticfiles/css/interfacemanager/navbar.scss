@@ -1,0 +1,27 @@
+@import '../utils/colors';
+
+nav {
+  position: fixed;
+  background-color: $darker;
+  top: 0;
+  width: 100vw;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  padding: 25px 10px;
+
+  ul {
+    min-width: 500px;
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  li,
+  a {
+      color: $lighter;
+  }
+
+  a:visited {
+    color: $lighter;
+  }
+}
