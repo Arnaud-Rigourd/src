@@ -40,37 +40,37 @@ header .main-title {
   font-size: 6.3vw;
   letter-spacing: 0.4vh;
 }
-header .btn-container {
+
+.btnContainer {
   position: relative;
   display: flex;
   justify-content: center;
   margin: 0 auto;
 }
-header .btn-container .header-btn {
+.btnContainer .header-btn {
   position: absolute;
   background-color: #FFFBFF;
   border: 3px solid #262322;
   height: 50px;
-  padding: 12px;
+  padding: 8px;
   text-align: center;
   transition: transform 300ms;
   width: 450px;
 }
-header .btn-container .header-btn:hover {
+.btnContainer .header-btn:hover {
   transform: translate(5px, -5px);
 }
-header .btn-container .header-btn__content {
-  color: #262322;
-  font-weight: bold;
-}
-header .btn-container .header-btn:visited {
+.btnContainer .header-btn__content {
   color: #262322;
 }
-header .btn-container .header-btn:active {
+.btnContainer .header-btn:visited {
+  color: #262322;
+}
+.btnContainer .header-btn:active {
   transform: translate(0, 0);
   background-color: #E8EBF7;
 }
-header .btn-container .trace {
+.btnContainer .trace {
   position: absolute;
   background-color: #262322;
   border-radius: 3px;
@@ -79,16 +79,16 @@ header .btn-container .trace {
   width: 450px;
   z-index: 0;
 }
-header .btn-container .trace:nth-child(2) {
+.btnContainer .trace:nth-child(2) {
   translate: 1px -1px;
 }
-header .btn-container .trace:nth-child(3) {
+.btnContainer .trace:nth-child(3) {
   translate: 2px -2px;
 }
-header .btn-container .trace:nth-child(4) {
+.btnContainer .trace:nth-child(4) {
   translate: 3px -3px;
 }
-header .btn-container .trace:nth-child(5) {
+.btnContainer .trace:nth-child(5) {
   translate: 4px -4px;
 }
 
