@@ -8,20 +8,21 @@
 {% block content %}
 <div class="wrapper">
     <video autoplay muted loop id="lp-video">
-        <source src="{% static 'videos/bg_clip_lp.mp4' %}" />
+        <source src="{% static 'videos/lp_bg_dev.mp4' %}" />
         Your browser does not support HTML5 video.
     </video>
     <header id="header">
-        <h1 class="main-title">Ton projet n'a pas de prix&nbsp;!<br />
-            Ton site non plus
-        </h1>
+        <div class="container-main-title flex-center flex-column">
+            <h1 class="main-title">Le potentiel ne se trouve pas dans un CV</h1>
+            <h2 class="sub-title">Il se révèle à travers les opportunités</h2>
+        </div>
+
         <div id='btnContainer' class="btn-container">
             <div class="trace"></div>
             <div class="trace"></div>
             <div class="trace"></div>
             <div class="trace"></div>
             <div class="trace"></div>
-    {#        <p id='headerBtn' class="btn"><a href="{% url 'profilemanager:index' %}">Trouve un développeur</a></p>#}
             <a id='headerBtn' class="btn header-btn" href="{% url 'profilemanager:index' %}"><p class="header-btn__content">Trouve un développeur</p></a>
         </div>
         <div class="header__arrows">
@@ -35,39 +36,41 @@
     </header>
 
     <main class="main-parallax">
-        {% if current_user.is_authenticated %}
-            <h1>Bienvenue {{ current_user.first_name }}</h1>
-        {% else %}
-            <h1>Bienvenue sur Dev For Free !</h1>
-        {% endif %}
+        <div class="main__container">
+            {% if current_user.is_authenticated %}
+                <h1>Bienvenue {{ current_user.first_name }}</h1>
+            {% else %}
+                <h1>Bienvenue sur Dev For Free !</h1>
+            {% endif %}
 
-        <section class="faq">
-            <h2>On te crée ton site gratuitement</h2>
-            {% for faq in faq_clients %}
-            <div class="faq__QA">
-                <div class="faq__question">
-                    <h3>{{ faq.question }}</h3>
+            <section class="faq">
+                <h2>On te crée ton site gratuitement</h2>
+                {% for faq in faq_clients %}
+                <div class="faq__QA">
+                    <div class="faq__question">
+                        <h3>{{ faq.question }}</h3>
+                    </div>
+                    <div class="faq__answer">
+                        <p>{{ faq.answer }}</p>
+                    </div>
                 </div>
-                <div class="faq__answer">
-                    <p>{{ faq.answer }}</p>
-                </div>
-            </div>
-            {% endfor %}
-        </section>
+                {% endfor %}
+            </section>
 
-        <section class="faq">
-            <h2>Ce site est fait pour toi, jeune développeur</h2>
-            {% for faq in faq_devs %}
-            <div class="faq__QA">
-                <div class="faq__question">
-                    <h3>{{ faq.question }}</h3>
+            <section class="faq">
+                <h2>Ce site est fait pour toi, jeune développeur</h2>
+                {% for faq in faq_devs %}
+                <div class="faq__QA">
+                    <div class="faq__question">
+                        <h3>{{ faq.question }}</h3>
+                    </div>
+                    <div class="faq__answer">
+                        <p>{{ faq.answer }}</p>
+                    </div>
                 </div>
-                <div class="faq__answer">
-                    <p>{{ faq.answer }}</p>
-                </div>
-            </div>
-            {% endfor %}
-        </section>
+                {% endfor %}
+            </section>
+        </div>
     </main>
 </div>
 {% endblock %}

@@ -26,9 +26,7 @@
 }
 
 body {
-  opacity: 0;
   background-color: #E8EBF7;
-  animation: fadeIn ease 3s forwards;
 }
 
 a {
