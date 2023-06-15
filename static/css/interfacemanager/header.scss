@@ -5,7 +5,7 @@
 
 #lp-video {
   position: absolute;
-  filter: saturate(0.5);
+  filter: saturate(0.5) brightness(0.7);
   height: 100vh;
   left: 50%;
   object-fit: cover;
@@ -122,7 +122,7 @@ header {
   .arrow {
     position: absolute;
     bottom: 0;
-    filter: invert(73%) sepia(0%) saturate(1%) hue-rotate(339deg) brightness(94%) contrast(89%);
+    filter: brightness(0) saturate(100%) invert(9%) sepia(15%) saturate(304%) hue-rotate(330deg) brightness(99%) contrast(89%);;
     opacity: 0.8;
     width: 3vh;
     z-index: 1;

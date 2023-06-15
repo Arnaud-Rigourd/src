@@ -35,22 +35,23 @@
         </div>
     </header>
 
-    <main class="main-parallax">
-        <div class="main__container">
+    <main class="main-parallax flex-center flex-column">
+        <div class="main-parallax__container">
             {% if current_user.is_authenticated %}
                 <h1>Bienvenue {{ current_user.first_name }}</h1>
             {% else %}
                 <h1>Bienvenue sur Dev For Free !</h1>
             {% endif %}
+            <h2>Comment ça marche 👇</h2>
 
             <section class="faq">
                 <h2>On te crée ton site gratuitement</h2>
                 {% for faq in faq_clients %}
-                <div class="faq__QA">
-                    <div class="faq__question">
+                <div class="faq__QA QA-card">
+                    <div class="faq__QA--question">
                         <h3>{{ faq.question }}</h3>
                     </div>
-                    <div class="faq__answer">
+                    <div class="faq__QA--answer">
                         <p>{{ faq.answer }}</p>
                     </div>
                 </div>
@@ -60,11 +61,11 @@
             <section class="faq">
                 <h2>Ce site est fait pour toi, jeune développeur</h2>
                 {% for faq in faq_devs %}
-                <div class="faq__QA">
-                    <div class="faq__question">
+                <div class="faq__QA QA-card">
+                    <div class="faq__QA--question">
                         <h3>{{ faq.question }}</h3>
                     </div>
-                    <div class="faq__answer">
+                    <div class="faq__QA--answer">
                         <p>{{ faq.answer }}</p>
                     </div>
                 </div>
