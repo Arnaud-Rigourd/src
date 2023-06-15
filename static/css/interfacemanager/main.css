@@ -1,3 +1,6 @@
+.main-parallax {
+  padding-bottom: 80px;
+}
 .main-parallax__container {
   width: 80vw;
 }
@@ -8,6 +11,12 @@
 .main-parallax h2 {
   text-align: center;
 }
+.main-parallax .suscribe {
+  position: relative;
+}
+.main-parallax .suscribe h2 {
+  margin: 25px auto;
+}
 
 .faq {
   margin: 40px 0;
@@ -15,7 +24,7 @@
 }
 .faq__QA {
   margin: 15px auto;
-  border: 2px #262322 solid;
+  border: 1px #262322 solid;
   border-radius: 5px;
   padding: 15px 30px;
   background-color: #FFFBFF;
@@ -28,7 +37,7 @@
   cursor: pointer;
 }
 .faq__QA--question {
-  margin-bottom: 12px;
+  margin-bottom: 15px;
 }
 .faq h2 {
   margin: 15px 0;

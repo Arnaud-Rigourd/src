@@ -17,13 +17,13 @@
             <h2 class="sub-title">Il se révèle à travers les opportunités</h2>
         </div>
 
-        <div id='btnContainer' class="btn-container">
+        <div id='btnContainer' class="btnContainer">
             <div class="trace"></div>
             <div class="trace"></div>
             <div class="trace"></div>
             <div class="trace"></div>
             <div class="trace"></div>
-            <a id='headerBtn' class="btn header-btn" href="{% url 'profilemanager:index' %}"><p class="header-btn__content">Trouve un développeur</p></a>
+            <a id='headerBtn' class="btn header-btn" href="{% url 'profilemanager:index' %}"><h3 class="header-btn__content">Trouve un développeur 🔍</h3></a>
         </div>
         <div class="header__arrows">
             <svg class="arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
@@ -71,7 +71,23 @@
                 </div>
                 {% endfor %}
             </section>
+
+            <div class="suscribe flex-column flex-center">
+                <h2>Prêt à prendre de l'expérience ?</h2>
+                <div class="btnContainer">
+                    <div class="trace"></div>
+                    <div class="trace"></div>
+                    <div class="trace"></div>
+                    <div class="trace"></div>
+                    <div class="trace"></div>
+                    <h3 class="btn header-btn">👉 <a href="{% url 'accounts:signup' %}">Inscris-toi</a> 👈</h3>
+                </div>
+            </div>
         </div>
     </main>
+
+    <footer>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto et impedit ipsa repellendus. Debitis, est hic id ipsum libero magnam maiores nam, nesciunt nostrum officia pariatur quaerat quidem, repellendus saepe.</p>
+    </footer>
 </div>
 {% endblock %}

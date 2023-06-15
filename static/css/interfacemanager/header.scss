@@ -46,68 +46,66 @@ header {
     font-size: 6.3vw;
     letter-spacing: 0.4vh;
   }
+}
 
-  .btn-container {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    margin: 0 auto;
+.btnContainer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
 
-    .header-btn {
-      position: absolute;
-      background-color: $lighter;
-      border: 3px solid $darker;
-      height: 50px;
-      padding: 12px;
-      text-align: center;
-      transition: transform 300ms;
-      width: 450px;
+  .header-btn {
+    position: absolute;
+    background-color: $lighter;
+    border: 3px solid $darker;
+    height: 50px;
+    padding: 8px;
+    text-align: center;
+    transition: transform 300ms;
+    width: 450px;
 
-      &:hover {
-        @include hoverEffect
-      }
-
-      &__content {
-        color: $darker;
-        font-weight: bold;
-
-
-      }
-
-      &:visited {
-        color: $darker;
-      }
-
-      &:active {
-        transform: translate(0, 0);
-        background-color: $mediumLight;
-      }
+    &:hover {
+      @include hoverEffect
     }
 
-    .trace {
-      position: absolute;
-      background-color: $darker;
-      border-radius: 3px;
-      height: 50px;
-      opacity: 0;
-      width: 450px;
-      z-index: 0;
+    &__content {
+      color: $darker;
+      //font-weight: bold;
+    }
 
-      &:nth-child(2) {
-        translate: 1px -1px;
-      }
+    &:visited {
+      color: $darker;
+    }
 
-      &:nth-child(3) {
-        translate: 2px -2px;
-      }
+    &:active {
+      transform: translate(0, 0);
+      background-color: $mediumLight;
+    }
+  }
 
-      &:nth-child(4) {
-        translate: 3px -3px;
-      }
+  .trace {
+    position: absolute;
+    background-color: $darker;
+    border-radius: 3px;
+    height: 50px;
+    opacity: 0;
+    width: 450px;
+    z-index: 0;
 
-      &:nth-child(5) {
-        translate: 4px -4px;
-      }
+    &:nth-child(2) {
+      translate: 1px -1px;
+    }
+
+    &:nth-child(3) {
+      translate: 2px -2px;
+    }
+
+    &:nth-child(4) {
+      translate: 3px -3px;
+    }
+
+    &:nth-child(5) {
+      translate: 4px -4px;
     }
   }
 }
