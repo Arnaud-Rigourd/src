@@ -42,7 +42,7 @@ header .btn-container {
 }
 header .btn-container .header-btn {
   position: absolute;
-  background-color: #E8EBF7;
+  background-color: #FFFBFF;
   border: 3px solid #262322;
   height: 50px;
   padding: 12px;
@@ -62,7 +62,7 @@ header .btn-container .header-btn:visited {
 }
 header .btn-container .header-btn:active {
   transform: translate(0, 0);
-  background-color: #F1E4F3;
+  background-color: #E8EBF7;
 }
 header .btn-container .trace {
   position: absolute;
@@ -119,7 +119,7 @@ header .btn-container .trace:nth-child(5) {
 }
 
 main {
-  background-color: #E8EBF7;
+  background-color: #FFFBFF;
 }
 
 /*# sourceMappingURL=home.css.map */
