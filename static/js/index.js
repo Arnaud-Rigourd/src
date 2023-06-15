@@ -1,46 +1,4 @@
-// console.log("Hello from index.js")
-//
-// const btn = document.getElementById('headerBtn')
-//
-// btn.addEventListener('mouseover', function(event) {
-//   const btn = event.target;
-//   const btnContainer = document.getElementById('btnContainer')
-//
-//   for(let i = 0; i < 4; i++) {
-//     const trace = document.createElement('div');
-//     trace.className = 'trace';
-//     trace.style.top = (btn.offsetTop - i) + 'px';
-//     trace.style.left = (btn.offsetLeft - i) + 'px';
-//     btnContainer.appendChild(trace);
-//   }
-//
-//   function step(timestamp) {
-//       if (!start) start = timestamp;
-//       var progress = timestamp - start;
-//
-//       // Calcule la nouvelle position de la div
-//       var newTop = initialTop - (4 * progress / duration);
-//       var newLeft = initialLeft - (4 * progress / duration);
-//
-//       // Applique la nouvelle position
-//       box.style.top = newTop + 'px';
-//       box.style.left = newLeft + 'px';
-//
-//       if (progress < duration) {
-//           // Si l'animation n'est pas encore terminée, demande le prochain frame
-//           window.requestAnimationFrame(step);
-//       }
-//   }
-// });
-//
-// document.getElementById('headerBtn').addEventListener('mouseleave', function(event) {
-//   var traces = document.getElementsByClassName('trace');
-//
-//   // Parcours et suppression de tous les éléments avec la classe 'trace'
-//   while (traces[0]) {
-//     traces[0].parentNode.removeChild(traces[0]);
-//   }
-// });
+// Header
 
 const header = document.getElementById('header');
 const btnContainer = document.getElementById('btnContainer');
@@ -93,3 +51,40 @@ btnContainer.addEventListener('mousedown', e => {
     })
 
 })
+
+
+
+// Main
+
+const QACards = document.querySelectorAll('.QA-card')
+
+QACards.forEach((card) => {
+    card.addEventListener('click', e => {
+        e.stopPropagation()
+
+        const currentHeight = window.getComputedStyle(card).height
+        const fullHeight = `${card.scrollHeight}px`
+
+
+        QACards.forEach((otherCards) => {
+            otherCards.style.height = '60px'
+            otherCards.style.backgroundColor = '#FFFBFF'
+        })
+
+        if (currentHeight != '60px') {
+            card.style.height = '60px'
+            card.style.backgroundColor = '#FFFBFF'
+        } else {
+            card.style.height = fullHeight
+            card.style.backgroundColor = '#e8ebf78c'
+        }
+    })
+})
+
+document.addEventListener('click', e => {
+    QACards.forEach((card) => {
+        card.style.height = '60px'
+        card.style.backgroundColor = '#FFFBFF'
+    })
+})
+

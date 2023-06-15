@@ -1,0 +1,37 @@
+.main-parallax__container {
+  width: 80vw;
+}
+.main-parallax h1 {
+  margin-top: 25px;
+  text-align: center;
+}
+.main-parallax h2 {
+  text-align: center;
+}
+
+.faq {
+  margin: 40px 0;
+  padding: 15px 30px;
+}
+.faq__QA {
+  margin: 15px auto;
+  border: 2px #262322 solid;
+  border-radius: 5px;
+  padding: 15px 30px;
+  background-color: #FFFBFF;
+  height: 60px;
+  overflow: hidden;
+  transition: height 500ms ease, background-color 500ms ease;
+}
+.faq__QA:hover {
+  background-color: #E8EBF7;
+  cursor: pointer;
+}
+.faq__QA--question {
+  margin-bottom: 12px;
+}
+.faq h2 {
+  margin: 15px 0;
+}
+
+/*# sourceMappingURL=main.css.map */
