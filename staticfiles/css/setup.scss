@@ -11,9 +11,7 @@
 }
 
 body {
-	opacity: 0;
 	background-color: $lighter;
-	animation: fadeIn ease 3s forwards;
 }
 
 a {
@@ -49,6 +47,14 @@ a {
 }
 
 .active {}
+
+.fit-content-height {
+	height: fit-content;
+}
+
+.fit-content-width {
+	width: fit-content;
+}
 
 strong {
   	font-weight: normal;
