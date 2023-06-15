@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="wrapper">
+<div id="wrapper" class="wrapper">
     <video autoplay muted loop id="lp-video">
         <source src="{% static 'videos/lp_bg_dev.mp4' %}" />
         Your browser does not support HTML5 video.
@@ -80,7 +80,7 @@
                     <div class="trace"></div>
                     <div class="trace"></div>
                     <div class="trace"></div>
-                    <h3 class="btn header-btn">👉 <a href="{% url 'accounts:signup' %}">Inscris-toi</a> 👈</h3>
+                    <a class="btn header-btn" href="{% url 'accounts:signup' %}"><h3>👉 Inscris-toi 👈</h3></a>
                 </div>
             </div>
         </div>

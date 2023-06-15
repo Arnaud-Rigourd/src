@@ -88,3 +88,17 @@ document.addEventListener('click', e => {
     })
 })
 
+
+
+// Navbar
+
+const navbar = document.getElementById('navbar')
+const wrapper = document.getElementById('wrapper')
+
+wrapper.addEventListener("scroll", e => {
+    if (wrapper.scrollTop >= (window.innerHeight - 72)) {
+      navbar.classList.add("nav-bg")
+    } else {
+      navbar.classList.remove("nav-bg")
+    }
+})
