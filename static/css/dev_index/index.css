@@ -50,6 +50,10 @@
 .main-list-dev .dev-card .profile-link:hover {
   transform: translate(5px, -5px);
 }
+.main-list-dev .dev-card .profile-link:active {
+  transform: translate(0, 0);
+  background-color: #E8EBF7;
+}
 .main-list-dev .dev-card img {
   align-self: center;
   width: 16vh;
