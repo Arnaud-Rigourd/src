@@ -88,7 +88,16 @@ h5 {
 }
 
 .nav-bg {
-  background-color: black;
+  background-color: #1d1d1d;
+}
+
+.dummy {
+  visibility: hidden;
+}
+
+main {
+  background-color: #FFFBFF;
+  margin-bottom: 50px;
 }
 
 /*# sourceMappingURL=setup.css.map */
