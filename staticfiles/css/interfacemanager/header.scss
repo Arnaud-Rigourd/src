@@ -53,9 +53,13 @@
   display: flex;
   justify-content: center;
   margin: 0 auto;
+  width: fit-content;
+
+  &:hover > .header-btn {
+    @include hoverEffect;
+  }
 
   .header-btn {
-    position: absolute;
     background-color: $lighter;
     border: 3px solid $darker;
     height: 50px;
@@ -64,13 +68,8 @@
     transition: transform 300ms;
     width: 450px;
 
-    &:hover {
-      @include hoverEffect;
-    }
-
     &__content {
       color: $darker;
-      //font-weight: bold;
     }
 
     &:visited {
@@ -87,9 +86,9 @@
     position: absolute;
     background-color: $darker;
     border-radius: 3px;
-    height: 50px;
+    height: 100%;
     opacity: 0;
-    width: 450px;
+    width: 100%;
     z-index: 0;
 
     &:nth-child(2) {
