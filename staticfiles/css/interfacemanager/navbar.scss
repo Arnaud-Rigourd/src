@@ -1,9 +1,11 @@
 @import '../utils/colors';
+@import '../utils/fonts';
 
 nav {
   position: fixed;
   animation: fadeIn ease 3s forwards;
   background-color: rgb(0 0 0 / 43%);
+  box-shadow: 5px 0 10px #00000026;
   display: flex;
   justify-content: space-between;
   opacity: 0;
@@ -30,5 +32,41 @@ nav {
 
   a:visited {
     color: $lighter;
+  }
+
+
+//  link hover effect
+
+}
+
+.navbar__hover-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  overflow: hidden;
+  cursor: pointer;
+
+  &:hover > a {
+    transform: translateY(-27px);
+  }
+
+  &:hover > .double {
+    transform: translateY(-27px);
+  }
+
+  .double {
+    position: absolute;
+    color: $lighter;
+    font-family: $pg;
+    transition: transform ease 300ms;
+  }
+
+  a {
+    position: absolute;
+    top: 27px;
+    transition: transform ease 300ms;
   }
 }

@@ -2,6 +2,7 @@ nav {
   position: fixed;
   animation: fadeIn ease 3s forwards;
   background-color: rgba(0, 0, 0, 0.43);
+  box-shadow: 5px 0 10px rgba(0, 0, 0, 0.1490196078);
   display: flex;
   justify-content: space-between;
   opacity: 0;
@@ -25,6 +26,34 @@ nav a {
 }
 nav a:visited {
   color: #FFFBFF;
+}
+
+.navbar__hover-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  overflow: hidden;
+  cursor: pointer;
+}
+.navbar__hover-container:hover > a {
+  transform: translateY(-27px);
+}
+.navbar__hover-container:hover > .double {
+  transform: translateY(-27px);
+}
+.navbar__hover-container .double {
+  position: absolute;
+  color: #FFFBFF;
+  font-family: "Ranade", "sans-serif";
+  transition: transform ease 300ms;
+}
+.navbar__hover-container a {
+  position: absolute;
+  top: 27px;
+  transition: transform ease 300ms;
 }
 
 /*# sourceMappingURL=navbar.css.map */

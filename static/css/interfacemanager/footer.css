@@ -1,3 +1,28 @@
-
+footer .body-footer {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: rgba(232, 235, 247, 0.5490196078);
+  padding: 30px;
+  border-top: 1px solid #E8EBF7;
+}
+footer .body-footer .footer-pg {
+  font-size: 14px;
+  margin: 4px 0;
+}
+footer .body-footer .footer-title {
+  margin-bottom: 10px;
+}
+footer .footer-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #262322;
+}
+footer .footer-footer .small {
+  color: #FFFBFF;
+  font-size: 10px;
+}
 
 /*# sourceMappingURL=footer.css.map */

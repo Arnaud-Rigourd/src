@@ -2,6 +2,7 @@ nav {
   position: fixed;
   animation: fadeIn ease 3s forwards;
   background-color: rgba(0, 0, 0, 0.43);
+  box-shadow: 5px 0 10px rgba(0, 0, 0, 0.1490196078);
   display: flex;
   justify-content: space-between;
   opacity: 0;

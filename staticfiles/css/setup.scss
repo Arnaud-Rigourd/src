@@ -78,6 +78,14 @@ h5 {
 
 
 .nav-bg {
-	background-color: black;
+	background-color: $customBlack;
 }
 
+.dummy {
+	visibility: hidden;
+}
+
+main {
+  	background-color: $lighter;
+	margin-bottom: 50px;
+}
