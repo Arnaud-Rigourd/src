@@ -5,19 +5,26 @@
 {% endblock %}
 
 {% block content %}
-<h1>Index des dev !</h1>
-{% for dev in devs %}
-    {% if dev.profile.visible %}
-        <section class="dev-card">
-            <a href="{% url 'profilemanager:detail' slug=dev.slug pk=dev.pk %}">
-                <img src="{{ dev.profile_image }}" alt="Profile pic" />
-                <div class="dev-card__info">
-                    <h2>{{ dev.first_name }} {{ dev.last_name }}</h2>
-                    <p>En quelques nots : {{ dev.profile.description }}</p>
-                    <p>Stacks : {% for stack in dev.profile.stacks_set.all %}{{ stack.name }} {% endfor %}</p>
-                </div>
-            </a>
-        </section>
-    {% endif %}
-{% endfor %}
+    <main class="main-list-dev">
+
+        <h1>Index des dev !</h1>
+        <div class="dev-cards">
+            {% for dev in devs %}
+                {% if dev.profile.visible %}
+                    <section class="dev-card">
+                        <a class="profile-link" href="{% url 'profilemanager:detail' slug=dev.slug pk=dev.pk %}">
+                            <img src="{{ dev.profile_image }}" alt="Profile pic" />
+                            <div class="dev-card__info">
+                                <h2>{{ dev.first_name }} {{ dev.last_name }}</h2>
+                                <p>En quelques nots : {{ dev.profile.description }}</p>
+                                <p>Stacks : {% for stack in dev.profile.stacks_set.all %}{{ stack.name }} {% endfor %}</p>
+                            </div>
+                            <p class="more-info">En savoir plus</p>
+                        </a>
+                    </section>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+    </main>
 {% endblock %}
