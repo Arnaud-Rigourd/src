@@ -13,7 +13,7 @@
   z-index: -1;
 }
 
-header {
+#header {
   position: relative;
   align-items: center;
   display: flex;
@@ -26,17 +26,17 @@ header {
   transform-style: preserve-3d;
   z-index: -1;
 }
-header .container-main-title {
+#header .container-main-title {
   margin: 15vh auto;
 }
-header .main-title, header .sub-title {
+#header .main-title, #header .sub-title {
   color: #FFFBFF;
   font-family: "clash display", "sans-serif";
   letter-spacing: 0.4vh;
   text-align: center;
   text-shadow: 0 0 30px black;
 }
-header .main-title {
+#header .main-title {
   font-size: 6.3vw;
   letter-spacing: 0.4vh;
 }

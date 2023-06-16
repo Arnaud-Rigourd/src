@@ -50,24 +50,25 @@
             {% if current_user and current_user.profile %}
                 <li>
                     <div class="navbar__hover-container">
-                        <span class="dummy">---Se déconnecter---</span>
-                        <span class="double">Se déconnecter</span>
+                        <span class="dummy">---Mon profil---</span>
+                        <span class="double">Mon profil</span>
                         <a href="{% url 'profilemanager:detail' slug=current_user.slug pk=current_user.pk %}">Mon profil</a>
                     </div>
                 </li>
            {% elif not current_user.profile and current_user.category == 'developpeur' %}
                 <li>
                     <div class="navbar__hover-container">
-                        <span class="dummy">---Se déconnecter---</span>
-                        <span class="double">Se déconnecter</span>
+                        <span class="dummy">---Créer mon profile---</span>
+                        <span class="double">Créer mon profile</span>
                         <a href="{% url 'profilemanager:create' username=current_user.username %}">Créer mon profile</a>
                     </div>
                 </li>
 
             {% endif %}
+
             <li>
                 <div class="navbar__hover-container">
-                    <span class="dummy">---Se déconnecter---</span>
+                    <span class="dummy">-----Se déconnecter-----</span>
                     <span class="double">Se déconnecter</span>
                     <a href="{% url 'accounts:signout' %}">Se déconnecter</a>
                 </div>
