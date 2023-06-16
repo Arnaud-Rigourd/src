@@ -11,7 +11,12 @@
         <div class="dev-cards">
             {% for dev in devs %}
                 {% if dev.profile.visible %}
-                    <section class="dev-card">
+                    <section class="dev-card profileContainer">
+                        <div class="trace"></div>
+                        <div class="trace"></div>
+                        <div class="trace"></div>
+                        <div class="trace"></div>
+                        <div class="trace"></div>
                         <a class="profile-link" href="{% url 'profilemanager:detail' slug=dev.slug pk=dev.pk %}">
                             <img src="{{ dev.profile_image }}" alt="Profile pic" />
                             <div class="dev-card__info">
