@@ -29,27 +29,64 @@
         <a href="{% url 'interfacemanager:home' %}">DevForFree</a>
     </div>
     <ul>
-        <div class="navbar__hover-container">
-            <span class="dummy">---Liste des devs---</span>
-            <span class="double">Liste des devs</span>
-            <li>
+        <li>
+            <div class="navbar__hover-container">
+                <span class="dummy">---Liste des devs---</span>
+                <span class="double">Liste des devs</span>
                 <a href="{% url 'profilemanager:index' %}">Liste des devs</a>
-            </li>
-        </div>
+            </div>
+        </li>
         {% if current_user.is_authenticated %}
             {% if current_user.category == 'company' %}
-                <li><a href="{% url 'profilemanager:company-monitoring' slug=current_user.slug pk=current_user.pk %}">Mon profil</a></li>
+                <li>
+                    <div class="navbar__hover-container">
+                        <span class="dummy">---Mon profil---</span>
+                        <span class="double">Mon profil</span>
+                        <a href="{% url 'profilemanager:company-monitoring' slug=current_user.slug pk=current_user.pk %}">Mon profil</a>
+                    </div>
+                </li>
             {% endif %}
 
             {% if current_user and current_user.profile %}
-                <li><a href="{% url 'profilemanager:detail' slug=current_user.slug pk=current_user.pk %}">Mon profil</a></li>
+                <li>
+                    <div class="navbar__hover-container">
+                        <span class="dummy">---Se déconnecter---</span>
+                        <span class="double">Se déconnecter</span>
+                        <a href="{% url 'profilemanager:detail' slug=current_user.slug pk=current_user.pk %}">Mon profil</a>
+                    </div>
+                </li>
            {% elif not current_user.profile and current_user.category == 'developpeur' %}
-                <li><a href="{% url 'profilemanager:create' username=current_user.username %}">Créer mon profile</a></li>
+                <li>
+                    <div class="navbar__hover-container">
+                        <span class="dummy">---Se déconnecter---</span>
+                        <span class="double">Se déconnecter</span>
+                        <a href="{% url 'profilemanager:create' username=current_user.username %}">Créer mon profile</a>
+                    </div>
+                </li>
+
             {% endif %}
-            <li><a href="{% url 'accounts:signout' %}">Se déconnecter</a></li>
+            <li>
+                <div class="navbar__hover-container">
+                    <span class="dummy">---Se déconnecter---</span>
+                    <span class="double">Se déconnecter</span>
+                    <a href="{% url 'accounts:signout' %}">Se déconnecter</a>
+                </div>
+            </li>
         {% else %}
-            <li><a href="{% url 'accounts:signin' %}">Se connecter</a></li>
-            <li><a href="{% url 'accounts:signup' %}">S'inscrire</a></li>
+            <li>
+                <div class="navbar__hover-container">
+                    <span class="dummy">---Se connecter---</span>
+                    <span class="double">Se connecter</span>
+                    <a href="{% url 'accounts:signin' %}">Se connecter</a>
+                </div>
+            </li>
+            <li>
+                <div class="navbar__hover-container">
+                    <span class="dummy">---S'inscrire---</span>
+                    <span class="double">S'inscrire</span>
+                    <a href="{% url 'accounts:signup' %}">S'inscrire</a>
+                </div>
+            </li>
         {% endif %}
     </ul>
 </nav>
