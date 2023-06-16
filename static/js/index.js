@@ -95,10 +95,66 @@ document.addEventListener('click', e => {
 const navbar = document.getElementById('navbar')
 const wrapper = document.getElementById('wrapper')
 
-wrapper.addEventListener("scroll", e => {
-    if (wrapper.scrollTop >= (window.innerHeight - 72)) {
-      navbar.classList.add("nav-bg")
-    } else {
-      navbar.classList.remove("nav-bg")
+if (wrapper != null) {
+    wrapper.addEventListener("scroll", e => {
+        if (wrapper.scrollTop >= (window.innerHeight - 72)) {
+          navbar.classList.add("nav-bg")
+        } else {
+          navbar.classList.remove("nav-bg")
+        }
+    })
+} else {
+    navbar.classList.add("nav-bg")
+}
+
+
+
+
+// Dev List
+
+const profileContainer = document.querySelectorAll('.profileContainer');
+profileContainer.forEach((btn) => {
+    const traces = btn.querySelectorAll('.trace');
+
+    btn.addEventListener('mouseenter', e => {
+        hoverTimeout = setTimeout(() => {
+            traces.forEach((trace, index) => {
+                fadeIns[index] = setTimeout(() => {
+                    trace.style.opacity = 1;
+                }, index * animationTime/traceNum);
+            });
+        }, 50);
+    })
+
+    function fadeOutTraces() {
+        fadeIns.forEach(clearTimeout); // Clear any ongoing fadeIn timeouts
+        fadeIns = []; // Reset the fadeIn timeouts array
+
+        traces.forEach((trace, index) => {
+            fadeOuts[index] = setTimeout(() => {
+                trace.style.opacity = 0;
+            }, (traces.length - 1 - index) * animationTime/traceNum);
+        });
     }
+
+    btn.addEventListener('mouseleave', e => {
+        clearTimeout(hoverTimeout);
+        fadeOuts.forEach(clearTimeout); // Clear any ongoing fadeOut timeouts
+        fadeOuts = []; // Reset the fadeOut timeouts array
+        fadeOutTraces();
+    })
+
+    btn.addEventListener('mouseout', e => {
+        if (!btn.contains(e.relatedTarget)) {
+            fadeOutTraces();
+        }
+    })
+
+    btn.addEventListener('mousedown', e => {
+        traces.forEach((trace) => {
+            trace.style.opacity = 0;
+        })
+
+    })
 })
+

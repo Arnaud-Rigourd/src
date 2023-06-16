@@ -65,7 +65,7 @@
     width: 450px;
 
     &:hover {
-      @include hoverEffect
+      @include hoverEffect;
     }
 
     &__content {

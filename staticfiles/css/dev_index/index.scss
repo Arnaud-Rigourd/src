@@ -1,0 +1,80 @@
+@import '../utils/colors';
+@import '../utils/mixins';
+
+.main-list-dev {
+  margin: 70px 0;
+
+  .dev-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-column-gap: 4vw;
+    margin: 0 auto;
+    width: 80vw;
+  }
+
+  .dev-card {
+    position: relative;
+
+
+    box-shadow: 5px 0 10px #00000026;
+    z-index: 0;
+
+    .trace {
+      position: absolute;
+      background-color: $darker;
+      border-radius: 5px;
+      height: 100%;
+      opacity: 0;
+      width: 100%;
+      z-index: -1;
+      top: 0;
+      left: 0;
+
+
+      &:nth-child(2) {
+        translate: 1px -1px;
+      }
+
+      &:nth-child(3) {
+        translate: 2px -2px;
+      }
+
+      &:nth-child(4) {
+        translate: 3px -3px;
+      }
+
+      &:nth-child(5) {
+        translate: 4px -4px;
+      }
+    }
+
+    .profile-link {
+      border: 2px solid $darker;
+      border-radius: 5px;
+      background-color: $lighter;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 10px;
+      transition: transform 500ms ease;
+
+      &:hover {
+        @include hoverEffect;
+      }
+    }
+
+    img {
+      align-self: center;
+      width: 16vh;
+      border: 1px solid black;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+
+    .more-info {
+      text-decoration: underline;
+      align-self: flex-end;
+    }
+  }
+}
