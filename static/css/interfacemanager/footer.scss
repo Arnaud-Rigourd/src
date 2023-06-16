@@ -1,6 +1,33 @@
-
+@import '../utils/colors';
 
 footer {
-  //position: fixed;
-  //bottom: 0;
+  .body-footer {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: $mediumLightOpacity;
+    padding: 30px;
+    border-top: 1px solid $mediumLight;
+
+    .footer-pg {
+      font-size: 14px;
+      margin: 4px 0;
+    }
+
+    .footer-title {
+      margin-bottom: 10px;
+    }
+  }
+
+  .footer-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: $darker;
+    .small {
+      color: $lighter;
+      font-size: 10px;
+    }
+  }
 }
