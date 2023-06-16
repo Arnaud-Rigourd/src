@@ -5,9 +5,6 @@
     <meta charset="UTF-8">
     <link href="https://api.fontshare.com/v2/css?f[]=ranade@300&f[]=excon@500&display=swap" rel="stylesheet">
     <link href="https://api.fontshare.com/v2/css?f[]=clash-display@200,400,700,500,600,300&display=swap" rel="stylesheet">
-{#    <link rel="preconnect" href="https://fonts.googleapis.com">#}
-{#    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>#}
-{#    <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700;900&display=swap" rel="stylesheet">#}
     <link rel="stylesheet" href="{% static 'css/index.css' %}">
     <meta name="viewport" content="width=device-width" />
     {% if request.resolver_match.url_name == 'first-stack-create' %}
@@ -26,9 +23,19 @@
 <body>
 
 <nav id="navbar">
-    <p><a href="{% url 'interfacemanager:home' %}">Accueil</a></p>
+    <div class="navbar__hover-container">
+        <span class="dummy">---DevForFree---</span>
+        <span class="double">DevForFree</span>
+        <a href="{% url 'interfacemanager:home' %}">DevForFree</a>
+    </div>
     <ul>
-        <li><a href="{% url 'profilemanager:index' %}">Liste des développeurs.euses</a></li>
+        <div class="navbar__hover-container">
+            <span class="dummy">---Liste des devs---</span>
+            <span class="double">Liste des devs</span>
+            <li>
+                <a href="{% url 'profilemanager:index' %}">Liste des devs</a>
+            </li>
+        </div>
         {% if current_user.is_authenticated %}
             {% if current_user.category == 'company' %}
                 <li><a href="{% url 'profilemanager:company-monitoring' slug=current_user.slug pk=current_user.pk %}">Mon profil</a></li>

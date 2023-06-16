@@ -91,4 +91,8 @@ h5 {
   background-color: black;
 }
 
+.dummy {
+  visibility: hidden;
+}
+
 /*# sourceMappingURL=setup.css.map */
