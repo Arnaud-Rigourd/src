@@ -1,60 +1,89 @@
 // Header
 
-const header = document.getElementById('header');
-const btnContainer = document.querySelectorAll('.btnContainer');
+hoverEffect('btnContainer');
+hoverEffect('profileContainer');
 
+/**
+ * Set the opacity of a trace element after a delay
+ * @param {HTMLElement} trace - The trace element to set the opacity of
+ * @param {number} opacity - The opacity to set
+ * @param {number} delay - The delay before setting the opacity, in milliseconds
+ * @return {number} The ID of the timeout that was started
+ */
+function setTraceOpacity(trace, opacity, delay) {
+    return setTimeout(() => {
+        trace.style.opacity = opacity;
+    }, delay);
+}
 
-const animationTime = 300
-const traceNum = 5
+/**
+ * Clear a list of timeouts and return an empty array
+ * @param {number[]} timeouts - The list of timeout IDs to clear
+ * @return {number[]} An empty array
+ */
+function clearAndResetTimeouts(timeouts) {
+    timeouts.forEach(clearTimeout);
+    return [];
+}
 
-let hoverTimeout;
-let fadeIns = [];
-let fadeOuts = [];
+/**
+ * Add a hover effect to all elements with a given class name.
+ * The effect will fade in/out all children with the 'trace' class.
+ * @param {string} containerClassName - The class name of the containers to apply the hover effect to
+ */
+function hoverEffect(containerClassName) {
+    const animationTime = 300;
 
-btnContainer.forEach((btn) => {
-    const traces = btn.querySelectorAll('.trace');
+    const containers = document.querySelectorAll(`.${containerClassName}`);
 
-    btn.addEventListener('mouseenter', e => {
-        hoverTimeout = setTimeout(() => {
-            traces.forEach((trace, index) => {
-                fadeIns[index] = setTimeout(() => {
-                    trace.style.opacity = 1;
-                }, index * animationTime/traceNum);
-            });
-        }, 50);
-    })
+    containers.forEach((container) => {
+        // Variables to store the IDs of timeouts
+        let hoverTimeout;
+        let fadeIns = [];
+        let fadeOuts = [];
 
-    function fadeOutTraces() {
-        fadeIns.forEach(clearTimeout); // Clear any ongoing fadeIn timeouts
-        fadeIns = []; // Reset the fadeIn timeouts array
+        // Select all traces within the current container
+        const traces = Array.from(container.querySelectorAll('.trace'));
+        const traceNum = traces.length;
 
-        traces.forEach((trace, index) => {
-            fadeOuts[index] = setTimeout(() => {
-                trace.style.opacity = 0;
-            }, (traces.length - 1 - index) * animationTime/traceNum);
+        // Add a hover effect to each trace
+        container.addEventListener('mouseenter', () => {
+            hoverTimeout = setTimeout(() => {
+                fadeIns = traces.map((trace, index) =>
+                    setTraceOpacity(trace, 1, index * animationTime / traceNum)
+                );
+            }, 50);
         });
-    }
 
-    btn.addEventListener('mouseleave', e => {
-        clearTimeout(hoverTimeout);
-        fadeOuts.forEach(clearTimeout); // Clear any ongoing fadeOut timeouts
-        fadeOuts = []; // Reset the fadeOut timeouts array
-        fadeOutTraces();
-    })
+        // Add a hover out effect to each trace
+        container.addEventListener('mouseleave', () => {
+            clearTimeout(hoverTimeout);
+            fadeIns = clearAndResetTimeouts(fadeIns);
+            fadeOuts = traces.map((trace, index) =>
+                setTraceOpacity(trace, 0, (traceNum - 1 - index) * animationTime / traceNum)
+            );
+        });
 
-    btn.addEventListener('mouseout', e => {
-        if (!btn.contains(e.relatedTarget)) {
-            fadeOutTraces();
-        }
-    })
+        // Add a mouse out effect to each trace in case the mouseleave is not detected
+        container.addEventListener('mouseout', (e) => {
+            if (!container.contains(e.relatedTarget)) {
+                fadeIns = clearAndResetTimeouts(fadeIns);
+                fadeOuts = traces.map((trace, index) =>
+                    setTraceOpacity(trace, 0, (traceNum - 1 - index) * animationTime / traceNum)
+                );
+            }
+        });
 
-    btn.addEventListener('mousedown', e => {
-        traces.forEach((trace) => {
-            trace.style.opacity = 0;
-        })
+        // Add a mousedown effect to each trace
+        container.addEventListener('mousedown', () => {
+            fadeIns = clearAndResetTimeouts(fadeIns);
+            fadeOuts = clearAndResetTimeouts(fadeOuts);
+            traces.forEach(trace => trace.style.opacity = 0);
+        });
+    });
+}
 
-    })
-})
+
 
 
 // Main
@@ -106,55 +135,4 @@ if (wrapper != null) {
 } else {
     navbar.classList.add("nav-bg")
 }
-
-
-
-
-// Dev List
-
-const profileContainer = document.querySelectorAll('.profileContainer');
-profileContainer.forEach((btn) => {
-    const traces = btn.querySelectorAll('.trace');
-
-    btn.addEventListener('mouseenter', e => {
-        hoverTimeout = setTimeout(() => {
-            traces.forEach((trace, index) => {
-                fadeIns[index] = setTimeout(() => {
-                    trace.style.opacity = 1;
-                }, index * animationTime/traceNum);
-            });
-        }, 50);
-    })
-
-    function fadeOutTraces() {
-        fadeIns.forEach(clearTimeout); // Clear any ongoing fadeIn timeouts
-        fadeIns = []; // Reset the fadeIn timeouts array
-
-        traces.forEach((trace, index) => {
-            fadeOuts[index] = setTimeout(() => {
-                trace.style.opacity = 0;
-            }, (traces.length - 1 - index) * animationTime/traceNum);
-        });
-    }
-
-    btn.addEventListener('mouseleave', e => {
-        clearTimeout(hoverTimeout);
-        fadeOuts.forEach(clearTimeout); // Clear any ongoing fadeOut timeouts
-        fadeOuts = []; // Reset the fadeOut timeouts array
-        fadeOutTraces();
-    })
-
-    btn.addEventListener('mouseout', e => {
-        if (!btn.contains(e.relatedTarget)) {
-            fadeOutTraces();
-        }
-    })
-
-    btn.addEventListener('mousedown', e => {
-        traces.forEach((trace) => {
-            trace.style.opacity = 0;
-        })
-
-    })
-})
 

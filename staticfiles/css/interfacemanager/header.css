@@ -59,6 +59,7 @@
   text-align: center;
   transition: transform 300ms;
   width: 450px;
+  z-index: 1;
 }
 .btnContainer .header-btn__content {
   color: #262322;
