@@ -67,6 +67,7 @@
     text-align: center;
     transition: transform 300ms;
     width: 450px;
+    z-index: 1;
 
     &__content {
       color: $darker;
