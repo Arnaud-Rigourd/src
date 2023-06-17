@@ -7,6 +7,7 @@ class FAQClientAdmin(admin.ModelAdmin):
     list_display = (
         'question',
         'answer',
+        'position',
     )
 
     list_per_page = 10
@@ -17,6 +18,7 @@ class FAQDevAdmin(admin.ModelAdmin):
     list_display = (
         'question',
         'answer',
+        'position',
     )
 
     list_per_page = 10
