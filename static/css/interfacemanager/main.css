@@ -17,6 +17,12 @@
 .main-parallax .suscribe h2 {
   margin: 25px auto;
 }
+.main-parallax .suscribe .header-btn {
+  transition: transform 300ms, box-shadow 300ms;
+}
+.main-parallax .suscribe .header-btn:hover {
+  box-shadow: none;
+}
 
 .faq {
   margin: 40px 0;
