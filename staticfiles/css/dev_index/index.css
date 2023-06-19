@@ -10,6 +10,7 @@
 }
 .main-list-dev .dev-card {
   position: relative;
+  margin: 2vw 0;
   box-shadow: 5px 0 10px rgba(0, 0, 0, 0.1490196078);
   z-index: 0;
 }

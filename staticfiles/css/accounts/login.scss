@@ -1,0 +1,97 @@
+@import '../utils/colors';
+@import '../utils/fonts';
+
+.main-log {
+  margin: 0;
+  height: 100vh;
+
+  & * {
+    font-family: $pg;
+  }
+
+  .section-form-log {
+    min-height: 500px;
+    height: fit-content;
+    width: 440px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 5px;
+    padding: 15px;
+    background-color: $mediumLightOpacity;
+    box-shadow: 5px 0 10px #00000026;
+
+    h1 {
+      margin: 30px 0;
+    }
+
+    .form-fields {
+      height: fit-content;
+      width: 80%;
+
+      .messages > li {
+        color: red;
+      }
+
+      .form-log {
+          height: 100%;
+          width: 100%;
+
+        .input-form {
+          p {
+            width: 100%;
+            height: 60px;
+            margin: 15px 0;
+
+            input {
+              border: none;
+              width: 100%;
+              height: 100%;
+              background-color: $lighter;
+              padding: 10px 20px;
+              border-radius: 10px;
+              font-size: 16px;
+
+              &::placeholder {
+                color: $darker;
+              }
+            }
+          }
+        }
+
+          .errors-messages {
+            color: red;
+          }
+
+          .log-btn {
+            width: 100%;
+            height: 60px;
+            border: none;
+            border-radius: 10px;
+            background-color: $medium;
+            color: $lighter;
+            font-size: 18px;
+            transition: background-color 300ms;
+            cursor: pointer;
+
+            &:hover {
+              background-color: $mediumDark;
+            }
+          }
+        }
+
+
+        .login-side-links {
+          margin: 15px auto;
+
+          p {
+            font-size: 14px;
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+
+
+}
+

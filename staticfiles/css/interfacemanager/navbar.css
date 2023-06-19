@@ -38,7 +38,7 @@ nav a:visited {
   overflow: hidden;
   cursor: pointer;
 }
-.navbar__hover-container:hover > a {
+.navbar__hover-container:hover > .original {
   transform: translateY(-27px);
 }
 .navbar__hover-container:hover > .double {
@@ -50,7 +50,7 @@ nav a:visited {
   font-family: "Ranade", "sans-serif";
   transition: transform ease 300ms;
 }
-.navbar__hover-container a {
+.navbar__hover-container .original {
   position: absolute;
   top: 27px;
   transition: transform ease 300ms;

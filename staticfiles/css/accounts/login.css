@@ -1,0 +1,76 @@
+.main-log {
+  margin: 0;
+  height: 100vh;
+}
+.main-log * {
+  font-family: "Ranade", "sans-serif";
+}
+.main-log .section-form-log {
+  min-height: 500px;
+  height: fit-content;
+  width: 440px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 5px;
+  padding: 15px;
+  background-color: rgba(232, 235, 247, 0.5490196078);
+  box-shadow: 5px 0 10px rgba(0, 0, 0, 0.1490196078);
+}
+.main-log .section-form-log h1 {
+  margin: 30px 0;
+}
+.main-log .section-form-log .form-fields {
+  height: fit-content;
+  width: 80%;
+}
+.main-log .section-form-log .form-fields .messages > li {
+  color: red;
+}
+.main-log .section-form-log .form-fields .form-log {
+  height: 100%;
+  width: 100%;
+}
+.main-log .section-form-log .form-fields .form-log .input-form p {
+  width: 100%;
+  height: 60px;
+  margin: 15px 0;
+}
+.main-log .section-form-log .form-fields .form-log .input-form p input {
+  border: none;
+  width: 100%;
+  height: 100%;
+  background-color: #FFFBFF;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 16px;
+}
+.main-log .section-form-log .form-fields .form-log .input-form p input::placeholder {
+  color: #262322;
+}
+.main-log .section-form-log .form-fields .form-log .errors-messages {
+  color: red;
+}
+.main-log .section-form-log .form-fields .form-log .log-btn {
+  width: 100%;
+  height: 60px;
+  border: none;
+  border-radius: 10px;
+  background-color: #C97D60;
+  color: #FFFBFF;
+  font-size: 18px;
+  transition: background-color 300ms;
+  cursor: pointer;
+}
+.main-log .section-form-log .form-fields .form-log .log-btn:hover {
+  background-color: #63372C;
+}
+.main-log .section-form-log .form-fields .login-side-links {
+  margin: 15px auto;
+}
+.main-log .section-form-log .form-fields .login-side-links p {
+  font-size: 14px;
+  text-decoration: underline;
+}
+
+/*# sourceMappingURL=login.css.map */

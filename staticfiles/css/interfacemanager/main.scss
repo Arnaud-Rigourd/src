@@ -21,8 +21,16 @@
     position: relative;
 
     h2 {
-    margin: 25px auto;
-  }
+      margin: 25px auto;
+    }
+
+    .header-btn {
+      transition: transform 300ms, box-shadow 300ms;
+
+      &:hover {
+        box-shadow: none;
+      }
+    }
   }
 }
 
