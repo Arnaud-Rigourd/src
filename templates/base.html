@@ -25,15 +25,15 @@
 <nav id="navbar">
     <div class="navbar__hover-container">
         <span class="dummy">---DevForFree---</span>
-        <span class="double">DevForFree</span>
-        <a href="{% url 'interfacemanager:home' %}">DevForFree</a>
+        <a class="double" href="{% url 'interfacemanager:home' %}">DevForFree</a>
+        <a class="original" href="{% url 'interfacemanager:home' %}">DevForFree</a>
     </div>
     <ul>
         <li>
             <div class="navbar__hover-container">
                 <span class="dummy">---Liste des devs---</span>
-                <span class="double">Liste des devs</span>
-                <a href="{% url 'profilemanager:index' %}">Liste des devs</a>
+                <a class="double" href="{% url 'profilemanager:index' %}">Liste des devs</a>
+                <a class="original" href="{% url 'profilemanager:index' %}">Liste des devs</a>
             </div>
         </li>
         {% if current_user.is_authenticated %}
@@ -41,8 +41,8 @@
                 <li>
                     <div class="navbar__hover-container">
                         <span class="dummy">---Mon profil---</span>
-                        <span class="double">Mon profil</span>
-                        <a href="{% url 'profilemanager:company-monitoring' slug=current_user.slug pk=current_user.pk %}">Mon profil</a>
+                        <a class="double" href="{% url 'profilemanager:company-monitoring' slug=current_user.slug pk=current_user.pk %}">Mon profil</a>
+                        <a class="original" href="{% url 'profilemanager:company-monitoring' slug=current_user.slug pk=current_user.pk %}">Mon profil</a>
                     </div>
                 </li>
             {% endif %}
@@ -51,8 +51,8 @@
                 <li>
                     <div class="navbar__hover-container">
                         <span class="dummy">---Mon profil---</span>
-                        <span class="double">Mon profil</span>
-                        <a href="{% url 'profilemanager:detail' slug=current_user.slug pk=current_user.pk %}">Mon profil</a>
+                        <a class="double" href="{% url 'profilemanager:detail' slug=current_user.slug pk=current_user.pk %}">Mon profil</a>
+                        <a class="original" href="{% url 'profilemanager:detail' slug=current_user.slug pk=current_user.pk %}">Mon profil</a>
                     </div>
                 </li>
            {% elif not current_user.profile and current_user.category == 'developpeur' %}
@@ -60,7 +60,7 @@
                     <div class="navbar__hover-container">
                         <span class="dummy">---Créer mon profile---</span>
                         <span class="double">Créer mon profile</span>
-                        <a href="{% url 'profilemanager:create' username=current_user.username %}">Créer mon profile</a>
+                        <a class="original" href="{% url 'profilemanager:create' username=current_user.username %}">Créer mon profile</a>
                     </div>
                 </li>
 
@@ -69,23 +69,23 @@
             <li>
                 <div class="navbar__hover-container">
                     <span class="dummy">-----Se déconnecter-----</span>
-                    <span class="double">Se déconnecter</span>
-                    <a href="{% url 'accounts:signout' %}">Se déconnecter</a>
+                    <a class="double" href="{% url 'accounts:signout' %}">Se déconnecter</a>
+                    <a class="original" href="{% url 'accounts:signout' %}">Se déconnecter</a>
                 </div>
             </li>
         {% else %}
             <li>
                 <div class="navbar__hover-container">
                     <span class="dummy">---Se connecter---</span>
-                    <span class="double">Se connecter</span>
-                    <a href="{% url 'accounts:signin' %}">Se connecter</a>
+                    <a class="double" href="{% url 'accounts:signin' %}">Se connecter</a>
+                    <a class="original" href="{% url 'accounts:signin' %}">Se connecter</a>
                 </div>
             </li>
             <li>
                 <div class="navbar__hover-container">
                     <span class="dummy">---S'inscrire---</span>
-                    <span class="double">S'inscrire</span>
-                    <a href="{% url 'accounts:signup' %}">S'inscrire</a>
+                    <a class="double" href="{% url 'accounts:signup' %}">S'inscrire</a>
+                    <a class="original" href="{% url 'accounts:signup' %}">S'inscrire</a>
                 </div>
             </li>
         {% endif %}

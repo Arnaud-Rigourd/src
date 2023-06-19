@@ -1,6 +1,6 @@
 import re
 
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django import forms
 from django.core.exceptions import ValidationError
 
@@ -14,7 +14,16 @@ class CustomSignupForm(UserCreationForm):
             'invalid': 'Please enter a valid username',
             'unique': 'This username is already taken'
         },
-        widget=forms.TextInput(attrs={'autofocus': 'autofocus'})
+        widget=forms.TextInput(attrs={'autofocus': 'autofocus',
+                                      'placeholder': "Nom d'utilisateur*"})
+    )
+
+    first_name = forms.CharField(
+        widget=forms.TextInput(attrs={'placeholder': "Prénom*"})
+    )
+
+    last_name = forms.CharField(
+        widget=forms.TextInput(attrs={'placeholder': "Nom*"})
     )
 
     email = forms.EmailField(
@@ -22,13 +31,27 @@ class CustomSignupForm(UserCreationForm):
             'required': 'Please enter an email address',
             'invalid': 'Please enter a valid email address',
             'unique': 'This email address is already taken'
-        }
+        },
+        widget=forms.TextInput(attrs={'placeholder': 'email@example.com*'})
     )
 
     phone_number = forms.CharField(
         error_messages={
             'invalid': 'Please enter a valid phone number',
-        }
+        },
+        widget=forms.TextInput(attrs={'placeholder': 'Téléphone : XX XX XX XX XX'})
+    )
+
+    company_name = forms.CharField(
+        widget=forms.TextInput(attrs={'placeholder': "Nom d'entreprise (facultatif)"})
+    )
+
+    password1 = forms.CharField(
+        widget=forms.PasswordInput(attrs={'placeholder': "Mot de passe*"})
+    )
+
+    password2 = forms.CharField(
+        widget=forms.PasswordInput(attrs={'placeholder': "Confirmez votre mot de passe*"})
     )
 
     def __init__(self, *args, **kwargs):
@@ -57,25 +80,20 @@ class CustomSignupForm(UserCreationForm):
             'email',
             'category',
             'phone_number',
-            'phone_display',
+            # 'phone_display',
             'company_name',
         )
 
 
-
-
-class CustomLoginForm(UserCreationForm):
-    email = forms.EmailField(
-        error_messages={
-            'required': 'Please enter an email address',
-            'invalid': 'Please enter a valid email address'
-        }
+class CustomAuthenticationForm(AuthenticationForm):
+    username = forms.CharField(
+        widget=forms.TextInput(attrs={'placeholder': 'Email'})
     )
-    class Meta:
-        model = CustomUser
-        fields = (
-            'email',
-        )
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={'placeholder': 'Mot de passe'})
+    )
+
+
 
 class ImageUploadForm(forms.Form):
     image = forms.ImageField(

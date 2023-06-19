@@ -9,4 +9,6 @@
 @import url('utils/mixins.css');
 @import url('utils/fonts.css');
 @import url('dev_index/index.css');
+@import url('accounts/login.css');
+@import url('accounts/signup.css');
 
