@@ -5,13 +5,16 @@
 {% endblock %}
 
 {% block title %}
-<title>Email confirmation</title>
+<title>Confirmation d'inscription</title>
 {% endblock %}
 
 {% block content %}
-
+<main class="main-log flex-center">
+    <section class="section-form-log flex-center">
 <h1>You did it! Welcome on board!</h1>
 <p>You are going to be redirected to the signin page in few seconds. If not, you can click directly on the link below</p>
 <p><a href="{% url 'accounts:signin' %}">log in</a>.</p>
+    </section>
+</main>
 
 {% endblock %}

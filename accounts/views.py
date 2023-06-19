@@ -12,7 +12,7 @@ from django.template.loader import render_to_string
 from django.urls import reverse
 from dotenv import load_dotenv
 
-from accounts.forms import CustomSignupForm, ImageUploadForm, CustomUpdateForm
+from accounts.forms import CustomSignupForm, ImageUploadForm, CustomUpdateForm, CustomAuthenticationForm
 from accounts.models import EmailConfirmation, CustomUser
 from profilemanager.models import Company
 
@@ -89,9 +89,9 @@ def signin(request):
     """
     # Handle form for GET request
     if request.method != 'POST':
-        return render(request, "registration/login.html", context={'form': AuthenticationForm()})
+        return render(request, "registration/login.html", context={'form': CustomAuthenticationForm()})
 
-    form = AuthenticationForm(data=request.POST)
+    form = CustomAuthenticationForm(data=request.POST)
 
     # Handle invalid form
     if not form.is_valid():

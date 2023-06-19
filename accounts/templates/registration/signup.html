@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-<title>Sign up</title>
+<title>Inscription</title>
 {% endblock %}
 
 {% block script %}
@@ -9,22 +9,29 @@
 {% endblock %}
 
 {% block content %}
-<h1>Sign up</h1>
 
-<form method="POST" action="{% url 'accounts:signup' %}">
-    {% csrf_token %}
-    <table>
-        {% for field in form %}
-        <tr>
-            <td>{{ field.label_tag }}</td>
-            <td>{{ field }}</td>
-            <td>{{ field.errors }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-    <button type="submit">Valider</button>
-</form>
+    <main class="main-log main-signup flex-center">
+    <section class="section-form-log flex-center">
+        <h1>Inscription</h1>
 
-<p><a href="{% url 'interfacemanager:home' %}">Back home</a></p>
-
+        <div class="form-fields">
+            <form class="form-log" method="POST" action="{% url 'accounts:signup' %}">
+                {% csrf_token %}
+                <div class="input-form">
+                    {% for field in form %}
+                        {% if field.name == 'category' %}
+                            <span>Tu es (choisis dans la liste) :</span>
+                        {% endif %}
+                        <p>{{ field }}</p>
+                        <span class="errors-messages">{{ field.errors }}</span>
+                    {% endfor %}
+                </div>
+                <button class="log-btn" type="submit">Valider</button>
+            </form>
+            <div class="login-side-links">
+                <p><a href="{% url 'interfacemanager:home' %}">Retour à l'accueil</a></p>
+            </div>
+        </div>
+    </section>
+    </main>
 {% endblock %}

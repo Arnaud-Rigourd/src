@@ -1,35 +1,49 @@
 {% extends 'base.html' %}
 
 {% block title %}
-<title>Login</title>
+<title>Connecte-toi sur DFF</title>
 {% endblock %}
 
 {% block content %}
 
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li {% if message.tags %} class="{{ message.tags }}"{% endif %} >{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
+    <main class="main-log flex-center">
+    <section class="section-form-log flex-center">
 
-<form method="POST" action="{% url 'accounts:signin' %}">
-    {% csrf_token %}
-    <p>
-        {{ form.username.label_tag }} {{ form.username }}
-    </p>
-    <p>
-        {{ form.password.label_tag }} {{ form.password }}
-    </p>
-    <button type="submit">Login</button>
-</form>
+    <h1>Connexion</h1>
 
-<div class="login_reset">
-    <p><a href="{% url 'accounts:signup' %}">Join us? Sign up</a></p>
-    <p><a href="{% url 'accounts:password_reset' %}">Forgot your password ?</a></p>
-</div>
+        <div class="form-fields">
 
-<p><a href="{% url 'interfacemanager:home' %}">Back home</a></p>
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}"{% endif %} >{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+
+            <form class="form-log" method="POST" action="{% url 'accounts:signin' %}">
+                {% csrf_token %}
+
+                    <div class="input-form">
+                    {% for field in form %}
+                            <p>{{ field }}</p>
+                    {% endfor %}
+                    </div>
+
+
+
+                <button type="submit" class="log-btn">Login</button>
+            </form>
+
+            <div class="login-side-links">
+                <p><a href="{% url 'accounts:signup' %}">Crée ton compte</a></p>
+                <p><a href="{% url 'accounts:password_reset' %}">Mot de passe oublié ?</a></p>
+                <p><a href="{% url 'interfacemanager:home' %}">Retour à l'accueil</a></p>
+            </div>
+
+        </div>
+
+    </section>
+    </main>
 
 {% endblock %}
