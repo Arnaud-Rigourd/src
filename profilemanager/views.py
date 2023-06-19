@@ -52,7 +52,8 @@ class ProfileDetail(TemplateView):
         context['pk'] = pk
         context['profile'] = user.profile
         context['dev'] = user.category == 'developpeur'
-        context['stacks'] = user.profile.stacks_set.filter(~Q(name__startswith='[{'))
+        # context['stacks'] = user.profile.stacks_set.filter(~Q(name__startswith='[{'))
+        context['stacks'] = user.profile.stacks_set.filter(~Q(name=None))
         context['projects'] = user.profile.projects_set.all()
         context['stack_form'] = CustomStacksForm()
         context['project_form'] = CustomProjectsForm()
@@ -127,7 +128,6 @@ class FirstStackCreate(CreateView):
     fields = ['name']
 
     def get_success_url(self):
-        print(self.request.user.profile.stacks_set.all())
         return reverse('profilemanager:detail', kwargs={'slug': self.request.user.slug, 'pk': self.request.user.pk})
 
     def get_context_data(self, **kwargs):
@@ -139,6 +139,7 @@ class FirstStackCreate(CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
+        self.object.name = None
         self.object.profile = self.request.user.profile
 
         tags_json_string = form.cleaned_data.get('name')
