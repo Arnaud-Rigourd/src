@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load stack_filters %}
 
 {% block title %}
     <title>Liste des développeurs disponibles</title>
@@ -22,7 +23,7 @@
                             <div class="dev-card__info">
                                 <h2>{{ dev.first_name }} {{ dev.last_name }}</h2>
                                 <p>En quelques nots : {{ dev.profile.description }}</p>
-                                <p>Stacks : {% for stack in dev.profile.stacks_set.all %}{{ stack.name }} {% endfor %}</p>
+                                <p>Stacks : {% for stack in dev.profile.stacks_set.all|filter_none_stacks %}{{ stack.name }} {% endfor %}</p>
                             </div>
                             <p class="more-info">En savoir plus</p>
                         </a>

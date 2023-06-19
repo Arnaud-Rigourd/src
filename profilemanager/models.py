@@ -43,7 +43,7 @@ class Stacks(models.Model):
     - profile: A foreign key linking to the profile to which this stack belongs.
     """
     id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=250, blank=False)
+    name = models.CharField(max_length=250, blank=True, null=True)
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
 
     def __str__(self):
