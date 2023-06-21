@@ -102,7 +102,7 @@ QACards.forEach((card) => {
             otherCards.style.height = '60px'
         })
 
-        if (currentHeight != '60px') {
+        if (currentHeight !== '60px') {
             card.style.height = '60px'
         } else {
             card.style.height = fullHeight
