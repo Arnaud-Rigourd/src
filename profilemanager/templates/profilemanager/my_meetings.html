@@ -16,10 +16,10 @@
                 <p>avec {{ meeting.company.user.first_name }}</p>
                 <p>statut : {{ meeting.status }}</p>
                 <img src="{{ meeting.company.user.profile_image }}" alt="company profile picture" />
-                <p>Message old : {{ meeting.message }}</p>
                 <h4>Discution</h4>
                 {% for message in meeting.messages_set.all %}
-                    <p>{{ message.content }}</p>
+                    <p class="sender">{{ message.sender.first_name }}</p>
+                    <p class="message-content">{{ message.content }}</p>
                 {% endfor %}
 
             </div>
@@ -60,7 +60,11 @@
             <p>avec {{ meeting.company.user.first_name }}</p>
             <p>statut : {{ meeting.status }}</p>
             <img src="{{ meeting.company.user.profile_image }}" alt="company profile picture" />
-            <p>Message : {{ meeting.message }}</p>
+            <h4>Discution</h4>
+                {% for message in meeting.messages_set.all %}
+                    <p class="sender">{{ message.sender.first_name }}</p>
+                    <p class="message-content">{{ message.content }}</p>
+                {% endfor %}
 
             <form method="POST" action="{% url 'meetingsmanager:update' meeting_pk=meeting.pk %}">
                 {% csrf_token %}

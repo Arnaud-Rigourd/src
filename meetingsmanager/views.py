@@ -115,13 +115,20 @@ class MessagesCreateDev(CreateView):
     form_class = CustomMessageForm
 
     def get_success_url(self):
-        return reverse('profilemanager:dev-meetings', kwargs={'pk': self.request.user.pk, 'slug': self.request.user.slug})
+        if self.request.user.category == 'company':
+            return reverse('profilemanager:company-monitoring',
+                           kwargs={'slug': self.request.user.slug, 'pk': self.request.user.pk})
+        elif self.request.user.category == 'developpeur':
+            return reverse('profilemanager:dev-meetings',
+                           kwargs={'pk': self.request.user.pk, 'slug': self.request.user.slug})
+        else:
+            return reverse('interfacemanager:home')
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
         meeting = get_object_or_404(Meetings, pk=self.kwargs['meeting_pk'])
         sender = get_object_or_404(User, pk=self.request.user.pk)
-        if sender == meeting.company_id:
+        if sender == meeting.company.user:
             receiver = get_object_or_404(User, pk=meeting.dev.user_id)
         else:
             receiver = get_object_or_404(User, pk=meeting.company.user_id)
