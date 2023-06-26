@@ -89,6 +89,7 @@ function hoverEffect(containerClassName) {
 // Main
 
 const QACards = document.querySelectorAll('.QA-card')
+const minHeight = '60px'
 
 QACards.forEach((card) => {
     card.addEventListener('click', e => {
@@ -99,11 +100,11 @@ QACards.forEach((card) => {
 
 
         QACards.forEach((otherCards) => {
-            otherCards.style.height = '60px'
+            otherCards.style.height = minHeight
         })
 
-        if (currentHeight != '60px') {
-            card.style.height = '60px'
+        if (currentHeight !== minHeight) {
+            card.style.height = minHeight
         } else {
             card.style.height = fullHeight
             card.style.backgroundColor = '#e8ebf78c'
@@ -113,7 +114,7 @@ QACards.forEach((card) => {
 
 document.addEventListener('click', e => {
     QACards.forEach((card) => {
-        card.style.height = '60px'
+        card.style.height = minHeight
     })
 })
 
