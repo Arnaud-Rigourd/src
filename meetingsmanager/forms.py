@@ -6,12 +6,12 @@ from meetingsmanager.models import Meetings, Messages
 
 
 class CustomMeetingForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['message'].required = False
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(*args, **kwargs)
+    #     self.fields['message'].required = False
     class Meta:
         model = Meetings
-        fields = ['title', 'message', 'meeting_date']
+        fields = ['title', 'meeting_date']
         widgets = {
             'meeting_date': DateTimePickerInput(),
         }

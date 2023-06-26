@@ -52,7 +52,6 @@ class ProfileDetail(TemplateView):
         context['pk'] = pk
         context['profile'] = user.profile
         context['dev'] = user.category == 'developpeur'
-        # context['stacks'] = user.profile.stacks_set.filter(~Q(name__startswith='[{'))
         context['stacks'] = user.profile.stacks_set.filter(~Q(name=None))
         context['projects'] = user.profile.projects_set.all()
         context['stack_form'] = CustomStacksForm()
@@ -364,9 +363,9 @@ class CompanyDetail(TemplateView):
 
         context['company'] = company
         context['meetings'] = company.meetings_set.all()
-
         context['user'] = user
         context['current_user'] = self.request.user
+        context['message_form'] = CustomMessageForm()
         return context
 
 

@@ -55,6 +55,14 @@
                         <a class="original" href="{% url 'profilemanager:detail' slug=current_user.slug pk=current_user.pk %}">Mon profil</a>
                     </div>
                 </li>
+
+                <li>
+                    <div class="navbar__hover-container">
+                        <span class="dummy">-Mes RDV--</span>
+                        <a class="double" href="{% url 'profilemanager:dev-meetings' slug=current_user.slug pk=current_user.pk %}">Mes RDV</a>
+                        <a class="original" href="{% url 'profilemanager:dev-meetings' slug=current_user.slug pk=current_user.pk %}">Mes RDV</a>
+                    </div>
+                </li>
            {% elif not current_user.profile and current_user.category == 'developpeur' %}
                 <li>
                     <div class="navbar__hover-container">
@@ -76,16 +84,16 @@
         {% else %}
             <li>
                 <div class="navbar__hover-container">
-                    <span class="dummy">---Se connecter---</span>
-                    <a class="double" href="{% url 'accounts:signin' %}">Se connecter</a>
-                    <a class="original" href="{% url 'accounts:signin' %}">Se connecter</a>
+                    <span class="dummy">---S'inscrire---</span>
+                    <a class="double" href="{% url 'accounts:signup' %}">S'inscrire</a>
+                    <a class="original" href="{% url 'accounts:signup' %}">S'inscrire</a>
                 </div>
             </li>
             <li>
                 <div class="navbar__hover-container">
-                    <span class="dummy">---S'inscrire---</span>
-                    <a class="double" href="{% url 'accounts:signup' %}">S'inscrire</a>
-                    <a class="original" href="{% url 'accounts:signup' %}">S'inscrire</a>
+                    <span class="dummy">---Se connecter---</span>
+                    <a class="double" href="{% url 'accounts:signin' %}">Se connecter</a>
+                    <a class="original" href="{% url 'accounts:signin' %}">Se connecter</a>
                 </div>
             </li>
         {% endif %}

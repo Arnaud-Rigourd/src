@@ -15,13 +15,20 @@
         {% if meeting.status == 'pending' %}
         <div class="meeting">
             <img src="{{ user.profile_image }}" alt="profile picture" />
-            <p>Le {{ meeting.meeting_date|date:'d/m/Y' }} à {{ meeting.meeting_date|date:'H:i' }}</p>
+            <p>Date de rendez-vous proposée : le {{ meeting.meeting_date|date:'d/m/Y' }} à {{ meeting.meeting_date|date:'H:i' }}</p>
             <p>avec {{ meeting.dev.user.first_name }}</p>
             <p>statut : {{ meeting.status }}</p>
             <h4>Discution</h4>
             {% for message in meeting.messages_set.all %}
-                <p>{{ message.content }}</p>
+                <p class="sender">{{ message.sender.first_name }}</p>
+                <p class="message-content">{{ message.content }}</p>
             {% endfor %}
+
+            <form method="POST" action="{% url 'meetingsmanager:message-create' meeting_pk=meeting.pk %}">
+                {% csrf_token %}
+                {{ message_form.as_p }}
+                <button type="submit">Envoyer</button>
+            </form>
 
             <form method="POST" action="{% url 'meetingsmanager:delete' meeting_pk=meeting.pk %}">
                 {% csrf_token %}
@@ -37,10 +44,20 @@
         {% if meeting.status == 'accepted' %}
         <div class="meeting">
             <img src="{{ user.profile_image }}" alt="profile picture" />
-            <p>Le {{ meeting.meeting_date|date:'d/m/Y' }} à {{ meeting.meeting_date|date:'H:i' }}</p>
+            <p>Date de rendez-vous proposée : le {{ meeting.meeting_date|date:'d/m/Y' }} à {{ meeting.meeting_date|date:'H:i' }}</p>
             <p>avec {{ meeting.dev.user.first_name }}</p>
             <p>statut : {{ meeting.status }}</p>
-            <p>Message : {{ meeting.message }} </p>
+            <h4>Discution</h4>
+            {% for message in meeting.messages_set.all %}
+                <p class="sender">{{ message.sender.first_name }}</p>
+                <p class="message-content">{{ message.content }}</p>
+            {% endfor %}
+
+            <form method="POST" action="{% url 'meetingsmanager:message-create' meeting_pk=meeting.pk %}">
+                {% csrf_token %}
+                {{ message_form.as_p }}
+                <button type="submit">Envoyer</button>
+            </form>
         </div>
         {% endif %}
     {% endfor %}
@@ -50,10 +67,14 @@
         {% if meeting.status == 'declined' %}
         <div class="meeting">
             <img src="{{ user.profile_image }}" alt="profile picture" />
-            <p>Le {{ meeting.meeting_date|date:'d/m/Y' }} à {{ meeting.meeting_date|date:'H:i' }}</p>
+            <p>Date de rendez-vous proposée : le {{ meeting.meeting_date|date:'d/m/Y' }} à {{ meeting.meeting_date|date:'H:i' }}</p>
             <p>avec {{ meeting.dev.user.first_name }}</p>
             <p>statut : {{ meeting.status }}</p>
-            <p>Message : {{ meeting.message }} </p>
+            <h4>Discution</h4>
+            {% for message in meeting.messages_set.all %}
+                <p class="sender">{{ message.sender.first_name }}</p>
+                <p class="message-content">{{ message.content }}</p>
+            {% endfor %}
         </div>
         {% endif %}
     {% endfor %}

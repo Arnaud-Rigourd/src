@@ -170,6 +170,8 @@
             {% for form in messages %}
                 {{ form.as_p }}
             {% endfor %}
+{#            <input type="hidden" name="messages_set-0-sender" value="{{ current_user.id }}"/>#}
+{#            <input type="hidden" name="messages_set-0-receiver" value="{{ user.id }}" />#}
             <button type="submit">Envoyer</button>
         </form>
     </section>

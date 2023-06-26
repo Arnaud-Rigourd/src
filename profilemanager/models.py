@@ -67,7 +67,6 @@ class Projects(models.Model):
     name = models.CharField(max_length=250, blank=False)
     description = models.TextField(blank=True)
     used_stacks = models.ManyToManyField(Stacks)
-    # used_stacks = models.TextField(blank=True)
     link = models.URLField(blank=True, default="")
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
 
