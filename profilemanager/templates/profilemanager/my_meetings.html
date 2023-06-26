@@ -12,7 +12,7 @@
 
         <div class="meeting">
             <div class="meeting__content">
-                <p>Date : le {{ meeting.meeting_date|date:'d/m/Y' }} à {{ meeting.meeting_date|date:'H:i' }}</p>
+                <p>Date de rendez-vous proposé : le {{ meeting.meeting_date|date:'d/m/Y' }} à {{ meeting.meeting_date|date:'H:i' }}</p>
                 <p>avec {{ meeting.company.user.first_name }}</p>
                 <p>statut : {{ meeting.status }}</p>
                 <img src="{{ meeting.company.user.profile_image }}" alt="company profile picture" />
@@ -56,7 +56,7 @@
         {% if meeting.status != 'pending' %}
 
         <div class="meeting">
-            <p>Le {{ meeting.meeting_date|date:'d/m/Y' }} à {{ meeting.meeting_date|date:'H:i' }}</p>
+            <p>Date de Date de rendez-vous proposé : le {{ meeting.meeting_date|date:'d/m/Y' }} à {{ meeting.meeting_date|date:'H:i' }}</p>
             <p>avec {{ meeting.company.user.first_name }}</p>
             <p>statut : {{ meeting.status }}</p>
             <img src="{{ meeting.company.user.profile_image }}" alt="company profile picture" />
@@ -65,6 +65,7 @@
                     <p class="sender">{{ message.sender.first_name }}</p>
                     <p class="message-content">{{ message.content }}</p>
                 {% endfor %}
+
 
             <form method="POST" action="{% url 'meetingsmanager:update' meeting_pk=meeting.pk %}">
                 {% csrf_token %}
@@ -75,6 +76,12 @@
                 {% csrf_token %}
                 <input type="hidden" name="status" value="pending">
                 <button type="submit">En attente</button>
+            </form>
+
+            <form method="POST" action="{% url 'meetingsmanager:message-create' meeting_pk=meeting.pk %}">
+                {% csrf_token %}
+                {{ message_form.as_p }}
+                <button type="submit">Envoyer</button>
             </form>
         </div>
         

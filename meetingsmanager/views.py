@@ -48,7 +48,7 @@ class MeetingsCreate(CreateView):
                 message.receiver = get_object_or_404(User, pk=message.meeting.dev.user_id)
                 message.save()
 
-        subject, message, email_from, email_to = _email_content(self, self.object)
+        subject, message, email_from, email_to = first_email_content(self, self.object)
         send_mail(subject, message, email_from, email_to)
         return super().form_valid(form)
 
@@ -110,7 +110,7 @@ class MeetingsDelete(DeleteView):
         return reverse('profilemanager:company-monitoring', kwargs={'slug': self.object.company.user.slug, 'pk': self.object.company.user.pk})
 
 
-class MessagesCreateDev(CreateView):
+class MessagesCreate(CreateView):
     template_name = 'profilemanager/my_meetings.html'
     form_class = CustomMessageForm
 
@@ -138,13 +138,23 @@ class MessagesCreateDev(CreateView):
         self.object.meeting = meeting
 
         self.object.save()
+        subject, message, email_from, email_to = _email_content(self, self.object)
+        send_mail(subject, message, email_from, email_to)
         return super().form_valid(form)
 
 
-def _email_content(self, object):
+def first_email_content(self, object):
     subject = self.object.title
     message = render_to_string('meetingsmanager/email.html',
                                {'company': self.object.company, 'dev': self.object.dev, 'meeting': self.object})
     email_from = settings.EMAIL_HOST_USER
-    email_to = [self.object.dev.user.email]
+    email_to = [object.dev.user.email]
+    return subject, message, email_from, email_to
+
+
+def _email_content(self, object):
+    subject = f"Nouveau message de {object.sender.first_name} !"
+    message = render_to_string('meetingsmanager/email_exchanges.html', {'sender': object.sender, 'object': object})
+    email_from = settings.EMAIL_HOST_USER
+    email_to = [object.receiver.email]
     return subject, message, email_from, email_to
