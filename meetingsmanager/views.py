@@ -34,15 +34,20 @@ class MeetingsCreate(CreateView):
 
     def form_valid(self, form):
         context = self.get_context_data()
-        messages = context['messages']
+        message_form = context['messages']
         self.object = form.save(commit=False)
         self.object.dev = get_object_or_404(Profile, pk=self.kwargs['dev_pk'])
         self.object.company = get_object_or_404(Company, pk=self.kwargs['company_pk'])
         self.object.save()
 
-        if messages.is_valid():
-            messages.instance = self.object
-            messages.save()
+        if message_form.is_valid():
+            for message in message_form:
+                message = message.save(commit=False)
+                message.meeting = self.object
+                message.sender = get_object_or_404(User, pk=self.request.user.pk)
+                message.receiver = get_object_or_404(User, pk=message.meeting.dev.user_id)
+                message.save()
+
         subject, message, email_from, email_to = _email_content(self, self.object)
         send_mail(subject, message, email_from, email_to)
         return super().form_valid(form)
@@ -110,16 +115,22 @@ class MessagesCreateDev(CreateView):
     form_class = CustomMessageForm
 
     def get_success_url(self):
-        print(self.request.user.pk)
         return reverse('profilemanager:dev-meetings', kwargs={'pk': self.request.user.pk, 'slug': self.request.user.slug})
 
     def form_valid(self, form):
-        print('Hello')
         self.object = form.save(commit=False)
         meeting = get_object_or_404(Meetings, pk=self.kwargs['meeting_pk'])
+        sender = get_object_or_404(User, pk=self.request.user.pk)
+        if sender == meeting.company_id:
+            receiver = get_object_or_404(User, pk=meeting.dev.user_id)
+        else:
+            receiver = get_object_or_404(User, pk=meeting.company.user_id)
+
+        self.object.sender = sender
+        self.object.receiver = receiver
         self.object.meeting = meeting
+
         self.object.save()
-        print(self.object.content)
         return super().form_valid(form)
 
 
