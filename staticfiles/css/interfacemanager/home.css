@@ -62,7 +62,7 @@ header .btn-container .header-btn:visited {
 }
 header .btn-container .header-btn:active {
   transform: translate(0, 0);
-  background-color: #E8EBF7;
+  background-color: #d4d8ec;
 }
 header .btn-container .trace {
   position: absolute;
