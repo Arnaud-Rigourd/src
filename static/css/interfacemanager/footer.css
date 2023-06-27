@@ -2,9 +2,8 @@ footer .body-footer {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background-color: rgba(232, 235, 247, 0.5490196078);
+  background-color: #d4d8ec;
   padding: 30px;
-  border-top: 1px solid #E8EBF7;
 }
 footer .body-footer .footer-pg {
   font-size: 14px;

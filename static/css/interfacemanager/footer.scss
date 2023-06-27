@@ -5,9 +5,9 @@ footer {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    background-color: $mediumLightOpacity;
+    background-color: $mediumLight;
     padding: 30px;
-    border-top: 1px solid $mediumLight;
+    //border-top: 1px solid #C0C6ECFF;
 
     .footer-pg {
       font-size: 14px;
@@ -25,6 +25,7 @@ footer {
     align-items: center;
     padding: 10px;
     background-color: $darker;
+
     .small {
       color: $lighter;
       font-size: 10px;
