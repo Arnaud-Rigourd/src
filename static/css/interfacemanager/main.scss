@@ -2,10 +2,10 @@
 
 
 .main-parallax {
-  padding-bottom: 80px;
+  margin: 0;
 
   &__container {
-    width: 80vw;
+    width: 100vw;
   }
 
   h1 {
@@ -19,6 +19,9 @@
 
   .suscribe {
     position: relative;
+    padding-top: 40px;
+    padding-bottom: 80px;
+    background-color: $mediumLightOpacity;
 
     h2 {
       margin: 25px auto;
@@ -38,8 +41,15 @@
   margin: 40px 0;
   padding: 15px 30px;
 
+  &:nth-child(2n) {
+    background-color: $mediumLightOpacity;
+    padding: 40px 0;
+  }
+
   &__QA {
     margin: 15px auto;
+    width: 55vw;
+    max-width: 800px;
     border: 1px $darker solid;
     border-radius: 5px;
     padding: 15px 30px;
@@ -64,3 +74,7 @@
   }
 }
 
+.draw-illustration {
+  display: block;
+  margin: 0 auto;
+}

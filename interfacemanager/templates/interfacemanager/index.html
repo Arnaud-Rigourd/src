@@ -38,12 +38,17 @@
 
         <main class="main-parallax flex-center flex-column">
             <div class="main-parallax__container">
-                {% if current_user.is_authenticated %}
-                    <h1>Bienvenue {{ current_user.first_name }}</h1>
-                {% else %}
-                    <h1>Bienvenue sur Dev For Free !</h1>
-                {% endif %}
-                <h2>Comment ça marche 👇</h2>
+                <section class="titles">
+                    {% if current_user.is_authenticated %}
+                        <h1>Bienvenue {{ current_user.first_name }}</h1>
+                    {% else %}
+                        <h1>Bienvenue sur Dev For Free !</h1>
+                    {% endif %}
+                    <h2>Comment ça marche 👇</h2>
+
+                    <img class="draw-illustration" src="{% static 'images/2d_illustration_talk_no_bg.webp' %}"
+                         alt="2d illustration"/>
+                </section>
 
                 <section class="faq">
                     <h2>Ce que tu dois savoir : on te crée ton site gratuitement</h2>
@@ -57,9 +62,12 @@
                             </div>
                         </div>
                     {% endfor %}
+
                 </section>
 
                 <section class="faq">
+                    <img class="draw-illustration" src="{% static 'images/2d_illustration_dev_no_bg.webp' %}"
+                         alt="2d illustration"/>
                     <h2>Ce site est fait pour toi 🫵 jeune développeur</h2>
                     {% for faq in faq_devs %}
                         <div class="faq__QA QA-card">
@@ -73,7 +81,7 @@
                     {% endfor %}
                 </section>
 
-                <div class="suscribe flex-column flex-center">
+                <section class="suscribe flex-column flex-center">
                     <h2>Prêt à participer à l'aventure ?</h2>
                     <div class="btnContainer">
                         <div class="trace"></div>
@@ -83,7 +91,7 @@
                         <div class="trace"></div>
                         <a class="btn header-btn" href="{% url 'accounts:signup' %}"><h3>👉 Inscris-toi 👈</h3></a>
                     </div>
-                </div>
+                </section>
             </div>
         </main>
 

@@ -69,7 +69,7 @@
 }
 .btnContainer .header-btn:active {
   transform: translate(0, 0);
-  background-color: #E8EBF7;
+  background-color: #d4d8ec;
 }
 .btnContainer .trace {
   position: absolute;

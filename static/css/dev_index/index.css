@@ -53,7 +53,7 @@
 }
 .main-list-dev .dev-card .profile-link:active {
   transform: translate(0, 0);
-  background-color: #E8EBF7;
+  background-color: #d4d8ec;
 }
 .main-list-dev .dev-card img {
   align-self: center;
