@@ -1,8 +1,8 @@
 .main-parallax {
-  padding-bottom: 80px;
+  margin: 0;
 }
 .main-parallax__container {
-  width: 80vw;
+  width: 100vw;
 }
 .main-parallax h1 {
   margin-top: 25px;
@@ -13,6 +13,9 @@
 }
 .main-parallax .suscribe {
   position: relative;
+  padding-top: 40px;
+  padding-bottom: 80px;
+  background-color: rgba(232, 235, 247, 0.5490196078);
 }
 .main-parallax .suscribe h2 {
   margin: 25px auto;
@@ -28,8 +31,14 @@
   margin: 40px 0;
   padding: 15px 30px;
 }
+.faq:nth-child(2n) {
+  background-color: rgba(232, 235, 247, 0.5490196078);
+  padding: 40px 0;
+}
 .faq__QA {
   margin: 15px auto;
+  width: 55vw;
+  max-width: 800px;
   border: 1px #262322 solid;
   border-radius: 5px;
   padding: 15px 30px;
@@ -39,7 +48,7 @@
   transition: height 500ms ease, background-color 500ms ease;
 }
 .faq__QA:hover {
-  background-color: #E8EBF7;
+  background-color: #d4d8ec;
   cursor: pointer;
 }
 .faq__QA--question {
@@ -47,6 +56,11 @@
 }
 .faq h2 {
   margin: 15px 0;
+}
+
+.draw-illustration {
+  display: block;
+  margin: 0 auto;
 }
 
 /*# sourceMappingURL=main.css.map */
