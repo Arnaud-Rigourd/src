@@ -6,109 +6,87 @@
 {% endblock %}
 
 {% block content %}
-<div id="wrapper" class="wrapper">
-    <video autoplay muted loop id="lp-video">
-        <source src="{% static 'videos/lp_bg_dev.mp4' %}" />
-        Your browser does not support HTML5 video.
-    </video>
-    <header id="header">
-        <div class="container-main-title flex-center flex-column">
-            <h1 class="main-title">Le potentiel ne se trouve pas dans un CV</h1>
-            <h2 class="sub-title">Il se révèle à travers les opportunités</h2>
-        </div>
+    <div id="wrapper" class="wrapper">
+        <video autoplay muted loop id="lp-video">
+            <source src="{% static 'videos/lp_bg_dev.mp4' %}"/>
+            Your browser does not support HTML5 video.
+        </video>
+        <header id="header">
+            <div class="container-main-title flex-center flex-column">
+                <h1 class="main-title">Le potentiel ne se trouve pas dans un CV</h1>
+                <h2 class="sub-title">Il se révèle à travers les opportunités</h2>
+            </div>
 
-        <div id='btnContainer' class="btnContainer">
-            <div class="trace"></div>
-            <div class="trace"></div>
-            <div class="trace"></div>
-            <div class="trace"></div>
-            <div class="trace"></div>
-            <a id='headerBtn' class="btn header-btn" href="{% url 'profilemanager:index' %}"><h3 class="header-btn__content">Trouve un développeur 🔍</h3></a>
-        </div>
-        <div class="header__arrows">
-            <svg class="arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-                <path d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/>
-            </svg>
-            <svg class="arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-                <path d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/>
-            </svg>
-        </div>
-    </header>
+            <div id='btnContainer' class="btnContainer">
+                <div class="trace"></div>
+                <div class="trace"></div>
+                <div class="trace"></div>
+                <div class="trace"></div>
+                <div class="trace"></div>
+                <a id='headerBtn' class="btn header-btn" href="{% url 'profilemanager:index' %}"><h3
+                        class="header-btn__content">Trouve un développeur 🔍</h3></a>
+            </div>
+            <div class="header__arrows">
+                <svg class="arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                    <path d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/>
+                </svg>
+                <svg class="arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                    <path d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/>
+                </svg>
+            </div>
+        </header>
 
-    <main class="main-parallax flex-center flex-column">
-        <div class="main-parallax__container">
-            {% if current_user.is_authenticated %}
-                <h1>Bienvenue {{ current_user.first_name }}</h1>
-            {% else %}
-                <h1>Bienvenue sur Dev For Free !</h1>
-            {% endif %}
-            <h2>Comment ça marche 👇</h2>
+        <main class="main-parallax flex-center flex-column">
+            <div class="main-parallax__container">
+                {% if current_user.is_authenticated %}
+                    <h1>Bienvenue {{ current_user.first_name }}</h1>
+                {% else %}
+                    <h1>Bienvenue sur Dev For Free !</h1>
+                {% endif %}
+                <h2>Comment ça marche 👇</h2>
 
-            <section class="faq">
-                <h2>Ce que tu dois savoir : on te crée ton site gratuitement</h2>
-                {% for faq in faq_clients %}
-                <div class="faq__QA QA-card">
-                    <div class="faq__QA--question">
-                        <h3>{{ faq.question }}</h3>
-                    </div>
-                    <div class="faq__QA--answer">
-                        <p>{{ faq.answer }}</p>
+                <section class="faq">
+                    <h2>Ce que tu dois savoir : on te crée ton site gratuitement</h2>
+                    {% for faq in faq_clients %}
+                        <div class="faq__QA QA-card">
+                            <div class="faq__QA--question">
+                                <h3>{{ faq.question }}</h3>
+                            </div>
+                            <div class="faq__QA--answer">
+                                <p>{{ faq.answer }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </section>
+
+                <section class="faq">
+                    <h2>Ce site est fait pour toi 🫵 jeune développeur</h2>
+                    {% for faq in faq_devs %}
+                        <div class="faq__QA QA-card">
+                            <div class="faq__QA--question">
+                                <h3>{{ faq.question }}</h3>
+                            </div>
+                            <div class="faq__QA--answer">
+                                <p>{{ faq.answer }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </section>
+
+                <div class="suscribe flex-column flex-center">
+                    <h2>Prêt à participer à l'aventure ?</h2>
+                    <div class="btnContainer">
+                        <div class="trace"></div>
+                        <div class="trace"></div>
+                        <div class="trace"></div>
+                        <div class="trace"></div>
+                        <div class="trace"></div>
+                        <a class="btn header-btn" href="{% url 'accounts:signup' %}"><h3>👉 Inscris-toi 👈</h3></a>
                     </div>
                 </div>
-                {% endfor %}
-            </section>
+            </div>
+        </main>
 
-            <section class="faq">
-                <h2>Ce site est fait pour toi 🫵 jeune développeur</h2>
-                {% for faq in faq_devs %}
-                <div class="faq__QA QA-card">
-                    <div class="faq__QA--question">
-                        <h3>{{ faq.question }}</h3>
-                    </div>
-                    <div class="faq__QA--answer">
-                        <p>{{ faq.answer }}</p>
-                    </div>
-                </div>
-                {% endfor %}
-            </section>
-
-            <div class="suscribe flex-column flex-center">
-                <h2>Prêt à participer à l'aventure ?</h2>
-                <div class="btnContainer">
-                    <div class="trace"></div>
-                    <div class="trace"></div>
-                    <div class="trace"></div>
-                    <div class="trace"></div>
-                    <div class="trace"></div>
-                    <a class="btn header-btn" href="{% url 'accounts:signup' %}"><h3>👉 Inscris-toi 👈</h3></a>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <footer>
-        <section class="body-footer">
-            <div class="contact">
-                <h4 class="footer-title">Besoin d'aide ?</h4>
-                <p class="footer-pg">Nous contacter</p>
-                <p class="footer-pg">Qui sommes-nous ?</p>
-                <p class="footer-pg">Une proposition ? Nous vous écoutons</p>
-            </div>
-            <div class="account">
-                <h4 class="footer-title">Mon compte</h4>
-                <p class="footer-pg">Se connecter</p>
-                <p class="footer-pg">S'inscrire</p>
-                <p class="footer-pg">Mot de passe oublié</p>
-            </div>
-            <div class="CGU">
-                <p class="footer-pg">Mentions légales</p>
-                <p class="footer-pg">CGU</p>
-            </div>
-        </section>
-        <section class="footer-footer">
-            <p class="small">©2023 | DevForFree</p>
-            <p class="small">Made with ❤️ by a passionate developer for passionate developers</p>
-        </section>
-    </footer>
-</div>
+        {% include "footer.html" %}
+    </div>
 {% endblock %}

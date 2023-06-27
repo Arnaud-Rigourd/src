@@ -5,20 +5,22 @@
 {% endblock %}
 
 {% block content %}
-{% if current_user.profile.pk == profile_pk %}
-<h1>Tes informations</h1>
-    <form method="POST" action="{% url 'profilemanager:update' slug=slug pk=profile_pk %}">
-        {% csrf_token %}
-        {{ form.description.label_tag }}
-        {{ form.description }}
-        {{ form.job.label_tag }}
-        {{ form.job }}
+    {% if current_user.profile.pk == profile_pk %}
+        <h1>Tes informations</h1>
+        <form method="POST" action="{% url 'profilemanager:update' slug=slug pk=profile_pk %}">
+            {% csrf_token %}
+            {{ form.description.label_tag }}
+            {{ form.description }}
+            {{ form.job.label_tag }}
+            {{ form.job }}
 
-        <button type="submit">Valider</button>
-    </form>
-    
-    <p><a href="{% url 'profilemanager:detail' slug=slug pk=current_user.pk %}">Annuler</a></p>
-{% else %}
-    <h1>Accès non autorisé</h1>
-{% endif %}
+            <button type="submit">Valider</button>
+        </form>
+
+        <p><a href="{% url 'profilemanager:detail' slug=slug pk=current_user.pk %}">Annuler</a></p>
+    {% else %}
+        <h1>Accès non autorisé</h1>
+    {% endif %}
+
+    {% include "footer.html" %}
 {% endblock %}

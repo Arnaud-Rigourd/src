@@ -1,0 +1,26 @@
+<footer>
+    <section class="body-footer">
+        <div class="contact">
+            <h4 class="footer-title">Besoin d'aide ?</h4>
+            <p class="footer-pg"><a href="#">Nous contacter</a></p>
+            <p class="footer-pg"><a href="#">Qui sommes-nous ?</a></p>
+            <p class="footer-pg"><a href="#">Une proposition ? Nous vous écoutons</a></p>
+        </div>
+        {% if not request.user.is_authenticated %}
+            <div class="account">
+                <h4 class="footer-title">Mon compte</h4>
+                <p class="footer-pg"><a href="{% url 'accounts:signin' %}">Se connecter</a></p>
+                <p class="footer-pg"><a href="{% url 'accounts:signup' %}">S'inscrire</a></p>
+                <p class="footer-pg"><a href="{% url 'accounts:password_reset' %}">Mot de passe oublié</a></p>
+            </div>
+        {% endif %}
+        <div class="CGU">
+            <p class="footer-pg"><a href="#">Mentions légales</a></p>
+            <p class="footer-pg"><a href="#">CGU</a></p>
+        </div>
+    </section>
+    <section class="footer-footer">
+        <p class="small">©2023 | DevForFree</p>
+        <p class="small">Made with ❤️ by a passionate developer for passionate developers</p>
+    </section>
+</footer>

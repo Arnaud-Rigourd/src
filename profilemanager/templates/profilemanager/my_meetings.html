@@ -10,41 +10,42 @@
     {% for meeting in meetings %}
         {% if meeting.status == 'pending' %}
 
-        <div class="meeting">
-            <div class="meeting__content">
-                <p>Date de rendez-vous proposé : le {{ meeting.meeting_date|date:'d/m/Y' }} à {{ meeting.meeting_date|date:'H:i' }}</p>
-                <p>avec {{ meeting.company.user.first_name }}</p>
-                <p>statut : {{ meeting.status }}</p>
-                <img src="{{ meeting.company.user.profile_image }}" alt="company profile picture" />
-                <h4>Discution</h4>
-                {% for message in meeting.messages_set.all %}
-                    <p class="sender">{{ message.sender.first_name }}</p>
-                    <p class="message-content">{{ message.content }}</p>
-                {% endfor %}
+            <div class="meeting">
+                <div class="meeting__content">
+                    <p>Date de rendez-vous proposé : le {{ meeting.meeting_date|date:'d/m/Y' }}
+                        à {{ meeting.meeting_date|date:'H:i' }}</p>
+                    <p>avec {{ meeting.company.user.first_name }}</p>
+                    <p>statut : {{ meeting.status }}</p>
+                    <img src="{{ meeting.company.user.profile_image }}" alt="company profile picture"/>
+                    <h4>Discution</h4>
+                    {% for message in meeting.messages_set.all %}
+                        <p class="sender">{{ message.sender.first_name }}</p>
+                        <p class="message-content">{{ message.content }}</p>
+                    {% endfor %}
 
+                </div>
+
+                {% if current_user == user %}
+                    <form method="POST" action="{% url 'meetingsmanager:update' meeting_pk=meeting.pk %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="status" value="accepted">
+                        <button type="submit">Confirmer</button>
+                    </form>
+                    <form method="POST" action="{% url 'meetingsmanager:update' meeting_pk=meeting.pk %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="status" value="declined">
+                        <button type="submit">Refuser</button>
+                    </form>
+
+                    <div class="conversation">
+                        <form method="POST" action="{% url 'meetingsmanager:message-create' meeting_pk=meeting.pk %}">
+                            {% csrf_token %}
+                            {{ message_form.as_p }}
+                            <button type="submit">Envoyer</button>
+                        </form>
+                    </div>
+                {% endif %}
             </div>
-
-            {% if current_user == user %}
-            <form method="POST" action="{% url 'meetingsmanager:update' meeting_pk=meeting.pk %}">
-                {% csrf_token %}
-                <input type="hidden" name="status" value="accepted">
-                <button type="submit">Confirmer</button>
-            </form>
-            <form method="POST" action="{% url 'meetingsmanager:update' meeting_pk=meeting.pk %}">
-                {% csrf_token %}
-                <input type="hidden" name="status" value="declined">
-                <button type="submit">Refuser</button>
-            </form>
-
-            <div class="conversation">
-                <form method="POST" action="{% url 'meetingsmanager:message-create' meeting_pk=meeting.pk %}">
-                    {% csrf_token %}
-                    {{ message_form.as_p }}
-                    <button type="submit">Envoyer</button>
-                </form>
-            </div>
-            {% endif %}
-        </div>
 
         {% endif %}
 
@@ -55,38 +56,41 @@
     {% for meeting in meetings %}
         {% if meeting.status != 'pending' %}
 
-        <div class="meeting">
-            <p>Date de Date de rendez-vous proposé : le {{ meeting.meeting_date|date:'d/m/Y' }} à {{ meeting.meeting_date|date:'H:i' }}</p>
-            <p>avec {{ meeting.company.user.first_name }}</p>
-            <p>statut : {{ meeting.status }}</p>
-            <img src="{{ meeting.company.user.profile_image }}" alt="company profile picture" />
-            <h4>Discution</h4>
+            <div class="meeting">
+                <p>Date de Date de rendez-vous proposé : le {{ meeting.meeting_date|date:'d/m/Y' }}
+                    à {{ meeting.meeting_date|date:'H:i' }}</p>
+                <p>avec {{ meeting.company.user.first_name }}</p>
+                <p>statut : {{ meeting.status }}</p>
+                <img src="{{ meeting.company.user.profile_image }}" alt="company profile picture"/>
+                <h4>Discution</h4>
                 {% for message in meeting.messages_set.all %}
                     <p class="sender">{{ message.sender.first_name }}</p>
                     <p class="message-content">{{ message.content }}</p>
                 {% endfor %}
 
 
-            <form method="POST" action="{% url 'meetingsmanager:update' meeting_pk=meeting.pk %}">
-                {% csrf_token %}
-                <input type="hidden" name="status" value="declined">
-                <button type="submit">Refuser</button>
-            </form>
-            <form method="POST" action="{% url 'meetingsmanager:update' meeting_pk=meeting.pk %}">
-                {% csrf_token %}
-                <input type="hidden" name="status" value="pending">
-                <button type="submit">En attente</button>
-            </form>
+                <form method="POST" action="{% url 'meetingsmanager:update' meeting_pk=meeting.pk %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="status" value="declined">
+                    <button type="submit">Refuser</button>
+                </form>
+                <form method="POST" action="{% url 'meetingsmanager:update' meeting_pk=meeting.pk %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="status" value="pending">
+                    <button type="submit">En attente</button>
+                </form>
 
-            <form method="POST" action="{% url 'meetingsmanager:message-create' meeting_pk=meeting.pk %}">
-                {% csrf_token %}
-                {{ message_form.as_p }}
-                <button type="submit">Envoyer</button>
-            </form>
-        </div>
-        
+                <form method="POST" action="{% url 'meetingsmanager:message-create' meeting_pk=meeting.pk %}">
+                    {% csrf_token %}
+                    {{ message_form.as_p }}
+                    <button type="submit">Envoyer</button>
+                </form>
+            </div>
+
         {% endif %}
 
     {% endfor %}
+
+    {% include "footer.html" %}
 
 {% endblock %}
