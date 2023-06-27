@@ -41,10 +41,6 @@
   margin: 40px 0;
   padding: 15px 30px;
 
-  //&:nth-child(1n) {
-  //  background-color: ;
-  //}
-
   &:nth-child(2n) {
     background-color: $mediumLightOpacity;
     padding: 40px 0;
@@ -73,29 +69,9 @@
 
   }
 
-  //&__img {
-  //  width: 300px;
-  //  height: 500px;
-  //  overflow: hidden;
-  //  margin: 15px auto;
-  //}
-
   h2 {
     margin: 15px 0;
   }
-
-  //.faq-container {
-  //  display: flex;
-  //  justify-content: space-between;
-  //}
-  //
-  //.faq-content {
-  //  width: 58%;
-  //}
-  //
-  //.home-img {
-  //  object-fit: cover;
-  //}
 }
 
 .draw-illustration {
