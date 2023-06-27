@@ -2,19 +2,21 @@
     <section class="body-footer">
         <div class="contact">
             <h4 class="footer-title">Besoin d'aide ?</h4>
-            <p class="footer-pg">Nous contacter</p>
-            <p class="footer-pg">Qui sommes-nous ?</p>
-            <p class="footer-pg">Une proposition ? Nous vous écoutons</p>
+            <p class="footer-pg"><a href="#">Nous contacter</a></p>
+            <p class="footer-pg"><a href="#">Qui sommes-nous ?</a></p>
+            <p class="footer-pg"><a href="#">Une proposition ? Nous vous écoutons</a></p>
         </div>
-        <div class="account">
-            <h4 class="footer-title">Mon compte</h4>
-            <p class="footer-pg">Se connecter</p>
-            <p class="footer-pg">S'inscrire</p>
-            <p class="footer-pg">Mot de passe oublié</p>
-        </div>
+        {% if not request.user.is_authenticated %}
+            <div class="account">
+                <h4 class="footer-title">Mon compte</h4>
+                <p class="footer-pg"><a href="{% url 'accounts:signin' %}">Se connecter</a></p>
+                <p class="footer-pg"><a href="{% url 'accounts:signup' %}">S'inscrire</a></p>
+                <p class="footer-pg"><a href="{% url 'accounts:password_reset' %}">Mot de passe oublié</a></p>
+            </div>
+        {% endif %}
         <div class="CGU">
-            <p class="footer-pg">Mentions légales</p>
-            <p class="footer-pg">CGU</p>
+            <p class="footer-pg"><a href="#">Mentions légales</a></p>
+            <p class="footer-pg"><a href="#">CGU</a></p>
         </div>
     </section>
     <section class="footer-footer">
