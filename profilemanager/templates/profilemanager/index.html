@@ -19,11 +19,12 @@
                         <div class="trace"></div>
                         <div class="trace"></div>
                         <a class="profile-link" href="{% url 'profilemanager:detail' slug=dev.slug pk=dev.pk %}">
-                            <img src="{{ dev.profile_image }}" alt="Profile pic" />
+                            <img src="{{ dev.profile_image }}" alt="Profile pic"/>
                             <div class="dev-card__info">
                                 <h2>{{ dev.first_name }} {{ dev.last_name }}</h2>
                                 <p>En quelques nots : {{ dev.profile.description }}</p>
-                                <p>Stacks : {% for stack in dev.profile.stacks_set.all|filter_none_stacks %}{{ stack.name }} {% endfor %}</p>
+                                <p>Stacks : {% for stack in dev.profile.stacks_set.all|filter_none_stacks %}
+                                    {{ stack.name }} {% endfor %}</p>
                             </div>
                             <p class="more-info">En savoir plus</p>
                         </a>
@@ -33,4 +34,6 @@
         </div>
 
     </main>
+
+    {% include "footer.html" %}
 {% endblock %}
