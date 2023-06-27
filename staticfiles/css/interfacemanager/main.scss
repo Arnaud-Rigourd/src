@@ -1,4 +1,5 @@
 @import '../utils/colors';
+@import '../utils/fonts';
 
 
 .main-parallax {
@@ -37,6 +38,17 @@
   }
 }
 
+.titles {
+  h1 {
+    font-family: $mainTitle;
+    font-size: 42px;
+  }
+
+  h2, h3 {
+    text-align: center;
+  }
+}
+
 .faq {
   margin: 40px 0;
   padding: 15px 30px;
@@ -71,6 +83,7 @@
 
   h2 {
     margin: 15px 0;
+    font-family: $mainTitle;
   }
 }
 
