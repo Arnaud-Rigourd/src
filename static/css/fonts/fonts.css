@@ -1,0 +1,273 @@
+@font-face {
+    font-family: 'ClashDisplay-Extralight';
+    src: url('./fonts_files/ClashDisplay-Extralight.woff2') format('woff2'),
+    url('./fonts_files/ClashDisplay-Extralight.woff') format('woff'),
+    url('./fonts_files/ClashDisplay-Extralight.ttf') format('truetype');
+    font-weight: 200;
+    font-display: swap;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'ClashDisplay-Light';
+    src: url('./fonts_files/ClashDisplay-Light.woff2') format('woff2'),
+    url('./fonts_files/ClashDisplay-Light.woff') format('woff'),
+    url('./fonts_files/ClashDisplay-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-display: swap;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'ClashDisplay-Regular';
+    src: url('./fonts_files/ClashDisplay-Regular.woff2') format('woff2'),
+    url('./fonts_files/ClashDisplay-Regular.woff') format('woff'),
+    url('./fonts_files/ClashDisplay-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-display: swap;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'ClashDisplay-Medium';
+    src: url('./fonts_files/ClashDisplay-Medium.woff2') format('woff2'),
+    url('./fonts_files/ClashDisplay-Medium.woff') format('woff'),
+    url('./fonts_files/ClashDisplay-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-display: swap;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'ClashDisplay-Semibold';
+    src: url('./fonts_files/ClashDisplay-Semibold.woff2') format('woff2'),
+    url('./fonts_files/ClashDisplay-Semibold.woff') format('woff'),
+    url('./fonts_files/ClashDisplay-Semibold.ttf') format('truetype');
+    font-weight: 600;
+    font-display: swap;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'clash display';
+    src: url('./fonts_files/ClashDisplay-Bold.woff2') format('woff2'),
+    url('./fonts_files/ClashDisplay-Bold.woff') format('woff'),
+    url('./fonts_files/ClashDisplay-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-display: swap;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'Excon-Variable';
+    src: url('./fonts_files/Excon-Variable.woff2') format('woff2'),
+    url('./fonts_files/Excon-Variable.woff') format('woff'),
+    url('./fonts_files/Excon-Variable.ttf') format('truetype');
+    font-weight: 100 900;
+    font-display: swap;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'Excon';
+    src: url('./fonts_files/Excon-Thin.woff2') format('woff2'),
+    url('./fonts_files/Excon-Thin.woff') format('woff'),
+    url('./fonts_files/Excon-Thin.ttf') format('truetype');
+    font-weight: 100;
+    font-display: swap;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'Excon';
+    src: url('./fonts_files/Excon-Light.woff2') format('woff2'),
+    url('./fonts_files/Excon-Light.woff') format('woff'),
+    url('./fonts_files/Excon-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-display: swap;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'Excon';
+    src: url('./fonts_files/Excon-Regular.woff2') format('woff2'),
+    url('./fonts_files/Excon-Regular.woff') format('woff'),
+    url('./fonts_files/Excon-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-display: swap;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'Excon';
+    src: url('./fonts_files/Excon-Medium.woff2') format('woff2'),
+    url('./fonts_files/Excon-Medium.woff') format('woff'),
+    url('./fonts_files/Excon-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-display: swap;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'Excon-bold';
+    src: url('./fonts_files/Excon-Bold.woff2') format('woff2'),
+    url('./fonts_files/Excon-Bold.woff') format('woff'),
+    url('./fonts_files/Excon-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-display: swap;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'Excon-black';
+    src: url('./fonts_files/Excon-Black.woff2') format('woff2'),
+    url('./fonts_files/Excon-Black.woff') format('woff'),
+    url('./fonts_files/Excon-Black.ttf') format('truetype');
+    font-weight: 900;
+    font-display: swap;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'Ranade-Variable';
+    src: url('./fonts_files/Ranade-Variable.woff2') format('woff2'),
+    url('./fonts_files/Ranade-Variable.woff') format('woff'),
+    url('./fonts_files/Ranade-Variable.ttf') format('truetype');
+    font-weight: 100 700;
+    font-display: swap;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'Ranade-VariableItalic';
+    src: url('./fonts_files/Ranade-VariableItalic.woff2') format('woff2'),
+    url('./fonts_files/Ranade-VariableItalic.woff') format('woff'),
+    url('./fonts_files/Ranade-VariableItalic.ttf') format('truetype');
+    font-weight: 100 700;
+    font-display: swap;
+    font-style: italic;
+}
+
+
+@font-face {
+    font-family: 'Ranade-Thin';
+    src: url('./fonts_files/Ranade-Thin.woff2') format('woff2'),
+    url('./fonts_files/Ranade-Thin.woff') format('woff'),
+    url('./fonts_files/Ranade-Thin.ttf') format('truetype');
+    font-weight: 100;
+    font-display: swap;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'Ranade-ThinItalic';
+    src: url('./fonts_files/Ranade-ThinItalic.woff2') format('woff2'),
+    url('./fonts_files/Ranade-ThinItalic.woff') format('woff'),
+    url('./fonts_files/Ranade-ThinItalic.ttf') format('truetype');
+    font-weight: 100;
+    font-display: swap;
+    font-style: italic;
+}
+
+
+@font-face {
+    font-family: 'Ranade-Light';
+    src: url('./fonts_files/Ranade-Light.woff2') format('woff2'),
+    url('./fonts_files/Ranade-Light.woff') format('woff'),
+    url('./fonts_files/Ranade-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-display: swap;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'Ranade-LightItalic';
+    src: url('./fonts_files/Ranade-LightItalic.woff2') format('woff2'),
+    url('./fonts_files/Ranade-LightItalic.woff') format('woff'),
+    url('./fonts_files/Ranade-LightItalic.ttf') format('truetype');
+    font-weight: 300;
+    font-display: swap;
+    font-style: italic;
+}
+
+
+@font-face {
+    font-family: 'Ranade';
+    src: url('./fonts_files/Ranade-Regular.woff2') format('woff2'),
+    url('./fonts_files/Ranade-Regular.woff') format('woff'),
+    url('./fonts_files/Ranade-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-display: swap;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'Ranade-Italic';
+    src: url('./fonts_files/Ranade-Italic.woff2') format('woff2'),
+    url('./fonts_files/Ranade-Italic.woff') format('woff'),
+    url('./fonts_files/Ranade-Italic.ttf') format('truetype');
+    font-weight: 400;
+    font-display: swap;
+    font-style: italic;
+}
+
+
+@font-face {
+    font-family: 'Ranade-Medium';
+    src: url('./fonts_files/Ranade-Medium.woff2') format('woff2'),
+    url('./fonts_files/Ranade-Medium.woff') format('woff'),
+    url('./fonts_files/Ranade-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-display: swap;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'Ranade-MediumItalic';
+    src: url('./fonts_files/Ranade-MediumItalic.woff2') format('woff2'),
+    url('./fonts_files/Ranade-MediumItalic.woff') format('woff'),
+    url('./fonts_files/Ranade-MediumItalic.ttf') format('truetype');
+    font-weight: 500;
+    font-display: swap;
+    font-style: italic;
+}
+
+
+@font-face {
+    font-family: 'Ranade-Bold';
+    src: url('./fonts_files/Ranade-Bold.woff2') format('woff2'),
+    url('./fonts_files/Ranade-Bold.woff') format('woff'),
+    url('./fonts_files/Ranade-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-display: swap;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'Ranade-BoldItalic';
+    src: url('./fonts_files/Ranade-BoldItalic.woff2') format('woff2'),
+    url('./fonts_files/Ranade-BoldItalic.woff') format('woff'),
+    url('./fonts_files/Ranade-BoldItalic.ttf') format('truetype');
+    font-weight: 700;
+    font-display: swap;
+    font-style: italic;
+}
