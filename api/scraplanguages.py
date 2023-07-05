@@ -1,7 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
 
-
 MAIN_URL = 'https://en.wikipedia.org/wiki/List_of_programming_languages'
 
 
